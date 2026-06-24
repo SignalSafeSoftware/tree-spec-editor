@@ -1,0 +1,233 @@
+import type { ChangeEvent } from 'react';
+import { useState } from 'react';
+import { Form } from 'react-bootstrap';
+
+import {
+    GRAPH_SELECTION_KIND,
+    TREE_SPEC_NODE_TYPE_PRESETS,
+    type EditorNode,
+    type EditorTree,
+    type GraphSelection,
+} from '@signalsafe/tree-spec-editor-core';
+
+import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets';
+import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../lib/selectionStyles';
+
+export interface NodesPanelProps {
+    tree: EditorTree;
+    nodeSearch: string;
+    selection: GraphSelection;
+    /** Node to highlight when a choice or edge is focused (may differ from `selection`). */
+    focusNodeId?: string | null;
+    showMiniMap: boolean;
+    onNodeSearchChange: (value: string) => void;
+    onNodeSelect: (nodeId: string) => void;
+    onShowMiniMapChange: (checked: boolean) => void;
+    /** Optional placeholder text for the search input. */
+    searchPlaceholder?: string;
+    /** Optional tip text shown below the node list. */
+    tipText?: string;
+    /**
+     * When set, shows an add-node control in the card header (grid-style icon button).
+     * Typical host: `() => { void editor.actions.addNodeOfType('prompt'); }`.
+     */
+    onAddNode?: () => void;
+    /**
+     * When set, each node row shows a delete icon; invoke to remove that node id (e.g.
+     * `editor.actions.deleteNodeById`). Disabled when `isPublished` is true.
+     */
+    onDeleteNode?: (nodeId: string) => void;
+    /** When true, node delete controls are disabled (read-only published revision). */
+    isPublished?: boolean;
+}
+
+const DEFAULT_TIP_TEXT =
+    'Tip: connect choices by dragging the blue dots. Shortcuts: \u2318S save, \u2318\u21E7V validate, \u2318D duplicate, Del delete.';
+
+const TYPE_SORT_ORDER = new Map<string, number>(
+    (TREE_SPEC_NODE_TYPE_PRESETS as readonly string[]).map((t, i) => [t, i]),
+);
+
+function choiceLine(n: EditorNode): string {
+    const count = n.choices?.length ?? 0;
+    if (count === 0) return 'No choices';
+    if (count === 1) return '1 choice';
+    return `${count} choices`;
+}
+
+function compareNodesByTypeThenId(a: EditorNode, b: EditorNode): number {
+    const ta = a.type || 'unknown';
+    const tb = b.type || 'unknown';
+    const oa = TYPE_SORT_ORDER.has(ta) ? TYPE_SORT_ORDER.get(ta)! : 1_000;
+    const ob = TYPE_SORT_ORDER.has(tb) ? TYPE_SORT_ORDER.get(tb)! : 1_000;
+    if (oa !== ob) return oa - ob;
+    if (ta !== tb) return ta.localeCompare(tb);
+    return a.id.localeCompare(b.id);
+}
+
+function isNodeRowSelected(
+    nodeId: string,
+    selection: GraphSelection,
+    focusNodeId: string | null | undefined,
+): boolean {
+    if (focusNodeId === nodeId) return true;
+    return selection.kind === GRAPH_SELECTION_KIND.NODE && selection.id === nodeId;
+}
+
+export default function NodesPanel({
+    tree,
+    nodeSearch,
+    selection,
+    focusNodeId = null,
+    showMiniMap,
+    onNodeSearchChange,
+    onNodeSelect,
+    onShowMiniMapChange,
+    searchPlaceholder = 'Search nodes\u2026',
+    tipText = DEFAULT_TIP_TEXT,
+    onAddNode,
+    onDeleteNode,
+    isPublished = false,
+}: Readonly<NodesPanelProps>) {
+    const [expanded, setExpanded] = useState(true);
+    const filteredNodes = Object.values(tree.nodes)
+        .filter((n) => {
+            const q = nodeSearch.trim().toLowerCase();
+            if (!q) return true;
+            const hitPrompt = (n.prompt || '').toLowerCase().includes(q);
+            const hitId = n.id.toLowerCase().includes(q);
+            const hitType = (n.type || '').toLowerCase().includes(q);
+            const hitChoices = (n.choices ?? []).some(
+                (c) => (c.label || '').toLowerCase().includes(q) || c.id.toLowerCase().includes(q),
+            );
+            return hitPrompt || hitId || hitType || hitChoices;
+        })
+        .sort(compareNodesByTypeThenId);
+
+    return (
+        <div className="card mt-3">
+            <div className="card-header bg-body-secondary py-2 px-2 d-flex justify-content-between align-items-center gap-2">
+                <div className="d-flex align-items-center min-w-0">
+                    <span className="fw-semibold">Nodes</span>
+                    <PanelHeaderCollapseCarets expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
+                </div>
+                {onAddNode ? (
+                    <button
+                        type="button"
+                        className="btn p-0 border-0 bg-transparent flex-shrink-0"
+                        aria-label="Add node"
+                        title="Add node"
+                        onClick={onAddNode}
+                    >
+                        <i className="bi bi-plus-lg text-primary action-icon cursor-pointer" aria-hidden />
+                    </button>
+                ) : null}
+            </div>
+            <div className={expanded ? undefined : 'd-none'} aria-hidden={!expanded}>
+                    <Form.Control
+                        className="rounded-0 border-0 border-bottom shadow-none"
+                        placeholder={searchPlaceholder}
+                        value={nodeSearch}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => onNodeSearchChange(e.target.value)}
+                    />
+                    <div className="overflow-auto-max-h-320">
+                {filteredNodes.length === 0 ? (
+                    <div className="list-group list-group-flush">
+                        <div className="list-group-item text-muted small py-2 px-3">No matching nodes.</div>
+                    </div>
+                ) : (
+                    <div className="list-group list-group-flush">
+                        {filteredNodes.map((n) => {
+                            const isSelected = isNodeRowSelected(n.id, selection, focusNodeId);
+                            const typeLabel = n.type || 'unknown';
+                            return (
+                                <div
+                                    key={n.id}
+                                    className={`list-group-item px-3 py-2${
+                                        isSelected
+                                            ? ` ${LIST_SELECTION_CLASS} ${LIST_SELECTION_TEXT_CLASS}`
+                                            : ''
+                                    }`}
+                                    aria-current={isSelected ? 'true' : undefined}
+                                >
+                                    <div className="d-flex w-100 justify-content-between align-items-start gap-2 min-w-0">
+                                        <button
+                                            type="button"
+                                            className="btn p-0 border-0 bg-transparent flex-grow-1 text-start min-w-0"
+                                            onClick={() => onNodeSelect(n.id)}
+                                        >
+                                            <div className="d-flex w-100 justify-content-between align-items-center gap-2 mb-1 min-w-0">
+                                                <div
+                                                    className="min-w-0 flex-grow-1 text-break text-start"
+                                                    title={`${n.id}, ${typeLabel}`}
+                                                >
+                                                    <span
+                                                        className={`fs-6 fw-semibold text-uppercase${
+                                                            isSelected ? '' : ' text-body-secondary'
+                                                        }`}
+                                                    >
+                                                        {n.id}
+                                                    </span>
+                                                    <span
+                                                        className={`fs-6 text-uppercase${
+                                                            isSelected ? '' : ' text-body-secondary'
+                                                        }`}
+                                                    >
+                                                        {`, ${typeLabel}`}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <p
+                                                className={`mb-1 small text-break${
+                                                    isSelected ? '' : ' text-body-secondary'
+                                                }`}
+                                            >
+                                                {n.prompt || '(empty)'}
+                                            </p>
+                                            <small className={isSelected ? '' : ' text-body-secondary'}>
+                                                {choiceLine(n)}
+                                            </small>
+                                        </button>
+                                        {onDeleteNode ? (
+                                            <button
+                                                type="button"
+                                                className="btn p-0 border-0 bg-transparent flex-shrink-0"
+                                                aria-label={`Delete node ${n.id}`}
+                                                title="Delete node"
+                                                disabled={isPublished}
+                                                onClick={() => onDeleteNode(n.id)}
+                                            >
+                                                <i
+                                                    className={`bi bi-trash action-icon cursor-pointer${
+                                                        isPublished ? ' text-secondary opacity-50' : ' text-danger'
+                                                    }`}
+                                                    aria-hidden
+                                                />
+                                            </button>
+                                        ) : null}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+                    </div>
+                    <div className="card-footer p-2 border-top">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div className="text-muted font-size-12 text-break min-w-0 flex-grow-1 me-2">{tipText}</div>
+                            <Form.Check
+                                type="switch"
+                                id="showMiniMapToggle"
+                                label="Mini-map"
+                                checked={showMiniMap}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                    onShowMiniMapChange(e.target.checked)
+                                }
+                                className="font-size-12"
+                            />
+                        </div>
+                    </div>
+            </div>
+        </div>
+    );
+}
