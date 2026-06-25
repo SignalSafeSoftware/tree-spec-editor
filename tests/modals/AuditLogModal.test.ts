@@ -91,7 +91,7 @@ describe('AuditLogModal', () => {
                 Array.isArray(n.children) &&
                 n.children.includes('No audit events yet.')
         );
-        expect(ems.length).toBe(1);
+        expect(ems).toHaveLength(1);
     });
 
     it('renders one row per audit event with an action badge', async () => {
@@ -107,14 +107,14 @@ describe('AuditLogModal', () => {
         });
         const root = renderer!.root;
         const items = root.findAll((n) => n.type === 'li');
-        expect(items.length).toBe(3);
+        expect(items).toHaveLength(3);
         const badges = root.findAll(
             (n) =>
                 n.type === 'span' &&
                 typeof n.props.className === 'string' &&
                 n.props.className.includes('badge')
         );
-        expect(badges.length).toBe(3);
+        expect(badges).toHaveLength(3);
         const badgeTexts = badges.map((b) => (Array.isArray(b.children) ? b.children.join('') : ''));
         expect(badgeTexts).toEqual(expect.arrayContaining(['publish', 'clone', 'restore']));
     });
@@ -139,7 +139,7 @@ describe('AuditLogModal', () => {
                 n.children.includes('Actor ID:')
         );
         // Two of the three events have an actor; the third event omits the actor row.
-        expect(actors.length).toBe(2);
+        expect(actors).toHaveLength(2);
     });
 
     it('renders detail JSON for events that have a non-empty detail object', async () => {
@@ -155,7 +155,7 @@ describe('AuditLogModal', () => {
         });
         const pres = renderer!.root.findAll((n) => n.type === 'pre');
         // Only the first event has detail; the other two have no detail key or it's missing.
-        expect(pres.length).toBe(1);
+        expect(pres).toHaveLength(1);
         expect(JSON.stringify(pres[0].children)).toContain('first release');
     });
 
@@ -204,20 +204,20 @@ describe('AuditLogModal', () => {
                 Array.isArray(n.children) &&
                 n.children.includes('Activity')
         );
-        expect(titles.length).toBe(1);
+        expect(titles).toHaveLength(1);
         const subs = root.findAll(
             (n) =>
                 n.type === 'p' &&
                 Array.isArray(n.children) &&
                 n.children.includes('All actions on this tree.')
         );
-        expect(subs.length).toBe(1);
+        expect(subs).toHaveLength(1);
         const by = root.findAll(
             (n) =>
                 n.type === 'span' &&
                 Array.isArray(n.children) &&
                 n.children.includes('By:')
         );
-        expect(by.length).toBe(2);
+        expect(by).toHaveLength(2);
     });
 });

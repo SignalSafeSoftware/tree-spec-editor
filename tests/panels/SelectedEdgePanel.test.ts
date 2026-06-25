@@ -51,7 +51,7 @@ describe('SelectedEdgePanel', () => {
                 Array.isArray(n.children) &&
                 n.children.includes('Selected Edge')
         );
-        expect(titles.length).toBe(1);
+        expect(titles).toHaveLength(1);
 
         const detailContainers = root.findAll(
             (n) =>
@@ -60,7 +60,7 @@ describe('SelectedEdgePanel', () => {
                 n.props.className.includes('text-muted') &&
                 n.props.className.includes('font-size-12')
         );
-        expect(detailContainers.length).toBe(1);
+        expect(detailContainers).toHaveLength(1);
         expect(detailContainers[0].findAll((n) => n.type === 'button')).toHaveLength(0);
         const detailJson = JSON.stringify(renderer!.toJSON());
         expect(detailJson).toContain('start');
@@ -86,7 +86,7 @@ describe('SelectedEdgePanel', () => {
                 Array.isArray(n.children) &&
                 n.children.includes('start')
         );
-        expect(fromLink.length).toBe(1);
+        expect(fromLink).toHaveLength(1);
 
         await act(async () => {
             fromLink[0].props.onClick();
@@ -115,7 +115,7 @@ describe('SelectedEdgePanel', () => {
                 Array.isArray(n.children) &&
                 n.children.includes('Edge Details')
         );
-        expect(titles.length).toBe(1);
+        expect(titles).toHaveLength(1);
         const customDetail = root.findByProps({ 'data-testid': 'custom-details' });
         expect(customDetail).toBeTruthy();
         expect(JSON.stringify(customDetail.children)).toContain('t1');
