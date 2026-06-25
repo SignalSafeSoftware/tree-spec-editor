@@ -128,7 +128,7 @@ function deriveAppearancePanelViewState({
     selectedNode: EditorNode | null;
     selectedEdge: EditorTransition | null;
     focusChoiceId: string | null;
-    onUpdateChoiceEdgeHints?: AppearancePanelProps['onUpdateChoiceEdgeHints'];
+    onUpdateChoiceEdgeHints: AppearancePanelProps['onUpdateChoiceEdgeHints'];
 }>): AppearancePanelViewState {
     const edgeFocused = Boolean(selectedEdge);
     const contextNode =
