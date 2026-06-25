@@ -98,7 +98,7 @@ describe('DraftHistoryModal', () => {
                 Array.isArray(n.children) &&
                 n.children.includes('No snapshots yet. Create one to save the current draft.')
         );
-        expect(ems.length).toBe(1);
+        expect(ems).toHaveLength(1);
     });
 
     it('renders one row per snapshot with Restore buttons', async () => {
@@ -118,14 +118,14 @@ describe('DraftHistoryModal', () => {
             );
         });
         const root = renderer!.root;
-        expect(root.findAll((n) => n.type === 'li').length).toBe(2);
+        expect(root.findAll((n) => n.type === 'li')).toHaveLength(2);
         const restoreButtons = root.findAll(
             (n) =>
                 n.type === 'button' &&
                 typeof n.props.className === 'string' &&
                 n.props.className.includes('btn-outline-warning')
         );
-        expect(restoreButtons.length).toBe(2);
+        expect(restoreButtons).toHaveLength(2);
     });
 
     it('fires onRestoreSnapshot with the snapshot id when Restore is clicked', async () => {
@@ -238,20 +238,20 @@ describe('DraftHistoryModal', () => {
                 Array.isArray(n.children) &&
                 n.children.includes('Custom snapshots')
         );
-        expect(titles.length).toBe(1);
+        expect(titles).toHaveLength(1);
         const subs = root.findAll(
             (n) =>
                 n.type === 'p' &&
                 Array.isArray(n.children) &&
                 n.children.includes('Custom subtitle.')
         );
-        expect(subs.length).toBe(1);
+        expect(subs).toHaveLength(1);
         const empties = root.findAll(
             (n) =>
                 n.type === 'em' &&
                 Array.isArray(n.children) &&
                 n.children.includes('Nothing here yet.')
         );
-        expect(empties.length).toBe(1);
+        expect(empties).toHaveLength(1);
     });
 });

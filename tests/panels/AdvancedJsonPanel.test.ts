@@ -45,7 +45,7 @@ describe('AdvancedJsonPanel', () => {
                 Array.isArray(node.children) &&
                 node.children.includes('Advanced JSON (read-only)')
         );
-        expect(titles.length).toBe(1);
+        expect(titles).toHaveLength(1);
 
         const slot = root.findByProps({ 'data-testid': 'editor-slot' });
         expect(slot).toBeTruthy();
@@ -74,7 +74,7 @@ describe('AdvancedJsonPanel', () => {
                 Array.isArray(node.children) &&
                 node.children.includes('Compiled tree_spec')
         );
-        expect(titles.length).toBe(1);
+        expect(titles).toHaveLength(1);
 
         const subtitles = root.findAll(
             (node) =>
@@ -84,7 +84,7 @@ describe('AdvancedJsonPanel', () => {
                 Array.isArray(node.children) &&
                 node.children.includes('Read-only preview')
         );
-        expect(subtitles.length).toBe(1);
+        expect(subtitles).toHaveLength(1);
     });
 
     it('hides the expand/collapse button group when no callbacks are provided', async () => {
@@ -105,7 +105,7 @@ describe('AdvancedJsonPanel', () => {
                 typeof node.props.className === 'string' &&
                 node.props.className.includes('btn-group')
         );
-        expect(buttonGroups.length).toBe(0);
+        expect(buttonGroups).toHaveLength(0);
     });
 
     it('renders expand and collapse buttons that invoke the matching callbacks', async () => {
@@ -123,7 +123,7 @@ describe('AdvancedJsonPanel', () => {
         });
 
         const buttons = findHeaderButtons(renderer!.root);
-        expect(buttons.length).toBe(2);
+        expect(buttons).toHaveLength(2);
 
         await act(async () => {
             buttons[0].props.onClick();
@@ -151,7 +151,7 @@ describe('AdvancedJsonPanel', () => {
         });
 
         const buttons = findHeaderButtons(renderer!.root);
-        expect(buttons.length).toBe(1);
+        expect(buttons).toHaveLength(1);
         const labels = buttons[0].findAll((n) =>
             typeof n.children === 'object' ? false : typeof n === 'string'
         );
@@ -176,7 +176,7 @@ describe('AdvancedJsonPanel', () => {
         });
 
         const buttons = findHeaderButtons(renderer!.root);
-        expect(buttons.length).toBe(1);
+        expect(buttons).toHaveLength(1);
         expect(JSON.stringify(buttons[0].children)).toContain('Close all');
         await act(async () => {
             buttons[0].props.onClick();
@@ -203,6 +203,6 @@ describe('AdvancedJsonPanel', () => {
                 node.props.className.startsWith('card mt-3') &&
                 node.props.className.includes('shadow-sm')
         );
-        expect(cards.length).toBe(1);
+        expect(cards).toHaveLength(1);
     });
 });

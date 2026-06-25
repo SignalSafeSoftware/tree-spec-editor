@@ -106,8 +106,8 @@ describe('ToolbarPanel', () => {
                 n.props.className.includes('d-flex') &&
                 n.props.className.includes('gap-2')
         );
-        expect(wrapper.length).toBe(1);
-        expect(findButtons(root).length).toBe(0);
+        expect(wrapper).toHaveLength(1);
+        expect(findButtons(root)).toHaveLength(0);
     });
 
     it('renders a button item with default outline-secondary variant and forwards onClick', async () => {
@@ -121,7 +121,7 @@ describe('ToolbarPanel', () => {
             );
         });
         const buttons = findButtons(renderer!.root);
-        expect(buttons.length).toBe(1);
+        expect(buttons).toHaveLength(1);
         expect(buttons[0].props.className).toContain('btn-outline-secondary');
         await act(async () => {
             buttons[0].props.onClick();
@@ -171,20 +171,20 @@ describe('ToolbarPanel', () => {
                 typeof b.props.className === 'string' &&
                 b.props.className.includes('dropdown-toggle')
         );
-        expect(toggles.length).toBe(1);
+        expect(toggles).toHaveLength(1);
         const dropdownItems = root.findAll(
             (n) =>
                 n.type === 'a' &&
                 typeof n.props.className === 'string' &&
                 n.props.className.includes('dropdown-item')
         );
-        expect(dropdownItems.length).toBe(3);
+        expect(dropdownItems).toHaveLength(3);
         const dividers = root.findAll(
             (n) =>
                 typeof n.props.className === 'string' &&
                 n.props.className.includes('dropdown-divider')
         );
-        expect(dividers.length).toBe(1);
+        expect(dividers).toHaveLength(1);
         await act(async () => {
             dropdownItems[0].props.onClick({ preventDefault: () => undefined });
         });
@@ -244,7 +244,7 @@ describe('ToolbarPanel', () => {
                 typeof n.props.className === 'string' &&
                 n.props.className.includes('badge')
         );
-        expect(badges.length).toBe(2);
+        expect(badges).toHaveLength(2);
         expect(badges[0].props.className).toContain('bg-secondary');
         expect(badges[1].props.className).toContain('bg-success');
     });
@@ -267,7 +267,7 @@ describe('ToolbarPanel', () => {
                 Array.isArray(n.children) &&
                 n.children.includes('Saved')
         );
-        expect(span.length).toBe(1);
+        expect(span).toHaveLength(1);
     });
 
     it('renders a custom item using the provided render function', async () => {
@@ -301,7 +301,7 @@ describe('ToolbarPanel', () => {
                 typeof n.props.className === 'string' &&
                 n.props.className === 'custom-wrap py-2'
         );
-        expect(wrappers.length).toBe(1);
+        expect(wrappers).toHaveLength(1);
     });
 
     it('renders a mix of all item kinds in order', async () => {
@@ -322,14 +322,14 @@ describe('ToolbarPanel', () => {
         const root = renderer!.root;
         expect(root.findByProps({ 'data-testid': 'mix-back' })).toBeTruthy();
         const buttons = findButtons(root);
-        expect(buttons.length).toBe(2);
+        expect(buttons).toHaveLength(2);
         const badges = root.findAll(
             (n) =>
                 n.type === 'span' &&
                 typeof n.props.className === 'string' &&
                 n.props.className.includes('badge')
         );
-        expect(badges.length).toBe(1);
+        expect(badges).toHaveLength(1);
     });
 
     it('ignores unknown toolbar item kinds at runtime', async () => {
@@ -339,6 +339,6 @@ describe('ToolbarPanel', () => {
                 React.createElement(ToolbarPanel, { items })
             );
         });
-        expect(findButtons(renderer!.root).length).toBe(0);
+        expect(findButtons(renderer!.root)).toHaveLength(0);
     });
 });

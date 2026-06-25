@@ -45,7 +45,7 @@ describe('ChoiceTemplatesPanel', () => {
                 Array.isArray(node.children) &&
                 node.children.includes('Select a node to add preset choices.'),
         );
-        expect(message.length).toBe(1);
+        expect(message).toHaveLength(1);
     });
 
     it('renders template buttons and calls onApplyTemplate when clicked', async () => {

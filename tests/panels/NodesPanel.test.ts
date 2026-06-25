@@ -86,7 +86,7 @@ describe('NodesPanel', () => {
             );
         });
 
-        expect(findNodeRows(renderer!.root).length).toBe(3);
+        expect(findNodeRows(renderer!.root)).toHaveLength(3);
     });
 
     it('filters nodes by prompt text', async () => {
@@ -105,7 +105,7 @@ describe('NodesPanel', () => {
         });
 
         const rows = findNodeRows(renderer!.root);
-        expect(rows.length).toBe(1);
+        expect(rows).toHaveLength(1);
         const paragraphs = rows[0].findAll((n) => typeof n === 'object' && n.type === 'p');
         const textChunks = paragraphs.map((p) =>
             Array.isArray(p.children) ? p.children.join('') : String(p.children ?? ''),
@@ -138,7 +138,7 @@ describe('NodesPanel', () => {
                     })
                 );
             });
-            expect(findNodeRows(renderer!.root).length).toBe(expectedCount);
+            expect(findNodeRows(renderer!.root)).toHaveLength(expectedCount);
             renderer!.unmount();
             renderer = null;
         }
@@ -160,7 +160,7 @@ describe('NodesPanel', () => {
         });
 
         const rows = findNodeRows(renderer!.root);
-        expect(rows.length).toBe(3);
+        expect(rows).toHaveLength(3);
         const titles = rows.map((row) => {
             const titled = row.findAll(
                 (n) =>
@@ -168,7 +168,7 @@ describe('NodesPanel', () => {
                     typeof n.props.title === 'string' &&
                     n.props.title.includes(', ')
             );
-            expect(titled.length).toBe(1);
+            expect(titled).toHaveLength(1);
             return String(titled[0].props.title);
         });
         expect(new Set(titles)).toEqual(
@@ -217,8 +217,8 @@ describe('NodesPanel', () => {
 
         const rows = findNodeRows(renderer!.root);
         const classNames = rows.map((b) => String(b.props.className));
-        expect(classNames.filter((c) => c.includes('list-group-item-primary')).length).toBe(1);
-        expect(classNames.filter((c) => !c.includes('list-group-item-primary')).length).toBe(2);
+        expect(classNames.filter((c) => c.includes('list-group-item-primary'))).toHaveLength(1);
+        expect(classNames.filter((c) => !c.includes('list-group-item-primary'))).toHaveLength(2);
     });
 
     it('highlights focusNodeId when selection is an edge', async () => {
@@ -239,7 +239,7 @@ describe('NodesPanel', () => {
 
         const rows = findNodeRows(renderer!.root);
         const classNames = rows.map((b) => String(b.props.className));
-        expect(classNames.filter((c) => c.includes('list-group-item-primary')).length).toBe(1);
+        expect(classNames.filter((c) => c.includes('list-group-item-primary'))).toHaveLength(1);
         expect(classNames.some((c) => c.includes('list-group-item-primary'))).toBe(true);
     });
 
@@ -321,7 +321,7 @@ describe('NodesPanel', () => {
         const addButtons = renderer!.root.findAll(
             (node) => node.type === 'button' && node.props['aria-label'] === 'Add node'
         );
-        expect(addButtons.length).toBe(1);
+        expect(addButtons).toHaveLength(1);
         await act(async () => {
             addButtons[0].props.onClick();
         });
@@ -352,7 +352,7 @@ describe('NodesPanel', () => {
                 node.type === 'button' &&
                 node.props['aria-label'] === 'Delete node review'
         );
-        expect(deleteButtons.length).toBe(1);
+        expect(deleteButtons).toHaveLength(1);
         await act(async () => {
             deleteButtons[0].props.onClick({ stopPropagation: vi.fn() });
         });
@@ -381,8 +381,8 @@ describe('NodesPanel', () => {
                 Array.isArray(node.children) &&
                 node.children.includes('No matching nodes.')
         );
-        expect(emptyMessage.length).toBe(1);
-        expect(findNodeRows(renderer!.root).length).toBe(1);
+        expect(emptyMessage).toHaveLength(1);
+        expect(findNodeRows(renderer!.root)).toHaveLength(1);
     });
 
     it('sorts unknown node types alphabetically when they share the same preset rank', async () => {
@@ -426,11 +426,11 @@ describe('NodesPanel', () => {
             const titled = row.findAll(
                 (node) => typeof node.props.title === 'string' && node.props.title.includes(', ')
             );
-            expect(titled.length).toBe(1);
+            expect(titled).toHaveLength(1);
             return String(titled[0].props.title).split(',')[0].trim();
         });
         expect(orderedIds).toEqual(['a_custom', 'z_custom']);
-        expect(selectButtons.length).toBe(2);
+        expect(selectButtons).toHaveLength(2);
     });
 
     it('breaks ties by node id when unknown types match', async () => {

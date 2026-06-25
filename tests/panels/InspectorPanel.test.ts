@@ -90,7 +90,7 @@ describe('InspectorPanel', () => {
                 Array.isArray(node.children) &&
                 node.children.includes('Select a node to edit it.')
         );
-        expect(emptyNodes.length).toBe(1);
+        expect(emptyNodes).toHaveLength(1);
     });
 
     it('renders type select, prompt textarea, and one choice row per choice', async () => {
@@ -112,10 +112,10 @@ describe('InspectorPanel', () => {
 
         const root = renderer!.root;
         const textareas = root.findAll((n) => n.type === 'textarea');
-        expect(textareas.length).toBe(1);
+        expect(textareas).toHaveLength(1);
         expect(textareas[0].props.value).toBe('Review the suspicious message');
 
-        expect(findChoiceContainers(root).length).toBe(2);
+        expect(findChoiceContainers(root)).toHaveLength(2);
     });
 
     it('renders the outcome <select> only when a choice targets END', async () => {
@@ -139,7 +139,7 @@ describe('InspectorPanel', () => {
         const outcomeSelects = selects.filter(
             (s) => s.props.value === 'safe' || s.props.value === 'at_risk' || s.props.value === 'compromised'
         );
-        expect(outcomeSelects.length).toBe(1);
+        expect(outcomeSelects).toHaveLength(1);
     });
 
     it('uses the canonical TerminalOutcome options by default', async () => {
@@ -242,7 +242,7 @@ describe('InspectorPanel', () => {
         const addButtons = renderer!.root.findAll(
             (node) => node.type === 'button' && node.props['aria-label'] === 'Add choice'
         );
-        expect(addButtons.length).toBe(1);
+        expect(addButtons).toHaveLength(1);
         await act(async () => {
             addButtons[0].props.onClick();
         });
@@ -270,7 +270,7 @@ describe('InspectorPanel', () => {
         const deleteButtons = renderer!.root.findAll(
             (node) => node.props.role === 'button' && node.props['aria-label'] === 'Delete choice'
         );
-        expect(deleteButtons.length).toBe(2);
+        expect(deleteButtons).toHaveLength(2);
         await act(async () => {
             deleteButtons[0].props.onClick(mockPointerEvent());
         });
@@ -302,8 +302,8 @@ describe('InspectorPanel', () => {
         const moveDownButtons = renderer!.root.findAll(
             (node) => node.props.role === 'button' && node.props['aria-label'] === 'Move choice down',
         );
-        expect(moveUpButtons.length).toBe(2);
-        expect(moveDownButtons.length).toBe(2);
+        expect(moveUpButtons).toHaveLength(2);
+        expect(moveDownButtons).toHaveLength(2);
         expect(moveUpButtons[0].props['aria-disabled'] ?? moveUpButtons[0].props.ariaDisabled).toBe(true);
         expect(moveDownButtons[1].props['aria-disabled'] ?? moveDownButtons[1].props.ariaDisabled).toBe(true);
 
@@ -428,7 +428,7 @@ describe('InspectorPanel', () => {
                 typeof n.props.className === 'string' &&
                 n.props.className.includes('fw-semibold')
         );
-        expect(titleNodes.length).toBe(1);
+        expect(titleNodes).toHaveLength(1);
 
         const helperNodes = root.findAll(
             (n) =>
@@ -436,7 +436,7 @@ describe('InspectorPanel', () => {
                 Array.isArray(n.children) &&
                 n.children.includes('Custom type helper.')
         );
-        expect(helperNodes.length).toBe(1);
+        expect(helperNodes).toHaveLength(1);
     });
 
     it('fires onDeleteSelectedNode when the Required header delete control is activated', async () => {
@@ -461,7 +461,7 @@ describe('InspectorPanel', () => {
         const deleteButtons = renderer!.root.findAll(
             (node) => node.type === 'button' && node.props['aria-label'] === 'Delete node'
         );
-        expect(deleteButtons.length).toBe(1);
+        expect(deleteButtons).toHaveLength(1);
         await act(async () => {
             deleteButtons[0].props.onClick();
         });
@@ -546,7 +546,7 @@ describe('InspectorPanel', () => {
                 Array.isArray(node.children) &&
                 node.children.includes('No choices')
         );
-        expect(emptyChoices.length).toBe(1);
+        expect(emptyChoices).toHaveLength(1);
     });
 
     it('forwards prompt textarea edits to onUpdateSelectedNode', async () => {
@@ -600,7 +600,7 @@ describe('InspectorPanel', () => {
                 node.type === 'input' &&
                 node.props.placeholder === 'Enter custom type…'
         );
-        expect(customTypeInput.length).toBe(1);
+        expect(customTypeInput).toHaveLength(1);
         expect(customTypeInput[0].props.value).toBe('custom_flow');
     });
 
@@ -628,7 +628,7 @@ describe('InspectorPanel', () => {
                 typeof node.props.value === 'string' &&
                 node.props.value === 'Investigate'
         );
-        expect(labelInputs.length).toBe(1);
+        expect(labelInputs).toHaveLength(1);
         await act(async () => {
             labelInputs[0].props.onChange({ target: { value: 'Investigate further' } });
         });
@@ -759,7 +759,7 @@ describe('InspectorPanel', () => {
         const customOptions = typeSelect.findAll(
             (node) => node.type === 'option' && node.props.value === '__custom__',
         );
-        expect(customOptions.length).toBe(0);
+        expect(customOptions).toHaveLength(0);
     });
 
     it('disables the add choice control when published', async () => {
@@ -813,7 +813,7 @@ describe('InspectorPanel', () => {
                 Array.isArray(node.children) &&
                 node.children.includes('No choices'),
         );
-        expect(emptyChoices.length).toBe(1);
+        expect(emptyChoices).toHaveLength(1);
     });
 
     it('activates choice action icons on Enter and Space keydown', async () => {
@@ -877,7 +877,7 @@ describe('InspectorPanel', () => {
                 node.props.className.includes('card-body') &&
                 node.props.className.includes('p-0'),
         );
-        expect(choicesBodies.length).toBe(1);
+        expect(choicesBodies).toHaveLength(1);
         expect(choicesBodies[0].props.className).not.toContain('d-none');
 
         const collapseButtons = renderer!.root.findAll(

@@ -76,14 +76,14 @@ describe('IssuesPanel', () => {
         const emptyNodes = root.findAll(
             (node) => node.type === 'em' && Array.isArray(node.children) && node.children.includes('No issues')
         );
-        expect(emptyNodes.length).toBe(1);
+        expect(emptyNodes).toHaveLength(1);
         const notValidatedNodes = root.findAll(
             (node) =>
                 node.type === 'span' &&
                 Array.isArray(node.children) &&
                 node.children.includes('Not validated')
         );
-        expect(notValidatedNodes.length).toBe(1);
+        expect(notValidatedNodes).toHaveLength(1);
     });
 
     it('renders one entry per issue with the matching severity badge', async () => {
@@ -119,7 +119,7 @@ describe('IssuesPanel', () => {
                 Array.isArray(node.children) &&
                 node.children.includes('Validated FORMATTED')
         );
-        expect(validated.length).toBe(1);
+        expect(validated).toHaveLength(1);
     });
 
     it('formats validated timestamps with the default formatter when none is supplied', async () => {
@@ -145,7 +145,7 @@ describe('IssuesPanel', () => {
                     (child) => typeof child === 'string' && child.includes(`Validated ${formatted}`)
                 )
         );
-        expect(validated.length).toBe(1);
+        expect(validated).toHaveLength(1);
     });
 
     it('calls onSelectIssue with the original issue when an entry is clicked', async () => {
@@ -165,7 +165,7 @@ describe('IssuesPanel', () => {
         });
 
         const issueRows = findIssueButtons(renderer!.root);
-        expect(issueRows.length).toBe(issues.length);
+        expect(issueRows).toHaveLength(issues.length);
 
         await act(async () => {
             issueRows[0].props.onClick();
@@ -196,7 +196,7 @@ describe('IssuesPanel', () => {
         const selected = rows.filter((row) =>
             String(row.props.className).includes('list-group-item-primary'),
         );
-        expect(selected.length).toBe(1);
+        expect(selected).toHaveLength(1);
     });
 
     it('row header tooltip includes node id and resolved type when tree is passed', async () => {
@@ -247,7 +247,7 @@ describe('IssuesPanel', () => {
                 Array.isArray(node.children) &&
                 node.children.includes('Not validated')
         );
-        expect(notValidatedNodes.length).toBe(0);
+        expect(notValidatedNodes).toHaveLength(0);
     });
 
     it('disambiguates duplicate-keyed issues by occurrence', async () => {
@@ -269,7 +269,7 @@ describe('IssuesPanel', () => {
         });
 
         const issueRows = findIssueButtons(renderer!.root);
-        expect(issueRows.length).toBe(2);
+        expect(issueRows).toHaveLength(2);
     });
 
     it('filters issues by search text (message, node id, severity, type)', async () => {
@@ -287,7 +287,7 @@ describe('IssuesPanel', () => {
         });
 
         const issueRows = findIssueButtons(renderer!.root);
-        expect(issueRows.length).toBe(1);
+        expect(issueRows).toHaveLength(1);
     });
 
     it('shows no matching state when the search matches nothing', async () => {
@@ -307,6 +307,6 @@ describe('IssuesPanel', () => {
         const empty = renderer!.root.findAll(
             (node) => node.type === 'em' && Array.isArray(node.children) && node.children.includes('No matching issues.'),
         );
-        expect(empty.length).toBe(1);
+        expect(empty).toHaveLength(1);
     });
 });

@@ -119,7 +119,7 @@ describe('ChoiceEdgeAppearanceFields', () => {
                 typeof node.props.className === 'string' &&
                 node.props.className.includes('border-top'),
         );
-        expect(borderWrappers.length).toBe(0);
+        expect(borderWrappers).toHaveLength(0);
         expect(renderer!.root.findByProps({ type: 'color' })).toBeTruthy();
     });
 

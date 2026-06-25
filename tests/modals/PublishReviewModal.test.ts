@@ -69,9 +69,9 @@ describe('PublishReviewModal', () => {
                 Array.isArray(n.children) &&
                 n.children.includes('Review changes before publishing')
         );
-        expect(titles.length).toBe(1);
+        expect(titles).toHaveLength(1);
         const listItems = root.findAll((n) => n.type === 'li');
-        expect(listItems.length).toBe(2);
+        expect(listItems).toHaveLength(2);
     });
 
     it('shows the validation-error alert and disables Publish when an error issue exists', async () => {
@@ -97,7 +97,7 @@ describe('PublishReviewModal', () => {
                 typeof n.props.className === 'string' &&
                 n.props.className.includes('alert-danger')
         );
-        expect(alerts.length).toBe(1);
+        expect(alerts).toHaveLength(1);
         const publishButton = root.find(
             (n) =>
                 n.type === 'button' &&
@@ -187,7 +187,7 @@ describe('PublishReviewModal', () => {
                 Array.isArray(n.children) &&
                 n.children.includes('Confirm release')
         );
-        expect(titles.length).toBe(1);
+        expect(titles).toHaveLength(1);
         const summary = root.findAll(
             (n) =>
                 n.type === 'div' &&
@@ -196,7 +196,7 @@ describe('PublishReviewModal', () => {
                 Array.isArray(n.children) &&
                 n.children.includes('This release will be permanent.')
         );
-        expect(summary.length).toBe(1);
+        expect(summary).toHaveLength(1);
         const releaseButton = root.find(
             (n) =>
                 n.type === 'button' &&

@@ -64,7 +64,7 @@ describe('AppearancePanel', () => {
                 Array.isArray(n.children) &&
                 n.children.includes('Select a node or edge to edit appearance.'),
         );
-        expect(empty.length).toBe(1);
+        expect(empty).toHaveLength(1);
     });
 
     it('renders appearance fields when a node is selected', async () => {
