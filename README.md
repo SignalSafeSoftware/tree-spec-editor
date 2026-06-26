@@ -49,6 +49,11 @@ npm run typecheck
 
 See [SECURITY.md](./SECURITY.md). Host applications must enforce authorization, validate TreeSpec server-side, and control publish permissions.
 
+## Changelog and releases
+
+- [CHANGELOG.md](./CHANGELOG.md)
+- [RELEASING.md](./RELEASING.md)
+
 ---
 
 ## Detailed component reference
