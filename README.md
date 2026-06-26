@@ -1,20 +1,70 @@
 # `@signalsafe/tree-spec-editor`
 
-React graph editor for authoring `TreeSpec` content.
+React **Bootstrap UI shell** for authoring TreeSpec graphs: canvas (from `@signalsafe/tree-spec-editor-react`), sidebar panels, modals, and toolbar helpers.
 
-This package gives you a ready-to-embed editor component plus a small set of editor helpers. It is focused on graph editing only: nodes, choices, transitions, selection, layout, and validation hints.
+| | |
+|---|---|
+| **npm** | `@signalsafe/tree-spec-editor` |
+| **GitHub** | [SignalSafeSoftware/tree-spec-editor](https://github.com/SignalSafeSoftware/tree-spec-editor) |
+| **Peer deps** | `react`, `react-dom`, `reactflow`, `react-bootstrap` |
+
+## What this package does
+
+- Ships a ready-to-embed **graph editor UI** (`TreeSpecGraphEditor` re-export, panels, modals, toolbar).
+- Re-exports selected **editor-core helpers** and types for one-stop imports in Bootstrap hosts.
+
+## What this package does not do
+
+- Routing, REST/GraphQL clients, or authentication — your host app loads/saves drafts and enforces permissions.
+- Wire compile/publish without your adapter — use `useTreeSpecEditor` from `@signalsafe/tree-spec-editor-react` with a host adapter.
+- React Flow CSS by itself — the canvas lives in `-editor-react`; **consumers may need** `import 'reactflow/dist/style.css'` in the app entry (see `@signalsafe/tree-spec-editor-react` README). This package keeps `sideEffects: false` because it does not import CSS directly.
+
+## Package stack
+
+| Layer | Package |
+|---|---|
+| Wire | `@signalsafe/tree-spec` |
+| Editor model | `@signalsafe/tree-spec-editor-core` |
+| React Flow canvas | `@signalsafe/tree-spec-editor-react` |
+| **Bootstrap shell (this package)** | `@signalsafe/tree-spec-editor` |
 
 ## Install
 
 ```bash
-npm install @signalsafe/tree-spec-editor react react-dom reactflow react-bootstrap
+npm install @signalsafe/tree-spec-editor @signalsafe/tree-spec-editor-react @signalsafe/tree-spec-editor-core @signalsafe/tree-spec react react-dom reactflow react-bootstrap bootstrap
 ```
 
-The package ships React components that use `react-bootstrap` primitives (cards, buttons, form controls). The consuming app must install `react-bootstrap@^2.10.0` and load Bootstrap CSS in the usual way.
+Load Bootstrap CSS in your app. Import React Flow CSS as documented in `@signalsafe/tree-spec-editor-react`.
+
+## Development
+
+`yarn build` uses `tsconfig.build.json` and resolves `@signalsafe/*` from `node_modules`. Ecosystem sibling `paths` in `tsconfig.json` apply to local typecheck/tests only.
+
+```bash
+yarn install
+yarn build
+yarn test
+yarn typecheck
+```
+
+## Security
+
+See [SECURITY.md](./SECURITY.md). Host applications must enforce authorization, validate TreeSpec server-side, and control publish permissions.
+
+## Changelog and releases
+
+- [CHANGELOG.md](./CHANGELOG.md)
+- [RELEASING.md](./RELEASING.md)
+
+---
+
+## Detailed component reference
+
+The sections below document panels, modals, toolbar items, and integration patterns. Import from **`@signalsafe/tree-spec-editor`** package root only (no subpath exports).
 
 ## Source layout (maintainers)
 
-Published consumers import only the package root (`@signalsafe/tree-spec-editor`). This package is the **React + Bootstrap UI shell** in the layered editor stack:
+Published consumers import only the package root. Layer stack:
 
 | Layer | Package | Owns |
 |-------|---------|------|
@@ -30,7 +80,7 @@ Published consumers import only the package root (`@signalsafe/tree-spec-editor`
 | `src/lib/panelHelpers.ts` | `getIssueSeverityBadgeClass` (Bootstrap-flavored — Material / Angular shells ship their own equivalent) |
 | `src/index.ts` | Public barrel — **do not** import from subpaths in apps. Re-exports the canvas from `@signalsafe/tree-spec-editor-react` and the framework-agnostic surface from `@signalsafe/tree-spec-editor-core` |
 
-Tests live under `tests/panels/`, `tests/modals/`, plus `tests/index.test.ts` for the barrel. The canvas test lives in **`packages/tree-spec-editor-react/tests/`** and the framework-agnostic helper tests live in **`packages/tree-spec-editor-core/tests/`**.
+Tests live under `tests/panels/`, `tests/modals/`, and `tests/index.test.ts` in this repo. Canvas tests live in **`tree-spec-editor-react`**; core helper tests live in **`tree-spec-editor-core`**.
 
 ## Choosing the right package
 
@@ -51,11 +101,11 @@ Tests live under `tests/panels/`, `tests/modals/`, plus `tests/index.test.ts` fo
 
 This package (`@signalsafe/tree-spec-editor`) **remains the Bootstrap reference shell** — it does not become Material, Angular, or Vue.
 
-See [docs/ai/packages-editor-architecture.md](../../docs/ai/packages-editor-architecture.md).
+See package READMEs in the [`tree-spec-editor-core`](https://github.com/SignalSafeSoftware/tree-spec-editor-core) and [`tree-spec-editor-react`](https://github.com/SignalSafeSoftware/tree-spec-editor-react) repos for layer rules.
 
-## Full-stack host import pattern
+## Host import pattern
 
-The reference host ([`ScenarioVersionGraphEditorPage`](../../frontend/shared/domains/content/ScenarioVersionGraphEditorPage.tsx)) imports from **three** packages:
+Typical host apps import from **three** packages:
 
 ```tsx
 // Bootstrap UI shell — panels, modals, toolbar, canvas default export
@@ -78,9 +128,9 @@ The smallest useful integration is:
 2. Render `TreeSpecGraphEditor`.
 3. Replace the state value in `onChange`.
 
-The screenshot below was captured from the exact example tree in this section.
+The example below uses a minimal in-memory tree (screenshot assets are not bundled in the npm package).
 
-![Happy path editor example](https://raw.githubusercontent.com/denverprogrammer/DeliveryPlus/main/packages/tree-spec-editor/docs/tree-spec-editor-happy-path.png)
+<!-- Screenshot: add your own capture when integrating the editor in your app -->
 
 ```tsx
 import { useState, type JSX } from 'react';
@@ -179,9 +229,9 @@ export function ExampleTreeSpecEditor(): JSX.Element {
 
 Pass `issues` when you want the editor to highlight problem nodes and edges.
 
-The screenshot below was captured from the exact example tree in this section.
+The example below demonstrates validation highlighting (screenshot assets are not bundled in the npm package).
 
-![Validation issues example](https://raw.githubusercontent.com/denverprogrammer/DeliveryPlus/main/packages/tree-spec-editor/docs/tree-spec-editor-issues.png)
+<!-- Screenshot: add your own capture when integrating the editor in your app -->
 
 ```tsx
 import { useMemo, useState, type JSX } from 'react';
@@ -611,7 +661,7 @@ Right-rail panel for **canvas-only** styling. Combines:
 
 Scenario-level default edge routing lives in `GraphEditorInfoPanel`, not here.
 
-Hosts typically pair node fields with a project-specific component (for example `NodeAppearanceFields` in `frontend/shared`):
+Hosts typically pair node fields with a project-specific component:
 
 ```tsx
 import { AppearancePanel, InspectorPanel } from '@signalsafe/tree-spec-editor';
