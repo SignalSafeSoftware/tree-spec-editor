@@ -482,26 +482,26 @@
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.62.2.tgz#3671ce3f9b928d5c01f879792d5c0b60ae14d4ad"
   integrity sha512-BfzEnDJOt9T8M989/lA37EcJgat01wLRnoi5dQf3QzOH7jzpqTAzdDbVfRljVr5r+jzKqpbHeyOfAaXxAd0PAA==
 
-"@signalsafe/tree-spec-editor-core@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@signalsafe/tree-spec-editor-core/-/tree-spec-editor-core-0.1.2.tgz#f83d577f9bcaf08a4bd34a08bd2cebdadf5ee1c0"
-  integrity sha512-p+hSQu2GiQSEH9kPacufFD2E2KoVOvf/hWPCcudgjJlhmeWeHMJO0lIo0dIgTeoUR/72FN1/dg2OG+aZP631zg==
+"@signalsafe/tree-spec-editor-core@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@signalsafe/tree-spec-editor-core/-/tree-spec-editor-core-0.1.3.tgz#ebbae6ae1b027072a8f0da46c3ec5e6cea726c64"
+  integrity sha512-VDUl778gMgufW3/eYzSE9xPgi04eoIrAkaRdUbk+6GIFNZDCzc7PiOd6vfqfQMpRex1tIP9uM6OwBijXG1Nq4g==
   dependencies:
-    "@signalsafe/tree-spec" "^0.3.1"
+    "@signalsafe/tree-spec" "^0.3.2"
     dagre "^0.8.5"
 
-"@signalsafe/tree-spec-editor-react@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@signalsafe/tree-spec-editor-react/-/tree-spec-editor-react-0.1.2.tgz#1fff7fb8e6b6571aa005ef40117a1e0102e98831"
-  integrity sha512-saSYPToKSxKgZZk6diGlR4picrE65W6NIYWDjsRA30LyH/KX2dLZDr52srUT29x21dH5+SkykkkiiIcMDJwXMQ==
+"@signalsafe/tree-spec-editor-react@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@signalsafe/tree-spec-editor-react/-/tree-spec-editor-react-0.1.3.tgz#0b98018e0361aa94f107da158e4c59d49dfc4fae"
+  integrity sha512-Q6YtRP9yRoyz26sCkLyuWe1Ll98MDhRdPz9sHPzabHU0hlqEjx9sMwHKMGIfxOpM82w2pLULhJ7SteyD6fVhgQ==
   dependencies:
-    "@signalsafe/tree-spec" "^0.3.1"
-    "@signalsafe/tree-spec-editor-core" "^0.1.2"
+    "@signalsafe/tree-spec" "^0.3.2"
+    "@signalsafe/tree-spec-editor-core" "^0.1.3"
 
-"@signalsafe/tree-spec@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@signalsafe/tree-spec/-/tree-spec-0.3.1.tgz#0d4d1b21e68e7130fe67ba6cdfb4ebbb01fb7c65"
-  integrity sha512-23KUkmvnGDC/X+yl2M7s0o5Xpz2m98Qt/XQhbFo62epuiI1pngMZJeVnYoe0iyMnc6hr0rMf+YYHUzRBLfCqBQ==
+"@signalsafe/tree-spec@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@signalsafe/tree-spec/-/tree-spec-0.3.2.tgz#c5af9c87ae715e1cdc2914c76cb79bca8db60e27"
+  integrity sha512-Lfm9Al9/Fy7ZUmnjhRfgq+ppEQ7lt4M/qEePpzEWw2clO753gK1eG0HnFMHF07WF8ftOfOR7Dq2ZyE0c6BbcCw==
 
 "@swc/helpers@^0.5.0":
   version "0.5.23"
