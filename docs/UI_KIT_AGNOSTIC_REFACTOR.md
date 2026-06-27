@@ -1,6 +1,6 @@
 # UI-kit agnostic editor refactor — design scan (Prompt 8)
 
-**Status:** Implemented on `cleanup` (Prompt 9–10). `@signalsafe/tree-spec-editor@0.3.0` no longer requires `react-bootstrap`. See [UI_KIT_AGNOSTIC_USAGE.md](./UI_KIT_AGNOSTIC_USAGE.md). Canvas Bootstrap classes in `-react` remain a separate follow-up.
+**Status:** Implemented on `cleanup` (Prompts 9–10, 9A). `@signalsafe/tree-spec-editor@0.3.0` and `@signalsafe/tree-spec-editor-react@0.2.0` are UI-kit agnostic. See [UI_KIT_AGNOSTIC_USAGE.md](./UI_KIT_AGNOSTIC_USAGE.md) and [`tree-spec-editor-react` canvas doc](../../tree-spec-editor-react/docs/UI_KIT_AGNOSTIC_CANVAS.md).
 
 ---
 
@@ -9,7 +9,7 @@
 | Package | react-bootstrap | Bootstrap CSS classes | Ready for UI-kit agnostic goal |
 |---------|-----------------|----------------------|--------------------------------|
 | `tree-spec-editor-core` | None | None | **Yes** — already meets boundary |
-| `tree-spec-editor-react` | None | **Yes** — canvas nodes, context menu | **Partial** — no JS imports, but markup assumes Bootstrap CSS |
+| `tree-spec-editor-react` | None | **None (0.2.0+)** | **Yes** — canvas uses `graph-editor-*` hooks |
 | `tree-spec-editor` | ~~**Yes** — 13 source files~~ → **None (0.3.0+)** | ~~**Yes**~~ → **`graph-editor-*` hooks** | **Yes** — shell refactor complete |
 
 **Likely semver:** `@signalsafe/tree-spec-editor` **0.3.0** (remove `react-bootstrap` peer; public panel/modal API and styling contract change). `@signalsafe/tree-spec-editor-react` **0.2.0** (canvas class renames / neutral tokens). `@signalsafe/tree-spec-editor-core` **patch or unchanged**.
@@ -175,7 +175,7 @@ Remove from **`tree-spec-editor` public API** (breaking):
 | Repo | Action |
 |------|--------|
 | `tree-spec-editor-core` | **None** — maintain boundary |
-| `tree-spec-editor-react` | **Phase 1** — remove Bootstrap CSS class coupling from canvas |
+| `tree-spec-editor-react` | **Phase 1 ✓** — Bootstrap CSS removed from canvas (`0.2.0`) |
 | `tree-spec-editor` | **Phase 2–4** — headless API + optional bootstrap split; **0.3.0** |
 
 ---
@@ -183,4 +183,4 @@ Remove from **`tree-spec-editor` public API** (breaking):
 ## References
 
 - Ecosystem boundaries: `prompts/summary.md` (Option A — UI-kit agnostic editor)
-- npm packages: `@signalsafe/tree-spec-editor@0.2.3`, `@signalsafe/tree-spec-editor-react@0.1.3`, `@signalsafe/tree-spec-editor-core@0.1.3`
+- npm packages (release-ready on `cleanup`, not yet published): `@signalsafe/tree-spec-editor@0.3.0`, `@signalsafe/tree-spec-editor-react@0.2.0`, `@signalsafe/tree-spec-editor-core@0.1.3`

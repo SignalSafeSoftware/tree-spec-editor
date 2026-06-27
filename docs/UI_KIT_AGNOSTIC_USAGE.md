@@ -22,7 +22,7 @@ Peer dependencies: `react`, `react-dom`, `reactflow` only.
 |-------|---------|------------|
 | Wire | `@signalsafe/tree-spec` | None |
 | Model | `@signalsafe/tree-spec-editor-core` | None |
-| Canvas | `@signalsafe/tree-spec-editor-react` | None (React Flow only; canvas still uses Bootstrap-ish class names until a separate `-react` neutralization release) |
+| Canvas | `@signalsafe/tree-spec-editor-react` | None (React Flow only; canvas emits `graph-editor-*` hooks — see [`UI_KIT_AGNOSTIC_CANVAS.md`](../../tree-spec-editor-react/docs/UI_KIT_AGNOSTIC_CANVAS.md)) |
 | Shell | `@signalsafe/tree-spec-editor` | **Host-owned** — semantic hooks only |
 
 ---
@@ -118,9 +118,9 @@ Prefer **`getIssueSeverityToken`** when mapping to MUI/Bootstrap/theme tokens in
 3. **Update tests** that assert `text-bg-*`, `list-group-item-primary`, or `btn-*` on panel output — assert `graph-editor-*` instead.
 4. **Toolbar variants** — existing `outline-secondary` / `success` strings still work via tone mapping.
 5. **Optional short-term pin** — stay on `0.2.x` until host CSS is ready; then bump to `0.3.0`.
-6. **Future** — `@signalsafe/tree-spec-editor-bootstrap` may provide a reference Bootstrap skin without coupling the core package.
+6. **Future (optional)** — `@signalsafe/tree-spec-editor-bootstrap` may provide a reference Bootstrap skin without coupling the core package.
 
-Canvas nodes in `@signalsafe/tree-spec-editor-react` may still expect Bootstrap CSS class names until a separate `-react` release neutralizes canvas markup.
+**Canvas (`@signalsafe/tree-spec-editor-react@0.2.0`):** uses the same `graph-editor-*` prefix for node cards, lists, badges, and context menus. Map canvas hooks in host CSS alongside panel hooks.
 
 ---
 
