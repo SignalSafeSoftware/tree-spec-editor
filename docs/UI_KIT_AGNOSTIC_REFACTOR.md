@@ -1,16 +1,16 @@
 # UI-kit agnostic editor refactor — design scan (Prompt 8)
 
-**Status:** Implemented on `cleanup` (Prompt 9) — `@signalsafe/tree-spec-editor` no longer requires `react-bootstrap`. Canvas Bootstrap classes in `-react` remain a separate follow-up.
+**Status:** Implemented on `cleanup` (Prompt 9–10). `@signalsafe/tree-spec-editor@0.3.0` no longer requires `react-bootstrap`. See [UI_KIT_AGNOSTIC_USAGE.md](./UI_KIT_AGNOSTIC_USAGE.md). Canvas Bootstrap classes in `-react` remain a separate follow-up.
 
 ---
 
-## Executive summary
+## Executive summary (historical — Prompt 8 scan)
 
 | Package | react-bootstrap | Bootstrap CSS classes | Ready for UI-kit agnostic goal |
 |---------|-----------------|----------------------|--------------------------------|
 | `tree-spec-editor-core` | None | None | **Yes** — already meets boundary |
 | `tree-spec-editor-react` | None | **Yes** — canvas nodes, context menu | **Partial** — no JS imports, but markup assumes Bootstrap CSS |
-| `tree-spec-editor` | **Yes** — 13 source files | **Yes** — panels, modals, utilities | **No** — entire shell is Bootstrap today |
+| `tree-spec-editor` | ~~**Yes** — 13 source files~~ → **None (0.3.0+)** | ~~**Yes**~~ → **`graph-editor-*` hooks** | **Yes** — shell refactor complete |
 
 **Likely semver:** `@signalsafe/tree-spec-editor` **0.3.0** (remove `react-bootstrap` peer; public panel/modal API and styling contract change). `@signalsafe/tree-spec-editor-react` **0.2.0** (canvas class renames / neutral tokens). `@signalsafe/tree-spec-editor-core` **patch or unchanged**.
 
