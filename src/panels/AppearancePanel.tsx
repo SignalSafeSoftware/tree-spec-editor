@@ -22,7 +22,11 @@ import {
     EDITOR_CARD_HEADER,
     EDITOR_FLEX_ROW,
     EDITOR_HIDDEN,
+    EDITOR_MIN_W_0,
     EDITOR_MUTED,
+    EDITOR_SPACING_MB_2,
+    EDITOR_SPACING_MB_3,
+    EDITOR_SPACING_MT_3,
     joinClasses,
 } from '../ui/editorClasses';
 import ChoiceEdgeAppearanceFields from './ChoiceEdgeAppearanceFields';
@@ -75,7 +79,7 @@ function EdgeContextBreadcrumb({
     onNodeSelect?: (nodeId: string) => void;
 }>): ReactNode {
     return (
-        <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', 'mb-3')}>
+        <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_MB_3)}>
             <PanelNodeLink nodeId={fromNodeId} onNodeSelect={onNodeSelect} />
             {' · '}
             {choiceId}
@@ -96,8 +100,8 @@ function EdgeAppearanceSection({
 }>) {
     return (
         <>
-            <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', 'mb-2')}>{EDGE_APPEARANCE_HELPER}</div>
-            <div className={joinClasses('graph-editor-text--sm', 'graph-editor-text--semibold', 'mb-2')}>Edge appearance</div>
+            <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_MB_2)}>{EDGE_APPEARANCE_HELPER}</div>
+            <div className={joinClasses('graph-editor-text--sm', 'graph-editor-text--semibold', EDITOR_SPACING_MB_2)}>Edge appearance</div>
             <ChoiceEdgeAppearanceFields
                 variant="embedded"
                 choice={choice}
@@ -209,8 +213,8 @@ export default function AppearancePanel({
     });
 
     return (
-        <div className={joinClasses(EDITOR_CARD, 'mt-3')}>
-            <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_ROW, 'min-w-0')}>
+        <div className={joinClasses(EDITOR_CARD, EDITOR_SPACING_MT_3)}>
+            <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_ROW, EDITOR_MIN_W_0)}>
                 <span className="graph-editor-text--semibold">{title}</span>
                 {hasSelection ? (
                     <PanelHeaderCollapseCarets
@@ -227,7 +231,7 @@ export default function AppearancePanel({
                     <>
                         {showNodeAppearance ? (
                             <>
-                                <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', 'mb-2')}>{helperText}</div>
+                                <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_MB_2)}>{helperText}</div>
                                 {renderAppearanceFields({
                                     tree,
                                     node: contextNode,

@@ -13,11 +13,20 @@ import {
     EDITOR_CARD,
     EDITOR_CARD_BODY,
     EDITOR_CARD_HEADER,
+    EDITOR_ALIGN_TOP,
     EDITOR_FLEX_ROW,
+    EDITOR_FLEX_WRAP,
     EDITOR_HIDDEN,
     EDITOR_MONO,
     EDITOR_MUTED,
+    EDITOR_SPACING_M_0,
+    EDITOR_SPACING_MB_0,
+    EDITOR_SPACING_MB_1,
+    EDITOR_SPACING_MB_2,
+    EDITOR_SPACING_MB_3,
+    EDITOR_SPACING_MT_1,
     EDITOR_TABLE,
+    EDITOR_TEXT_BREAK,
     editorBadgeToneClass,
     joinClasses,
 } from '../ui/editorClasses';
@@ -51,7 +60,7 @@ function defaultFormatTimestamp(iso: string): string {
 function PropertyRow({ label, value }: Readonly<{ label: string; value: ReactNode }>) {
     return (
         <tr>
-            <td className="align-top">
+            <td className={EDITOR_ALIGN_TOP}>
                 <strong>{label}</strong>
             </td>
             <td>{value}</td>
@@ -85,10 +94,10 @@ export default function GraphEditorInfoPanel({
     const [expanded, setExpanded] = useState(true);
 
     return (
-        <div className={joinClasses(EDITOR_CARD, 'mb-3')}>
+        <div className={joinClasses(EDITOR_CARD, EDITOR_SPACING_MB_3)}>
             <div className={EDITOR_CARD_HEADER}>
-                <div className={joinClasses(EDITOR_FLEX_ROW, 'flex-wrap')}>
-                    <h5 className="mb-0">{title}</h5>
+                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_WRAP)}>
+                    <h5 className={EDITOR_SPACING_MB_0}>{title}</h5>
                     <PanelHeaderCollapseCarets expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
                 </div>
             </div>
@@ -96,7 +105,7 @@ export default function GraphEditorInfoPanel({
                 className={joinClasses(EDITOR_CARD_BODY, 'graph-editor-card__body--flush', !expanded && EDITOR_HIDDEN)}
                 aria-hidden={!expanded}
             >
-                <table className={joinClasses(EDITOR_TABLE, 'm-0')}>
+                <table className={joinClasses(EDITOR_TABLE, EDITOR_SPACING_M_0)}>
                     <tbody>
                         <PropertyRow label="Name" value={name} />
                         <PropertyRow
@@ -125,11 +134,11 @@ export default function GraphEditorInfoPanel({
                         />
                         <PropertyRow
                             label="Scenario ID"
-                            value={<span className={joinClasses(EDITOR_MONO, 'graph-editor-text--sm', 'text-break')}>{scenarioId}</span>}
+                            value={<span className={joinClasses(EDITOR_MONO, 'graph-editor-text--sm', EDITOR_TEXT_BREAK)}>{scenarioId}</span>}
                         />
                         <PropertyRow
                             label="Version ID"
-                            value={<span className={joinClasses(EDITOR_MONO, 'graph-editor-text--sm', 'text-break')}>{versionId}</span>}
+                            value={<span className={joinClasses(EDITOR_MONO, 'graph-editor-text--sm', EDITOR_TEXT_BREAK)}>{versionId}</span>}
                         />
                         <PropertyRow
                             label="Created"
@@ -143,9 +152,9 @@ export default function GraphEditorInfoPanel({
                 </table>
                 {onUpdateDefaultEdgeType ? (
                     <div className="graph-editor-card__section graph-editor-card__section--border-top">
-                        <div className={joinClasses('graph-editor-text--sm', 'graph-editor-text--semibold', 'mb-2')}>Global</div>
-                        <EditorField className="mb-0">
-                            <EditorLabel className="graph-editor-text--sm mb-1">Scenario default edge type</EditorLabel>
+                        <div className={joinClasses('graph-editor-text--sm', 'graph-editor-text--semibold', EDITOR_SPACING_MB_2)}>Global</div>
+                        <EditorField className={EDITOR_SPACING_MB_0}>
+                            <EditorLabel className={joinClasses('graph-editor-text--sm', EDITOR_SPACING_MB_1)}>Scenario default edge type</EditorLabel>
                             <EditorSelect
                                 value={defaultEdgeType}
                                 disabled={isPublished}
@@ -161,7 +170,7 @@ export default function GraphEditorInfoPanel({
                                     ),
                                 )}
                             </EditorSelect>
-                            <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', 'mt-1')}>
+                            <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_MT_1)}>
                                 Used when a choice edge type is set to Default.
                             </div>
                         </EditorField>

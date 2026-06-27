@@ -16,6 +16,8 @@ import {
     EDITOR_MODAL_TITLE,
     EDITOR_MUTED,
     EDITOR_SCROLL,
+    EDITOR_SPACING_MB_0,
+    EDITOR_SPACING_MB_3,
     joinClasses,
 } from '../ui/editorClasses';
 import { EditorButton, EditorCloseButton } from '../ui/primitives';
@@ -89,7 +91,7 @@ export default function DraftHistoryModal({
         );
     } else {
         snapshotsContent = (
-            <ul className={joinClasses('graph-editor-list--plain', EDITOR_SCROLL, 'mb-0')}>
+            <ul className={joinClasses('graph-editor-list--plain', EDITOR_SCROLL, EDITOR_SPACING_MB_0)}>
                 {snapshots.map((s) => (
                     <li key={s.id} className={joinClasses(EDITOR_FLEX_BETWEEN, 'graph-editor-list__plain-item')}>
                         <div>
@@ -124,7 +126,7 @@ export default function DraftHistoryModal({
                     </div>
                     <div className={EDITOR_MODAL_BODY}>
                         <p className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>{subtitle}</p>
-                        <div className={joinClasses(EDITOR_FLEX_BETWEEN, 'mb-3')}>
+                        <div className={joinClasses(EDITOR_FLEX_BETWEEN, EDITOR_SPACING_MB_3)}>
                             <span className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>{listCaption}</span>
                             <EditorButton
                                 tone="primary"

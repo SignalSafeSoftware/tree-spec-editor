@@ -16,12 +16,20 @@ import {
     EDITOR_CARD_FOOTER,
     EDITOR_CARD_HEADER,
     EDITOR_FLEX_BETWEEN,
+    EDITOR_FLEX_GROW_1,
     EDITOR_FLEX_ROW,
+    EDITOR_FLEX_SHRINK_0,
     EDITOR_HIDDEN,
     EDITOR_LIST,
     EDITOR_LIST_ITEM,
+    EDITOR_MIN_W_0,
     EDITOR_MUTED,
     EDITOR_SCROLL,
+    EDITOR_SPACING_MB_1,
+    EDITOR_SPACING_ME_2,
+    EDITOR_SPACING_MT_3,
+    EDITOR_TEXT_BREAK,
+    EDITOR_TEXT_START,
     joinClasses,
 } from '../ui/editorClasses';
 import { EditorIconButton, EditorInput, EditorSwitch } from '../ui/primitives';
@@ -118,15 +126,15 @@ export default function NodesPanel({
         .sort(compareNodesByTypeThenId);
 
     return (
-        <div className={joinClasses(EDITOR_CARD, 'mt-3')}>
+        <div className={joinClasses(EDITOR_CARD, EDITOR_SPACING_MT_3)}>
             <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_BETWEEN)}>
-                <div className={joinClasses(EDITOR_FLEX_ROW, 'min-w-0')}>
+                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_MIN_W_0)}>
                     <span className="graph-editor-text--semibold">Nodes</span>
                     <PanelHeaderCollapseCarets expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
                 </div>
                 {onAddNode ? (
                     <EditorIconButton
-                        className="flex-shrink-0 graph-editor-btn--primary"
+                        className={joinClasses(EDITOR_FLEX_SHRINK_0, 'graph-editor-btn--primary')}
                         aria-label="Add node"
                         title="Add node"
                         onClick={onAddNode}
@@ -164,15 +172,25 @@ export default function NodesPanel({
                                         )}
                                         aria-current={isSelected ? 'true' : undefined}
                                     >
-                                        <div className={joinClasses(EDITOR_FLEX_BETWEEN, 'min-w-0')}>
+                                        <div className={joinClasses(EDITOR_FLEX_BETWEEN, EDITOR_MIN_W_0)}>
                                             <button
                                                 type="button"
-                                                className="graph-editor-list__item-action flex-grow-1 text-start min-w-0"
+                                                className={joinClasses(
+                                                    'graph-editor-list__item-action',
+                                                    EDITOR_FLEX_GROW_1,
+                                                    EDITOR_TEXT_START,
+                                                    EDITOR_MIN_W_0,
+                                                )}
                                                 onClick={() => onNodeSelect(n.id)}
                                             >
-                                                <div className={joinClasses(EDITOR_FLEX_BETWEEN, 'mb-1', 'min-w-0')}>
+                                                <div className={joinClasses(EDITOR_FLEX_BETWEEN, EDITOR_SPACING_MB_1, EDITOR_MIN_W_0)}>
                                                     <div
-                                                        className="min-w-0 flex-grow-1 text-break text-start"
+                                                        className={joinClasses(
+                                                            EDITOR_MIN_W_0,
+                                                            EDITOR_FLEX_GROW_1,
+                                                            EDITOR_TEXT_BREAK,
+                                                            EDITOR_TEXT_START,
+                                                        )}
                                                         title={`${n.id}, ${typeLabel}`}
                                                     >
                                                         <span
@@ -197,8 +215,8 @@ export default function NodesPanel({
                                                 <p
                                                     className={joinClasses(
                                                         'graph-editor-text--sm',
-                                                        'text-break',
-                                                        'mb-1',
+                                                        EDITOR_TEXT_BREAK,
+                                                        EDITOR_SPACING_MB_1,
                                                         !isSelected && EDITOR_MUTED,
                                                     )}
                                                 >
@@ -211,7 +229,7 @@ export default function NodesPanel({
                                             {onDeleteNode ? (
                                                 <EditorIconButton
                                                     className={joinClasses(
-                                                        'flex-shrink-0',
+                                                        EDITOR_FLEX_SHRINK_0,
                                                         isPublished
                                                             ? 'graph-editor-btn--disabled'
                                                             : 'graph-editor-btn--danger',
@@ -233,7 +251,7 @@ export default function NodesPanel({
                 </div>
                 <div className={joinClasses(EDITOR_CARD_FOOTER, 'graph-editor-card__footer--border-top')}>
                     <div className={EDITOR_FLEX_BETWEEN}>
-                        <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', 'text-break', 'min-w-0', 'flex-grow-1', 'me-2')}>
+                        <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_TEXT_BREAK, EDITOR_MIN_W_0, EDITOR_FLEX_GROW_1, EDITOR_SPACING_ME_2)}>
                             {tipText}
                         </div>
                         <EditorSwitch

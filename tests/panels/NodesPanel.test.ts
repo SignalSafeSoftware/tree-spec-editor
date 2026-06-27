@@ -66,7 +66,7 @@ function findNodeSelectButtons(root: TestRenderer.ReactTestInstance) {
         (node) =>
             node.type === 'button' &&
             typeof node.props.className === 'string' &&
-            node.props.className.includes('flex-grow-1')
+            node.props.className.includes('graph-editor-flex-grow-1')
     );
 }
 

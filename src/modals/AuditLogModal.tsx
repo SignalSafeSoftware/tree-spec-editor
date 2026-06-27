@@ -18,6 +18,8 @@ import {
     EDITOR_MONO,
     EDITOR_MUTED,
     EDITOR_SCROLL,
+    EDITOR_SPACING_MB_0,
+    EDITOR_SPACING_MT_1,
     joinClasses,
 } from '../ui/editorClasses';
 import { EditorButton, EditorCloseButton } from '../ui/primitives';
@@ -68,7 +70,7 @@ export default function AuditLogModal({
         );
     } else {
         auditContent = (
-            <ul className={joinClasses('graph-editor-list--plain', EDITOR_SCROLL, 'mb-0')}>
+            <ul className={joinClasses('graph-editor-list--plain', EDITOR_SCROLL, EDITOR_SPACING_MB_0)}>
                 {auditEvents.map((e) => (
                     <li key={e.id} className="graph-editor-list__plain-item">
                         <div className={EDITOR_FLEX_BETWEEN}>
@@ -85,7 +87,7 @@ export default function AuditLogModal({
                             </span>
                         )}
                         {e.detail && Object.keys(e.detail).length > 0 ? (
-                            <pre className={joinClasses(EDITOR_MONO, EDITOR_MUTED, 'graph-editor-text--sm', 'mb-0 mt-1')}>
+                            <pre className={joinClasses(EDITOR_MONO, EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_MB_0, EDITOR_SPACING_MT_1)}>
                                 {JSON.stringify(e.detail)}
                             </pre>
                         ) : null}

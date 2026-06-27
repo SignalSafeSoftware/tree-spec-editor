@@ -9,7 +9,22 @@ import {
 } from '@signalsafe/tree-spec-editor-core';
 
 import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../../lib/selectionStyles';
-import { EDITOR_FLEX_BETWEEN, EDITOR_FLEX_ROW, EDITOR_LIST_ITEM, joinClasses } from '../../ui/editorClasses';
+import {
+    EDITOR_FLEX_ALIGN_END,
+    EDITOR_FLEX_BETWEEN,
+    EDITOR_FLEX_FILL,
+    EDITOR_FLEX_GROW_1,
+    EDITOR_FLEX_ROW,
+    EDITOR_FLEX_SHRINK_0,
+    EDITOR_LIST_ITEM,
+    EDITOR_MIN_W_0,
+    EDITOR_SPACING_MB_0,
+    EDITOR_SPACING_MB_1,
+    EDITOR_SPACING_MB_2,
+    EDITOR_SPACING_MT_0,
+    EDITOR_SPACING_MT_2,
+    joinClasses,
+} from '../../ui/editorClasses';
 import {
     EditorField,
     EditorInput,
@@ -79,11 +94,11 @@ export default function ChoiceEditorCard({
             )}
             onFocusCapture={() => onFocusChoice?.(choice.id)}
         >
-            <div className={joinClasses(EDITOR_FLEX_BETWEEN, 'mb-2', 'align-items-end')}>
-                <div className={joinClasses(EDITOR_FLEX_ROW, 'flex-grow-1', 'min-w-0', 'graph-editor-flex--gap')}>
+            <div className={joinClasses(EDITOR_FLEX_BETWEEN, EDITOR_SPACING_MB_2, EDITOR_FLEX_ALIGN_END)}>
+                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_GROW_1, EDITOR_MIN_W_0, 'graph-editor-flex--gap')}>
                     {showTypeSelect ? (
-                        <EditorField className="mb-0 flex-fill min-w-0">
-                            <EditorLabel className="mb-1">Type</EditorLabel>
+                        <EditorField className={joinClasses(EDITOR_SPACING_MB_0, EDITOR_FLEX_FILL, EDITOR_MIN_W_0)}>
+                            <EditorLabel className={EDITOR_SPACING_MB_1}>Type</EditorLabel>
                             <EditorSelect
                                 value={isCustomType ? '__custom__' : choice.id}
                                 disabled={isPublished}
@@ -114,8 +129,8 @@ export default function ChoiceEditorCard({
                             </EditorSelect>
                         </EditorField>
                     ) : (
-                        <EditorField className="mb-0 flex-fill min-w-0">
-                            <EditorLabel className="mb-1">Type</EditorLabel>
+                        <EditorField className={joinClasses(EDITOR_SPACING_MB_0, EDITOR_FLEX_FILL, EDITOR_MIN_W_0)}>
+                            <EditorLabel className={EDITOR_SPACING_MB_1}>Type</EditorLabel>
                             <EditorInput
                                 readOnly
                                 className="graph-editor-input--plain graph-editor-text--uppercase graph-editor-text--semibold"
@@ -124,8 +139,8 @@ export default function ChoiceEditorCard({
                         </EditorField>
                     )}
                     {hideOutcomeField ? null : (
-                        <EditorField className="mb-0 flex-fill min-w-0">
-                            <EditorLabel className="mb-1">Outcome</EditorLabel>
+                        <EditorField className={joinClasses(EDITOR_SPACING_MB_0, EDITOR_FLEX_FILL, EDITOR_MIN_W_0)}>
+                            <EditorLabel className={EDITOR_SPACING_MB_1}>Outcome</EditorLabel>
                             {showOutcome ? (
                                 <EditorSelect
                                     value={outcomeValue}
@@ -147,7 +162,7 @@ export default function ChoiceEditorCard({
                         </EditorField>
                     )}
                 </div>
-                <div className={joinClasses(EDITOR_FLEX_ROW, 'flex-shrink-0', 'graph-editor-flex--gap')}>
+                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_SHRINK_0, 'graph-editor-flex--gap')}>
                     {onMoveChoice ? (
                         <>
                             <span
@@ -181,7 +196,7 @@ export default function ChoiceEditorCard({
                     />
                 </div>
             </div>
-            <EditorLabel className="mt-0">Label</EditorLabel>
+            <EditorLabel className={EDITOR_SPACING_MT_0}>Label</EditorLabel>
             <EditorInput
                 value={choice.label}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -193,7 +208,7 @@ export default function ChoiceEditorCard({
                     onUpdateSelectedNode({ choices: updatedChoices });
                 }}
             />
-            <EditorLabel className="mt-2">Next</EditorLabel>
+            <EditorLabel className={EDITOR_SPACING_MT_2}>Next</EditorLabel>
             <EditorSelect
                 value={targetNodeId}
                 onChange={(e: ChangeEvent<HTMLSelectElement>) => onSetChoiceTarget(choice.id, e.target.value)}

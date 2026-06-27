@@ -8,8 +8,12 @@ import {
     EDITOR_CARD_HEADER,
     EDITOR_FLEX_BETWEEN,
     EDITOR_FLEX_ROW,
+    EDITOR_FLEX_WRAP,
     EDITOR_HIDDEN,
     EDITOR_MUTED,
+    EDITOR_SPACING_MB_0,
+    EDITOR_SPACING_MB_3,
+    EDITOR_SPACING_PY_2,
     joinClasses,
 } from '../ui/editorClasses';
 import { EditorButton } from '../ui/primitives';
@@ -49,17 +53,17 @@ export default function ChoiceTemplatesPanel({
     const disabled = isPublished || !selectedNodeId;
 
     return (
-        <div className={joinClasses(EDITOR_CARD, 'mb-3')}>
+        <div className={joinClasses(EDITOR_CARD, EDITOR_SPACING_MB_3)}>
             <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_BETWEEN)}>
                 <span className="graph-editor-text--semibold">Choice templates</span>
                 <PanelHeaderCollapseCarets expanded={expanded} onToggle={() => setExpanded((value) => !value)} />
             </div>
             <div
-                className={joinClasses(EDITOR_CARD_BODY, 'py-2', !expanded && EDITOR_HIDDEN)}
+                className={joinClasses(EDITOR_CARD_BODY, EDITOR_SPACING_PY_2, !expanded && EDITOR_HIDDEN)}
                 aria-hidden={!expanded}
             >
                 {selectedNodeId ? (
-                    <div className={joinClasses(EDITOR_FLEX_ROW, 'flex-wrap', 'graph-editor-flex--gap')}>
+                    <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_WRAP, 'graph-editor-flex--gap')}>
                         {templates.map((template) => (
                             <EditorButton
                                 key={template.id}
@@ -73,7 +77,7 @@ export default function ChoiceTemplatesPanel({
                         ))}
                     </div>
                 ) : (
-                    <p className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', 'mb-0')}>
+                    <p className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_MB_0)}>
                         Select a node to add preset choices.
                     </p>
                 )}

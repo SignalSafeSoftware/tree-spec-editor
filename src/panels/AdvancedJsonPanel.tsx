@@ -9,8 +9,13 @@ import {
     EDITOR_CARD_HEADER,
     EDITOR_FLEX_BETWEEN,
     EDITOR_FLEX_ROW,
+    EDITOR_FLEX_SHRINK_0,
+    EDITOR_FLEX_WRAP,
     EDITOR_HIDDEN,
+    EDITOR_MIN_W_0,
     EDITOR_MUTED,
+    EDITOR_SPACING_MS_AUTO,
+    EDITOR_SPACING_MT_3,
     joinClasses,
 } from '../ui/editorClasses';
 import { EditorButton } from '../ui/primitives';
@@ -56,10 +61,10 @@ export default function AdvancedJsonPanel({
     const hasButtons = Boolean(onExpandAll) || Boolean(onCollapseAll);
 
     return (
-        <div className={joinClasses(EDITOR_CARD, 'mt-3', className)}>
-            <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_BETWEEN, 'flex-wrap')}>
-                <div className="min-w-0">
-                    <div className={joinClasses(EDITOR_FLEX_ROW, 'flex-wrap')}>
+        <div className={joinClasses(EDITOR_CARD, EDITOR_SPACING_MT_3, className)}>
+            <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_BETWEEN, EDITOR_FLEX_WRAP)}>
+                <div className={EDITOR_MIN_W_0}>
+                    <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_WRAP)}>
                         <span className="graph-editor-text--bold">{title}</span>
                         <PanelHeaderCollapseCarets
                             expanded={expanded}
@@ -69,7 +74,7 @@ export default function AdvancedJsonPanel({
                     {subtitle ? <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>{subtitle}</div> : null}
                 </div>
                 {hasButtons ? (
-                    <div className={joinClasses(EDITOR_FLEX_ROW, 'flex-shrink-0', 'ms-auto', 'graph-editor-btn-group')}>
+                    <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_SHRINK_0, EDITOR_SPACING_MS_AUTO, 'graph-editor-btn-group')}>
                         {onExpandAll ? (
                             <EditorButton tone="neutral" onClick={onExpandAll}>
                                 {expandAllLabel}

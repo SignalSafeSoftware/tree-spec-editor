@@ -13,6 +13,7 @@ import {
     EDITOR_CARD,
     EDITOR_CARD_BODY,
     EDITOR_MUTED,
+    EDITOR_SPACING_MT_3,
     joinClasses,
 } from '../ui/editorClasses';
 
@@ -41,7 +42,7 @@ export default function SelectedEdgePanel({
     if (!selectedEdge) return null;
 
     return (
-        <div className={joinClasses(EDITOR_CARD, 'mt-3')}>
+        <div className={joinClasses(EDITOR_CARD, EDITOR_SPACING_MT_3)}>
             <div className={EDITOR_CARD_BODY}>
                 <div className="graph-editor-text--bold">{title}</div>
                 <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>

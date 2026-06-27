@@ -8,7 +8,15 @@ import {
     type EditorChoice,
 } from '@signalsafe/tree-spec-editor-core';
 
-import { EDITOR_FLEX_ROW, joinClasses } from '../ui/editorClasses';
+import {
+    EDITOR_FLEX_ROW,
+    EDITOR_SPACING_MB_0,
+    EDITOR_SPACING_MB_1,
+    EDITOR_SPACING_MB_2,
+    EDITOR_SPACING_MT_3,
+    EDITOR_SPACING_PT_2,
+    joinClasses,
+} from '../ui/editorClasses';
 import {
     EditorButton,
     EditorField,
@@ -38,7 +46,7 @@ export default function ChoiceEdgeAppearanceFields({
         <>
             <EditorSwitch
                 id={`choice-edge-show-label-${choice.id}`}
-                className="mb-2"
+                className={EDITOR_SPACING_MB_2}
                 label="Show label on canvas"
                 checked={hints.showLabel !== false}
                 disabled={isPublished}
@@ -46,8 +54,8 @@ export default function ChoiceEdgeAppearanceFields({
                     onPatch({ showLabel: event.target.checked })
                 }
             />
-            <EditorField className="mb-2">
-                <EditorLabel className="graph-editor-text--sm mb-1">Stroke color</EditorLabel>
+            <EditorField className={EDITOR_SPACING_MB_2}>
+                <EditorLabel className={joinClasses('graph-editor-text--sm', EDITOR_SPACING_MB_1)}>Stroke color</EditorLabel>
                 <div className={joinClasses(EDITOR_FLEX_ROW, 'graph-editor-flex--gap')}>
                     <EditorInput
                         type="color"
@@ -67,8 +75,8 @@ export default function ChoiceEdgeAppearanceFields({
                     </EditorButton>
                 </div>
             </EditorField>
-            <EditorField className="mb-0">
-                <EditorLabel className="graph-editor-text--sm mb-1">Edge type</EditorLabel>
+            <EditorField className={EDITOR_SPACING_MB_0}>
+                <EditorLabel className={joinClasses('graph-editor-text--sm', EDITOR_SPACING_MB_1)}>Edge type</EditorLabel>
                 <EditorSelect
                     value={hints.edgeType ?? 'default'}
                     disabled={isPublished}
@@ -93,8 +101,8 @@ export default function ChoiceEdgeAppearanceFields({
     }
 
     return (
-        <div className="graph-editor-card__section graph-editor-card__section--border-top mt-3 pt-2">
-            <div className={joinClasses('graph-editor-text--sm', 'graph-editor-text--semibold', 'mb-2')}>
+        <div className={joinClasses('graph-editor-card__section', 'graph-editor-card__section--border-top', EDITOR_SPACING_MT_3, EDITOR_SPACING_PT_2)}>
+            <div className={joinClasses('graph-editor-text--sm', 'graph-editor-text--semibold', EDITOR_SPACING_MB_2)}>
                 Edge appearance (canvas only)
             </div>
             {fields}

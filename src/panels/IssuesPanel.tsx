@@ -16,13 +16,20 @@ import {
     EDITOR_CARD_BODY,
     EDITOR_CARD_HEADER,
     EDITOR_FLEX_BETWEEN,
+    EDITOR_FLEX_GROW_1,
     EDITOR_FLEX_ROW,
+    EDITOR_FLEX_SHRINK_0,
     EDITOR_HIDDEN,
     EDITOR_LIST,
     EDITOR_LIST_ITEM,
+    EDITOR_MIN_W_0,
     EDITOR_MONO,
     EDITOR_MUTED,
     EDITOR_SCROLL,
+    EDITOR_SPACING_MB_1,
+    EDITOR_TEXT_BREAK,
+    EDITOR_TEXT_END,
+    EDITOR_TEXT_START,
     joinClasses,
 } from '../ui/editorClasses';
 import { EditorInput } from '../ui/primitives';
@@ -129,12 +136,12 @@ export default function IssuesPanel({
     return (
         <div className={EDITOR_CARD}>
             <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_BETWEEN)}>
-                <div className={joinClasses(EDITOR_FLEX_ROW, 'min-w-0')}>
+                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_MIN_W_0)}>
                     <span className="graph-editor-text--semibold">{title}</span>
                     <PanelHeaderCollapseCarets expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
                 </div>
                 {showValidationSummaryInHeader ? (
-                    <span className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', 'text-end', 'flex-shrink-0')}>
+                    <span className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_TEXT_END, EDITOR_FLEX_SHRINK_0)}>
                         {lastValidatedAt ? `Validated ${formatTimestamp(lastValidatedAt)}` : 'Not validated'}
                     </span>
                 ) : null}
@@ -183,9 +190,14 @@ export default function IssuesPanel({
                                                 aria-current={isSelected ? 'true' : undefined}
                                                 onClick={() => onSelectIssue(issue)}
                                             >
-                                                <div className={joinClasses(EDITOR_FLEX_BETWEEN, 'mb-1', 'min-w-0')}>
+                                                <div className={joinClasses(EDITOR_FLEX_BETWEEN, EDITOR_SPACING_MB_1, EDITOR_MIN_W_0)}>
                                                     <div
-                                                        className="min-w-0 flex-grow-1 text-break text-start"
+                                                        className={joinClasses(
+                                                            EDITOR_MIN_W_0,
+                                                            EDITOR_FLEX_GROW_1,
+                                                            EDITOR_TEXT_BREAK,
+                                                            EDITOR_TEXT_START,
+                                                        )}
                                                         title={headerTitle}
                                                     >
                                                         <span className="graph-editor-text--uppercase graph-editor-text--semibold">
@@ -203,7 +215,7 @@ export default function IssuesPanel({
                                                     <span
                                                         className={joinClasses(
                                                             getIssueSeverityBadgeClass(issue.severity),
-                                                            'flex-shrink-0',
+                                                            EDITOR_FLEX_SHRINK_0,
                                                             'graph-editor-text--uppercase',
                                                         )}
                                                     >
@@ -214,8 +226,8 @@ export default function IssuesPanel({
                                                     className={joinClasses(
                                                         EDITOR_MONO,
                                                         'graph-editor-text--sm',
-                                                        'text-break',
-                                                        'mb-1',
+                                                        EDITOR_TEXT_BREAK,
+                                                        EDITOR_SPACING_MB_1,
                                                         !isSelected && EDITOR_MUTED,
                                                     )}
                                                 >
@@ -224,7 +236,7 @@ export default function IssuesPanel({
                                                 {issue.choice_id ? (
                                                     <small
                                                         className={joinClasses(
-                                                            'text-break',
+                                                            EDITOR_TEXT_BREAK,
                                                             !isSelected && EDITOR_MUTED,
                                                         )}
                                                     >

@@ -10,7 +10,10 @@ import {
     EDITOR_CARD_HEADER,
     EDITOR_FLEX_BETWEEN,
     EDITOR_FLEX_ROW,
+    EDITOR_FLEX_SHRINK_0,
     EDITOR_HIDDEN,
+    EDITOR_MIN_W_0,
+    EDITOR_SPACING_MB_2,
     joinClasses,
 } from '../../ui/editorClasses';
 import { EditorField, EditorIconButton, EditorLabel, EditorTextarea } from '../../ui/primitives';
@@ -41,7 +44,7 @@ export default function RequiredNodeCard({
     return (
         <div className={EDITOR_CARD}>
             <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_BETWEEN)}>
-                <div className={joinClasses(EDITOR_FLEX_ROW, 'min-w-0')}>
+                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_MIN_W_0)}>
                     <span className="graph-editor-text--semibold">{title}</span>
                     <PanelHeaderCollapseCarets
                         expanded={requiredExpanded}
@@ -51,7 +54,7 @@ export default function RequiredNodeCard({
                 {onDeleteSelectedNode ? (
                     <EditorIconButton
                         className={joinClasses(
-                            'flex-shrink-0',
+                            EDITOR_FLEX_SHRINK_0,
                             isPublished ? 'graph-editor-btn--disabled' : 'graph-editor-btn--danger',
                         )}
                         aria-label="Delete node"
@@ -73,7 +76,7 @@ export default function RequiredNodeCard({
                     onUpdateSelectedNode={onUpdateSelectedNode}
                     typeHelperText={typeHelperText}
                 />
-                <EditorField className="mb-2">
+                <EditorField className={EDITOR_SPACING_MB_2}>
                     <EditorLabel>Prompt</EditorLabel>
                     <EditorTextarea
                         rows={4}

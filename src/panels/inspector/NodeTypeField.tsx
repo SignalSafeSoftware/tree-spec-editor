@@ -5,7 +5,13 @@ import {
     type EditorNode,
 } from '@signalsafe/tree-spec-editor-core';
 
-import { EDITOR_MUTED, joinClasses } from '../../ui/editorClasses';
+import {
+    EDITOR_MUTED,
+    EDITOR_SPACING_MB_2,
+    EDITOR_SPACING_MT_1,
+    EDITOR_SPACING_MT_2,
+    joinClasses,
+} from '../../ui/editorClasses';
 import { EditorField, EditorInput, EditorLabel, EditorSelect } from '../../ui/primitives';
 
 export default function NodeTypeField({
@@ -22,7 +28,7 @@ export default function NodeTypeField({
     const isPreset = (TREE_SPEC_NODE_TYPE_PRESETS as readonly string[]).includes(selectedNode.type);
 
     return (
-        <EditorField className="mb-2">
+        <EditorField className={EDITOR_SPACING_MB_2}>
             <EditorLabel>Type</EditorLabel>
             <EditorSelect
                 value={isPreset ? selectedNode.type : '__custom__'}
@@ -40,7 +46,7 @@ export default function NodeTypeField({
             </EditorSelect>
             {isPreset ? null : (
                 <EditorInput
-                    className="mt-2"
+                    className={EDITOR_SPACING_MT_2}
                     value={selectedNode.type}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         onUpdateSelectedNode({ type: e.target.value })
@@ -49,7 +55,7 @@ export default function NodeTypeField({
                     disabled={isPublished}
                 />
             )}
-            <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', 'mt-1')}>{typeHelperText}</div>
+            <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_MT_1)}>{typeHelperText}</div>
         </EditorField>
     );
 }

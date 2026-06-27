@@ -106,7 +106,7 @@ describe('IssuesPanel', () => {
                 node.type === 'span' &&
                 typeof node.props.className === 'string' &&
                 node.props.className.includes('graph-editor-badge') &&
-                node.props.className.includes('flex-shrink-0')
+                node.props.className.includes('graph-editor-flex-shrink-0')
         );
         const badgeClassNames = badges.map((b) => String(b.props.className));
         expect(badgeClassNames.some((c) => c.includes('graph-editor-badge--error'))).toBe(true);

@@ -10,10 +10,15 @@ import {
     EDITOR_CARD_HEADER,
     EDITOR_FLEX_BETWEEN,
     EDITOR_FLEX_ROW,
+    EDITOR_FLEX_SHRINK_0,
     EDITOR_HIDDEN,
     EDITOR_LIST,
+    EDITOR_MIN_W_0,
     EDITOR_MUTED,
     EDITOR_SCROLL,
+    EDITOR_SPACING_MT_3,
+    EDITOR_SPACING_PX_3,
+    EDITOR_SPACING_PY_3,
     joinClasses,
 } from '../../ui/editorClasses';
 import { EditorIconButton } from '../../ui/primitives';
@@ -60,19 +65,19 @@ export default function ChoiceEditorList({
     const usedChoiceTypeIds = new Set(choices.map((choice) => choice.id));
 
     return (
-        <div className={joinClasses(EDITOR_CARD, 'mt-3')}>
+        <div className={joinClasses(EDITOR_CARD, EDITOR_SPACING_MT_3)}>
             <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_BETWEEN)}>
-                <div className={joinClasses(EDITOR_FLEX_ROW, 'min-w-0')}>
+                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_MIN_W_0)}>
                     <span className="graph-editor-text--semibold">Choices</span>
                     <PanelHeaderCollapseCarets
                         expanded={choicesExpanded}
                         onToggle={() => setChoicesExpanded((v) => !v)}
                     />
                 </div>
-                <div className={joinClasses(EDITOR_FLEX_ROW, 'flex-shrink-0')}>
+                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_SHRINK_0)}>
                     <EditorIconButton
                         className={joinClasses(
-                            'flex-shrink-0',
+                            EDITOR_FLEX_SHRINK_0,
                             isPublished ? 'graph-editor-btn--disabled' : 'graph-editor-btn--primary',
                         )}
                         aria-label="Add choice"
@@ -89,7 +94,7 @@ export default function ChoiceEditorList({
                 aria-hidden={!choicesExpanded}
             >
                 {choices.length === 0 ? (
-                    <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', 'py-3', 'px-3')}>
+                    <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_PY_3, EDITOR_SPACING_PX_3)}>
                         <em>No choices</em>
                     </div>
                 ) : (
