@@ -2,6 +2,8 @@ import type { ReactNode } from 'react';
 
 import type { EditorTransition } from '@signalsafe/tree-spec-editor-core';
 
+import { EDITOR_BTN, joinClasses } from '../ui/editorClasses';
+
 export interface PanelNodeLinkContext {
     onNodeSelect?: (nodeId: string) => void;
 }
@@ -21,7 +23,7 @@ export function PanelNodeLink({
     return (
         <button
             type="button"
-            className="btn btn-link p-0 align-baseline font-size-12"
+            className={joinClasses(EDITOR_BTN, 'graph-editor-btn--link', 'graph-editor-text--sm')}
             onClick={() => onNodeSelect(nodeId)}
         >
             {nodeId}

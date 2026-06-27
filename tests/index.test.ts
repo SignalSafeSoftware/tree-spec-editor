@@ -28,6 +28,7 @@ describe('package barrel', () => {
         expect(Array.isArray(packageExports.DEFAULT_OUTCOME_OPTIONS)).toBe(true);
         expect(packageExports.buildStableEntries).toBeTypeOf('function');
         expect(packageExports.getIssueSeverityBadgeClass).toBeTypeOf('function');
+        expect(packageExports.getIssueSeverityToken).toBeTypeOf('function');
         expect(packageExports.duplicateNode).toBeTypeOf('function');
         expect(packageExports.deleteNode).toBeTypeOf('function');
         expect(packageExports.computeTreeDiffSummary).toBeTypeOf('function');

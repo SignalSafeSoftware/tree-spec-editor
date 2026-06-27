@@ -1,5 +1,4 @@
 import type { ChangeEvent, ReactNode } from 'react';
-import { Form } from 'react-bootstrap';
 
 import {
     END_NODE_ID,
@@ -10,6 +9,13 @@ import {
 } from '@signalsafe/tree-spec-editor-core';
 
 import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../../lib/selectionStyles';
+import { EDITOR_FLEX_BETWEEN, EDITOR_FLEX_ROW, EDITOR_LIST_ITEM, joinClasses } from '../../ui/editorClasses';
+import {
+    EditorField,
+    EditorInput,
+    EditorLabel,
+    EditorSelect,
+} from '../../ui/primitives';
 import { choiceActionIconProps } from './choiceActionIconProps';
 import type { ChoiceTypeOption, InspectorChoiceRenderContext } from './types';
 
@@ -66,17 +72,19 @@ export default function ChoiceEditorCard({
     return (
         <div
             id={`choice-editor-${selectedNode.id}-${choice.id}`}
-            className={`list-group-item py-3 px-3${
-                isFocused ? ` ${LIST_SELECTION_CLASS} ${LIST_SELECTION_TEXT_CLASS}` : ''
-            }`}
+            className={joinClasses(
+                EDITOR_LIST_ITEM,
+                isFocused && LIST_SELECTION_CLASS,
+                isFocused && LIST_SELECTION_TEXT_CLASS,
+            )}
             onFocusCapture={() => onFocusChoice?.(choice.id)}
         >
-            <div className="d-flex w-100 justify-content-between align-items-end gap-2 mb-2">
-                <div className="d-flex flex-grow-1 min-w-0 gap-2">
+            <div className={joinClasses(EDITOR_FLEX_BETWEEN, 'mb-2', 'align-items-end')}>
+                <div className={joinClasses(EDITOR_FLEX_ROW, 'flex-grow-1', 'min-w-0', 'graph-editor-flex--gap')}>
                     {showTypeSelect ? (
-                        <Form.Group className="mb-0 flex-fill min-w-0">
-                            <Form.Label className="mb-1">Type</Form.Label>
-                            <Form.Select
+                        <EditorField className="mb-0 flex-fill min-w-0">
+                            <EditorLabel className="mb-1">Type</EditorLabel>
+                            <EditorSelect
                                 value={isCustomType ? '__custom__' : choice.id}
                                 disabled={isPublished}
                                 aria-label={`Choice type for ${choice.id}`}
@@ -103,19 +111,23 @@ export default function ChoiceEditorCard({
                                 {isCustomType ? (
                                     <option value="__custom__">{choice.id} (custom)</option>
                                 ) : null}
-                            </Form.Select>
-                        </Form.Group>
+                            </EditorSelect>
+                        </EditorField>
                     ) : (
-                        <Form.Group className="mb-0 flex-fill min-w-0">
-                            <Form.Label className="mb-1">Type</Form.Label>
-                            <Form.Control plaintext readOnly className="text-uppercase fw-semibold" value={choice.id} />
-                        </Form.Group>
+                        <EditorField className="mb-0 flex-fill min-w-0">
+                            <EditorLabel className="mb-1">Type</EditorLabel>
+                            <EditorInput
+                                readOnly
+                                className="graph-editor-input--plain graph-editor-text--uppercase graph-editor-text--semibold"
+                                value={choice.id}
+                            />
+                        </EditorField>
                     )}
                     {hideOutcomeField ? null : (
-                        <Form.Group className="mb-0 flex-fill min-w-0">
-                            <Form.Label className="mb-1">Outcome</Form.Label>
+                        <EditorField className="mb-0 flex-fill min-w-0">
+                            <EditorLabel className="mb-1">Outcome</EditorLabel>
                             {showOutcome ? (
-                                <Form.Select
+                                <EditorSelect
                                     value={outcomeValue}
                                     disabled={isPublished}
                                     aria-label={`Outcome for ${choice.id}`}
@@ -126,47 +138,51 @@ export default function ChoiceEditorCard({
                                     {outcomeOptions.map((opt) => (
                                         <option key={opt.value} value={opt.value}>{opt.label}</option>
                                     ))}
-                                </Form.Select>
+                                </EditorSelect>
                             ) : (
-                                <Form.Select disabled aria-label={`Outcome for ${choice.id}`} value="">
+                                <EditorSelect disabled aria-label={`Outcome for ${choice.id}`} value="">
                                     <option value="">When Next is END</option>
-                                </Form.Select>
+                                </EditorSelect>
                             )}
-                        </Form.Group>
+                        </EditorField>
                     )}
                 </div>
-                <div className="d-flex align-items-center gap-2 flex-shrink-0">
+                <div className={joinClasses(EDITOR_FLEX_ROW, 'flex-shrink-0', 'graph-editor-flex--gap')}>
                     {onMoveChoice ? (
                         <>
-                            <i
+                            <span
                                 {...choiceActionIconProps(
                                     () => onMoveChoice(choice.id, 'up'),
                                     'Move choice up',
-                                    'bi bi-chevron-up text-secondary',
+                                    undefined,
                                     isPublished || !canMoveUp,
+                                    '↑',
                                 )}
                             />
-                            <i
+                            <span
                                 {...choiceActionIconProps(
                                     () => onMoveChoice(choice.id, 'down'),
                                     'Move choice down',
-                                    'bi bi-chevron-down text-secondary',
+                                    undefined,
                                     isPublished || !canMoveDown,
+                                    '↓',
                                 )}
                             />
                         </>
                     ) : null}
-                    <i
+                    <span
                         {...choiceActionIconProps(
                             () => onDeleteChoice(choice.id),
                             'Delete choice',
-                            'bi bi-trash text-danger',
+                            'graph-editor-action-icon--danger',
+                            isPublished,
+                            '×',
                         )}
                     />
                 </div>
             </div>
-            <Form.Label className="mt-0">Label</Form.Label>
-            <Form.Control
+            <EditorLabel className="mt-0">Label</EditorLabel>
+            <EditorInput
                 value={choice.label}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                     const updatedChoices = (selectedNode.choices ?? []).map((existingChoice) =>
@@ -177,8 +193,8 @@ export default function ChoiceEditorCard({
                     onUpdateSelectedNode({ choices: updatedChoices });
                 }}
             />
-            <Form.Label className="mt-2">Next</Form.Label>
-            <Form.Select
+            <EditorLabel className="mt-2">Next</EditorLabel>
+            <EditorSelect
                 value={targetNodeId}
                 onChange={(e: ChangeEvent<HTMLSelectElement>) => onSetChoiceTarget(choice.id, e.target.value)}
             >
@@ -189,7 +205,7 @@ export default function ChoiceEditorCard({
                     </option>
                 ))}
                 <option value={END_NODE_ID}>END</option>
-            </Form.Select>
+            </EditorSelect>
 
             {renderExtraChoiceFields
                 ? renderExtraChoiceFields({

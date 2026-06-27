@@ -1,3 +1,5 @@
+import { EditorIconButton } from '../ui/primitives';
+
 export interface PanelHeaderCollapseCaretsProps {
     expanded: boolean;
     onToggle: () => void;
@@ -9,14 +11,12 @@ export default function PanelHeaderCollapseCarets({
     onToggle,
 }: Readonly<PanelHeaderCollapseCaretsProps>) {
     return (
-        <button
-            type="button"
-            className="btn btn-sm btn-link text-body-secondary p-0 ms-1"
+        <EditorIconButton
             aria-expanded={expanded}
             aria-label={expanded ? 'Collapse panel' : 'Expand panel'}
             onClick={onToggle}
         >
-            <i className={`bi bi-caret-${expanded ? 'up' : 'down'}`} aria-hidden />
-        </button>
+            {expanded ? '▲' : '▼'}
+        </EditorIconButton>
     );
 }

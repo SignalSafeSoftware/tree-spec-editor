@@ -42,8 +42,8 @@ function findIssueButtons(root: TestRenderer.ReactTestInstance) {
         (node) =>
             node.type === 'button' &&
             typeof node.props.className === 'string' &&
-            node.props.className.includes('list-group-item') &&
-            !node.props.className.includes('list-group-item-action'),
+            node.props.className.includes('graph-editor-list__item') &&
+            node.props.className.includes('graph-editor-list__item--button'),
     );
 }
 
@@ -105,13 +105,13 @@ describe('IssuesPanel', () => {
             (node) =>
                 node.type === 'span' &&
                 typeof node.props.className === 'string' &&
-                node.props.className.includes('badge') &&
+                node.props.className.includes('graph-editor-badge') &&
                 node.props.className.includes('flex-shrink-0')
         );
         const badgeClassNames = badges.map((b) => String(b.props.className));
-        expect(badgeClassNames.some((c) => c.includes('bg-danger'))).toBe(true);
-        expect(badgeClassNames.some((c) => c.includes('bg-warning text-dark'))).toBe(true);
-        expect(badgeClassNames.some((c) => c.includes('bg-info'))).toBe(true);
+        expect(badgeClassNames.some((c) => c.includes('graph-editor-badge--error'))).toBe(true);
+        expect(badgeClassNames.some((c) => c.includes('graph-editor-badge--warning'))).toBe(true);
+        expect(badgeClassNames.some((c) => c.includes('graph-editor-badge--info'))).toBe(true);
 
         const validated = root.findAll(
             (node) =>
@@ -175,7 +175,7 @@ describe('IssuesPanel', () => {
         expect(onSelectIssue).toHaveBeenCalledWith(issues[0]);
     });
 
-    it('highlights the selected issue with list-group-item-primary', async () => {
+    it('highlights the selected issue with graph-editor-list__item--selected', async () => {
         const issues = createIssues();
         await act(async () => {
             renderer = TestRenderer.create(
@@ -194,7 +194,7 @@ describe('IssuesPanel', () => {
 
         const rows = findIssueButtons(renderer!.root);
         const selected = rows.filter((row) =>
-            String(row.props.className).includes('list-group-item-primary'),
+            String(row.props.className).includes('graph-editor-list__item--selected'),
         );
         expect(selected).toHaveLength(1);
     });

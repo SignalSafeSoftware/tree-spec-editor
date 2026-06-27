@@ -1,10 +1,13 @@
-import type { KeyboardEvent, MouseEvent } from 'react';
+import type { KeyboardEvent, MouseEvent, ReactNode } from 'react';
+
+import { joinClasses } from '../../ui/editorClasses';
 
 export function choiceActionIconProps(
     onClick: () => void,
     title: string,
-    className: string,
+    className?: string,
     disabled = false,
+    children?: ReactNode,
 ) {
     return {
         role: 'button' as const,
@@ -12,9 +15,12 @@ export function choiceActionIconProps(
         title,
         'aria-label': title,
         'aria-disabled': disabled ? true : undefined,
-        className: `${className} action-icon flex-shrink-0${
-            disabled ? ' text-secondary opacity-50' : ' cursor-pointer'
-        }`,
+        className: joinClasses(
+            'graph-editor-action-icon',
+            className,
+            disabled && 'graph-editor-action-icon--disabled',
+        ),
+        children,
         onClick: disabled
             ? undefined
             : (event: MouseEvent<HTMLElement>) => {

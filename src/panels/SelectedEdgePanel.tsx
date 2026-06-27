@@ -9,6 +9,12 @@ import type { ReactNode } from 'react';
 import type { EditorTransition } from '@signalsafe/tree-spec-editor-core';
 
 import { renderDefaultEdgeBreadcrumb, type PanelNodeLinkContext } from '../lib/panelNodeLink';
+import {
+    EDITOR_CARD,
+    EDITOR_CARD_BODY,
+    EDITOR_MUTED,
+    joinClasses,
+} from '../ui/editorClasses';
 
 export type SelectedEdgeDetailsContext = PanelNodeLinkContext;
 export { PanelNodeLink } from '../lib/panelNodeLink';
@@ -35,10 +41,10 @@ export default function SelectedEdgePanel({
     if (!selectedEdge) return null;
 
     return (
-        <div className="card mt-3">
-            <div className="card-body">
-                <div className="fw-bold">{title}</div>
-                <div className="text-muted font-size-12">
+        <div className={joinClasses(EDITOR_CARD, 'mt-3')}>
+            <div className={EDITOR_CARD_BODY}>
+                <div className="graph-editor-text--bold">{title}</div>
+                <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>
                     {renderDetails(selectedEdge, { onNodeSelect })}
                 </div>
             </div>

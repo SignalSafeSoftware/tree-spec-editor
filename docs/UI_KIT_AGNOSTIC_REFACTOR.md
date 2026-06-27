@@ -1,8 +1,6 @@
 # UI-kit agnostic editor refactor — design scan (Prompt 8)
 
-**Status:** Planned — **no runtime changes in Prompt 8.**  
-**Branch:** `cleanup`  
-**Packages:** `@signalsafe/tree-spec-editor` (primary), `@signalsafe/tree-spec-editor-react`, `@signalsafe/tree-spec-editor-core`
+**Status:** Implemented on `cleanup` (Prompt 9) — `@signalsafe/tree-spec-editor` no longer requires `react-bootstrap`. Canvas Bootstrap classes in `-react` remain a separate follow-up.
 
 ---
 

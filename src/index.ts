@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * React + Bootstrap implementation of the TreeSpec graph editor.
+ * UI-kit agnostic TreeSpec graph editor shell.
  *
  * Layered architecture:
  * - `@signalsafe/tree-spec` — wire contract (pure TS, no UI).
@@ -8,18 +8,15 @@
  *   and constants (no React, no DOM).
  * - `@signalsafe/tree-spec-editor-react` — headless React: React Flow canvas
  *   (no UI library).
- * - **`@signalsafe/tree-spec-editor`** (this package) — React + Bootstrap shell:
- *   sidebar panels, modals, toolbar, and the Bootstrap severity badge helper.
- *
- * The framework-agnostic surface from `-core` and the canvas from `-react`
- * are re-exported from this barrel for consumer convenience. Hosts targeting
- * alternative UI libraries (e.g. Material) should consume `-react` plus their
- * own UI shell instead.
+ * - **`@signalsafe/tree-spec-editor`** (this package) — composable panels,
+ *   modals, toolbar, and semantic `graph-editor-*` class hooks. Hosts style
+ *   with Bootstrap, Material UI, or custom CSS.
  *
  * Source layout:
  * - `panels/` — sidebar / toolbar / inspector presentational components
  * - `modals/` — authoring-flow dialogs
- * - `lib/` — UI-flavored helpers (Bootstrap severity badge classes)
+ * - `ui/` — UI-kit agnostic primitives and class tokens
+ * - `lib/` — panel helpers and toolbar builders
  */
 
 export { default } from '@signalsafe/tree-spec-editor-react';
@@ -68,7 +65,8 @@ export type {
     ToolbarCustomItem,
 } from './panels/ToolbarPanel';
 
-export { getIssueSeverityBadgeClass } from './lib/panelHelpers';
+export { getIssueSeverityBadgeClass, getIssueSeverityToken } from './lib/panelHelpers';
+export type { IssueSeverityToken } from './lib/panelHelpers';
 
 export { LIST_SELECTION_CLASS, CANVAS_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS, CANVAS_SELECTION_TEXT_CLASS } from './lib/selectionStyles';
 

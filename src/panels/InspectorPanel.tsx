@@ -86,7 +86,7 @@ export default function InspectorPanel({
                     />
                 </>
             ) : (
-                <div className="text-muted"><em>{emptyStateText}</em></div>
+                <div className="graph-editor-muted"><em>{emptyStateText}</em></div>
             )}
         </div>
     );

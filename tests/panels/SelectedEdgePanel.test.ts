@@ -47,7 +47,7 @@ describe('SelectedEdgePanel', () => {
             (n) =>
                 n.type === 'div' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('fw-bold') &&
+                n.props.className.includes('graph-editor-text--bold') &&
                 Array.isArray(n.children) &&
                 n.children.includes('Selected Edge')
         );
@@ -57,8 +57,8 @@ describe('SelectedEdgePanel', () => {
             (n) =>
                 n.type === 'div' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('text-muted') &&
-                n.props.className.includes('font-size-12')
+                n.props.className.includes('graph-editor-muted') &&
+                n.props.className.includes('graph-editor-text--sm')
         );
         expect(detailContainers).toHaveLength(1);
         expect(detailContainers[0].findAll((n) => n.type === 'button')).toHaveLength(0);
@@ -111,7 +111,7 @@ describe('SelectedEdgePanel', () => {
             (n) =>
                 n.type === 'div' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('fw-bold') &&
+                n.props.className.includes('graph-editor-text--bold') &&
                 Array.isArray(n.children) &&
                 n.children.includes('Edge Details')
         );

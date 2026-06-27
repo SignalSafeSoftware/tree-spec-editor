@@ -2,7 +2,7 @@
 
 Standalone repository: [SignalSafeSoftware/tree-spec-editor](https://github.com/SignalSafeSoftware/tree-spec-editor).
 
-**Depends on:** `@signalsafe/tree-spec`, `@signalsafe/tree-spec-editor-core`, `@signalsafe/tree-spec-editor-react`. **Peer deps:** `react`, `react-dom`, `reactflow`, `react-bootstrap`.
+**Depends on:** `@signalsafe/tree-spec`, `@signalsafe/tree-spec-editor-core`, `@signalsafe/tree-spec-editor-react`. **Peer deps:** `react`, `react-dom`, `reactflow`.
 
 ## CI publish policy
 

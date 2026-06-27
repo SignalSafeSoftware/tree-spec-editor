@@ -426,7 +426,7 @@ describe('InspectorPanel', () => {
                 n.type === 'span' &&
                 n.props.children === 'Node Settings' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('fw-semibold')
+                n.props.className.includes('graph-editor-text--semibold')
         );
         expect(titleNodes).toHaveLength(1);
 
@@ -874,11 +874,10 @@ describe('InspectorPanel', () => {
         const choicesBodies = renderer!.root.findAll(
             (node) =>
                 typeof node.props.className === 'string' &&
-                node.props.className.includes('card-body') &&
-                node.props.className.includes('p-0'),
+                node.props.className.includes('graph-editor-card__body--flush'),
         );
         expect(choicesBodies).toHaveLength(1);
-        expect(choicesBodies[0].props.className).not.toContain('d-none');
+        expect(choicesBodies[0].props.className).not.toContain('graph-editor-hidden');
 
         const collapseButtons = renderer!.root.findAll(
             (node) => node.type === 'button' && node.props['aria-label'] === 'Collapse panel',
@@ -888,7 +887,7 @@ describe('InspectorPanel', () => {
             collapseButtons[1].props.onClick();
         });
 
-        expect(choicesBodies[0].props.className).toContain('d-none');
+        expect(choicesBodies[0].props.className).toContain('graph-editor-hidden');
         expect(choicesBodies[0].props['aria-hidden']).toBe(true);
     });
 });

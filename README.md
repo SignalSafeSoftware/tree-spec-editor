@@ -1,17 +1,17 @@
 # `@signalsafe/tree-spec-editor`
 
-React **Bootstrap UI shell** for authoring TreeSpec graphs: canvas (from `@signalsafe/tree-spec-editor-react`), sidebar panels, modals, and toolbar helpers.
+React **UI-kit agnostic shell** for authoring TreeSpec graphs: canvas (from `@signalsafe/tree-spec-editor-react`), sidebar panels, modals, and toolbar helpers. Hosts style panels with Bootstrap, Material UI, or custom CSS via `graph-editor-*` class hooks.
 
 | | |
 |---|---|
 | **npm** | `@signalsafe/tree-spec-editor` |
 | **GitHub** | [SignalSafeSoftware/tree-spec-editor](https://github.com/SignalSafeSoftware/tree-spec-editor) |
-| **Peer deps** | `react`, `react-dom`, `reactflow`, `react-bootstrap` |
+| **Peer deps** | `react`, `react-dom`, `reactflow` |
 
 ## What this package does
 
 - Ships a ready-to-embed **graph editor UI** (`TreeSpecGraphEditor` re-export, panels, modals, toolbar).
-- Re-exports selected **editor-core helpers** and types for one-stop imports in Bootstrap hosts.
+- Re-exports selected **editor-core helpers** and types for one-stop imports in React hosts.
 
 ## What this package does not do
 
@@ -31,7 +31,7 @@ React **Bootstrap UI shell** for authoring TreeSpec graphs: canvas (from `@signa
 ## Install
 
 ```bash
-npm install @signalsafe/tree-spec-editor @signalsafe/tree-spec-editor-react @signalsafe/tree-spec-editor-core @signalsafe/tree-spec react react-dom reactflow react-bootstrap bootstrap
+npm install @signalsafe/tree-spec-editor @signalsafe/tree-spec-editor-react @signalsafe/tree-spec-editor-core @signalsafe/tree-spec react react-dom reactflow
 ```
 
 Load Bootstrap CSS in your app. Import React Flow CSS as documented in `@signalsafe/tree-spec-editor-react`.
@@ -77,8 +77,8 @@ Published consumers import only the package root. Layer stack:
 
 | Directory | Contents |
 |-----------|----------|
-| `src/panels/` | Sidebar, toolbar, inspector, and JSON chrome components (React + `react-bootstrap`) |
-| `src/modals/` | Publish review, draft history, and audit log dialogs (React + `react-bootstrap`) |
+| `src/panels/` | Sidebar, toolbar, inspector, and JSON chrome components (UI-kit agnostic React) |
+| `src/modals/` | Publish review, draft history, and audit log dialogs (UI-kit agnostic React) |
 | `src/lib/panelHelpers.ts` | `getIssueSeverityBadgeClass` (Bootstrap-flavored — Material / Angular shells ship their own equivalent) |
 | `src/index.ts` | Public barrel — **do not** import from subpaths in apps. Re-exports the canvas from `@signalsafe/tree-spec-editor-react` and the framework-agnostic surface from `@signalsafe/tree-spec-editor-core` |
 
@@ -1197,7 +1197,7 @@ function addPromptNode(tree: EditorTree): EditorTree {
 ## Notes
 
 - Import from the package root only.
-- Install `react`, `react-dom`, `reactflow`, and `react-bootstrap` in the consuming app, and load Bootstrap CSS as usual.
+- Install `react`, `react-dom`, and `reactflow` in the consuming app. Style panels with your UI library or CSS targeting `graph-editor-*` classes.
 - If you need wire-format compile/decompile helpers, use `@signalsafe/tree-spec`.
 
 ## Repository

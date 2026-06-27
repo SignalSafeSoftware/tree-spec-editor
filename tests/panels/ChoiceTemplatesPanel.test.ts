@@ -27,6 +27,17 @@ function findCollapseButton(root: TestRenderer.ReactTestInstance) {
     )[0];
 }
 
+function findTemplateButtons(root: TestRenderer.ReactTestInstance) {
+    return root.findAll(
+        (node) =>
+            node.type === 'button' &&
+            typeof node.props.className === 'string' &&
+            node.props.className.includes('graph-editor-btn--neutral') &&
+            typeof node.props.onClick === 'function' &&
+            node.props.title != null,
+    );
+}
+
 describe('ChoiceTemplatesPanel', () => {
     it('shows a message when no node is selected', async () => {
         await act(async () => {
@@ -61,11 +72,7 @@ describe('ChoiceTemplatesPanel', () => {
             );
         });
 
-        const buttons = renderer!.root.findAll(
-            (node) =>
-                node.props?.variant === 'outline-secondary' &&
-                typeof node.props.onClick === 'function',
-        );
+        const buttons = findTemplateButtons(renderer!.root);
         expect(buttons).toHaveLength(2);
         expect(buttons[0].props.title).toBe('Yes · No');
         expect(buttons[1].props.title).toBe('1 · 5');
@@ -88,11 +95,7 @@ describe('ChoiceTemplatesPanel', () => {
             );
         });
 
-        const buttons = renderer!.root.findAll(
-            (node) =>
-                node.props?.variant === 'outline-secondary' &&
-                typeof node.props.onClick === 'function',
-        );
+        const buttons = findTemplateButtons(renderer!.root);
         expect(buttons.every((button) => button.props.disabled === true)).toBe(true);
     });
 
@@ -110,16 +113,16 @@ describe('ChoiceTemplatesPanel', () => {
         const body = renderer!.root.findAll(
             (node) =>
                 typeof node.props.className === 'string' &&
-                node.props.className.includes('card-body'),
+                node.props.className.includes('graph-editor-card__body'),
         )[0];
-        expect(body.props.className).not.toContain('d-none');
+        expect(body.props.className).not.toContain('graph-editor-hidden');
         expect(body.props['aria-hidden']).toBe(false);
 
         await act(async () => {
             findCollapseButton(renderer!.root).props.onClick();
         });
 
-        expect(body.props.className).toContain('d-none');
+        expect(body.props.className).toContain('graph-editor-hidden');
         expect(body.props['aria-hidden']).toBe(true);
     });
 });

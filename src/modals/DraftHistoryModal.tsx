@@ -1,15 +1,24 @@
 /**
  * Draft-history modal for the TreeSpec graph editor.
- *
- * Presentational only: receives the snapshot list, loading/restoring flags, and
- * callbacks for creating and restoring snapshots. The package owns the modal chrome,
- * the snapshot list rendering, and the per-row "Restore" button; the host supplies
- * the data and decides what those actions mean.
  */
 import type { ReactNode } from 'react';
-import { Button, CloseButton } from 'react-bootstrap';
 
 import type { EditorTree, TreeSpecSnapshotItem } from '@signalsafe/tree-spec-editor-core';
+
+import {
+    EDITOR_FLEX_BETWEEN,
+    EDITOR_MODAL,
+    EDITOR_MODAL_BODY,
+    EDITOR_MODAL_CONTENT,
+    EDITOR_MODAL_DIALOG,
+    EDITOR_MODAL_FOOTER,
+    EDITOR_MODAL_HEADER,
+    EDITOR_MODAL_TITLE,
+    EDITOR_MUTED,
+    EDITOR_SCROLL,
+    joinClasses,
+} from '../ui/editorClasses';
+import { EditorButton, EditorCloseButton } from '../ui/primitives';
 
 export interface DraftHistoryModalProps {
     show: boolean;
@@ -22,25 +31,15 @@ export interface DraftHistoryModalProps {
     onCreateSnapshot: () => void;
     onRestoreSnapshot: (snapshotId: string) => void;
 
-    /** Override the modal title (default "Draft history"). */
     title?: string;
-    /** Override the muted subtitle below the title. */
     subtitle?: string;
-    /** Override the "Snapshots (newest first)" caption above the list. */
     listCaption?: string;
-    /** Override the "Create snapshot" button label. */
     createSnapshotLabel?: string;
-    /** Override the "Creating\u2026" label while a create is in flight. */
     creatingSnapshotLabel?: string;
-    /** Override the "Restore" button label. */
     restoreLabel?: string;
-    /** Override the "Restoring\u2026" button label while a restore is in flight. */
     restoringLabel?: string;
-    /** Override the loading state text. */
     loadingText?: string;
-    /** Override the empty-state text (when there are zero snapshots). */
     emptyStateText?: string;
-    /** Override the Close button label in the footer. */
     closeLabel?: string;
 }
 
@@ -81,37 +80,34 @@ export default function DraftHistoryModal({
 
     let snapshotsContent: ReactNode;
     if (loadingSnapshots) {
-        snapshotsContent = <div className="text-muted">{loadingText}</div>;
+        snapshotsContent = <div className={EDITOR_MUTED}>{loadingText}</div>;
     } else if (snapshots.length === 0) {
         snapshotsContent = (
-            <div className="text-muted"><em>{emptyStateText}</em></div>
+            <div className={EDITOR_MUTED}>
+                <em>{emptyStateText}</em>
+            </div>
         );
     } else {
         snapshotsContent = (
-            <ul className="list-unstyled mb-0 overflow-auto-max-h-320">
+            <ul className={joinClasses('graph-editor-list--plain', EDITOR_SCROLL, 'mb-0')}>
                 {snapshots.map((s) => (
-                    <li
-                        key={s.id}
-                        className="d-flex justify-content-between align-items-center border-bottom py-2"
-                    >
+                    <li key={s.id} className={joinClasses(EDITOR_FLEX_BETWEEN, 'graph-editor-list__plain-item')}>
                         <div>
-                            <span className="text-muted font-size-12">
-                                {new Date(s.created_on).toLocaleString()}
-                            </span>
-                            {s.label ? <span className="ms-2">{s.label}</span> : null}
+                            <span className={EDITOR_MUTED}>{new Date(s.created_on).toLocaleString()}</span>
+                            {s.label ? <span className="graph-editor-inline-gap">{s.label}</span> : null}
                             {s.spec_hash ? (
-                                <span className="ms-2 text-muted font-size-11">
+                                <span className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>
                                     {s.spec_hash.slice(0, 8)}…
                                 </span>
                             ) : null}
                         </div>
-                        <Button
-                            variant="outline-warning"
+                        <EditorButton
+                            tone="warning"
                             onClick={() => onRestoreSnapshot(s.id)}
                             disabled={restoringSnapshotId !== null}
                         >
                             {restoringSnapshotId === s.id ? restoringLabel : restoreLabel}
-                        </Button>
+                        </EditorButton>
                     </li>
                 ))}
             </ul>
@@ -119,29 +115,31 @@ export default function DraftHistoryModal({
     }
 
     return (
-        <dialog className="modal d-block modal-backdrop-dark" open>
-            <div className="modal-dialog modal-lg">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title">{title}</h5>
-                        <CloseButton aria-label="Close" onClick={onClose} />
+        <dialog className={joinClasses(EDITOR_MODAL, 'graph-editor-modal--open')} open>
+            <div className={joinClasses(EDITOR_MODAL_DIALOG, 'graph-editor-modal__dialog--lg')}>
+                <div className={EDITOR_MODAL_CONTENT}>
+                    <div className={EDITOR_MODAL_HEADER}>
+                        <h2 className={EDITOR_MODAL_TITLE}>{title}</h2>
+                        <EditorCloseButton onClick={onClose} />
                     </div>
-                    <div className="modal-body">
-                        <p className="text-muted font-size-13">{subtitle}</p>
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                            <span className="text-muted font-size-13">{listCaption}</span>
-                            <Button
-                                variant="outline-primary"
+                    <div className={EDITOR_MODAL_BODY}>
+                        <p className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>{subtitle}</p>
+                        <div className={joinClasses(EDITOR_FLEX_BETWEEN, 'mb-3')}>
+                            <span className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>{listCaption}</span>
+                            <EditorButton
+                                tone="primary"
                                 onClick={onCreateSnapshot}
                                 disabled={!tree || creatingSnapshot}
                             >
                                 {creatingSnapshot ? creatingSnapshotLabel : createSnapshotLabel}
-                            </Button>
+                            </EditorButton>
                         </div>
                         {snapshotsContent}
                     </div>
-                    <div className="modal-footer">
-                        <Button variant="secondary" onClick={onClose}>{closeLabel}</Button>
+                    <div className={EDITOR_MODAL_FOOTER}>
+                        <EditorButton tone="neutral" onClick={onClose}>
+                            {closeLabel}
+                        </EditorButton>
                     </div>
                 </div>
             </div>

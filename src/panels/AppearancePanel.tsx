@@ -16,6 +16,15 @@ import {
 
 import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets';
 import { PanelNodeLink } from '../lib/panelNodeLink';
+import {
+    EDITOR_CARD,
+    EDITOR_CARD_BODY,
+    EDITOR_CARD_HEADER,
+    EDITOR_FLEX_ROW,
+    EDITOR_HIDDEN,
+    EDITOR_MUTED,
+    joinClasses,
+} from '../ui/editorClasses';
 import ChoiceEdgeAppearanceFields from './ChoiceEdgeAppearanceFields';
 import type { InspectorNodeRenderContext } from './InspectorPanel';
 
@@ -66,7 +75,7 @@ function EdgeContextBreadcrumb({
     onNodeSelect?: (nodeId: string) => void;
 }>): ReactNode {
     return (
-        <div className="text-muted font-size-12 mb-3">
+        <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', 'mb-3')}>
             <PanelNodeLink nodeId={fromNodeId} onNodeSelect={onNodeSelect} />
             {' · '}
             {choiceId}
@@ -87,8 +96,8 @@ function EdgeAppearanceSection({
 }>) {
     return (
         <>
-            <div className="text-muted small mb-2">{EDGE_APPEARANCE_HELPER}</div>
-            <div className="small fw-semibold mb-2">Edge appearance</div>
+            <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', 'mb-2')}>{EDGE_APPEARANCE_HELPER}</div>
+            <div className={joinClasses('graph-editor-text--sm', 'graph-editor-text--semibold', 'mb-2')}>Edge appearance</div>
             <ChoiceEdgeAppearanceFields
                 variant="embedded"
                 choice={choice}
@@ -100,10 +109,7 @@ function EdgeAppearanceSection({
 }
 
 function appearancePanelBodyClassName(hasSelection: boolean, expanded: boolean): string {
-    if (hasSelection && !expanded) {
-        return 'card-body d-none';
-    }
-    return 'card-body';
+    return joinClasses(EDITOR_CARD_BODY, hasSelection && !expanded && EDITOR_HIDDEN);
 }
 
 interface AppearancePanelViewState {
@@ -203,9 +209,9 @@ export default function AppearancePanel({
     });
 
     return (
-        <div className="card mt-3">
-            <div className="card-header bg-body-secondary py-2 px-2 d-flex align-items-center min-w-0">
-                <span className="fw-semibold">{title}</span>
+        <div className={joinClasses(EDITOR_CARD, 'mt-3')}>
+            <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_ROW, 'min-w-0')}>
+                <span className="graph-editor-text--semibold">{title}</span>
                 {hasSelection ? (
                     <PanelHeaderCollapseCarets
                         expanded={expanded}
@@ -221,7 +227,7 @@ export default function AppearancePanel({
                     <>
                         {showNodeAppearance ? (
                             <>
-                                <div className="text-muted small mb-2">{helperText}</div>
+                                <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', 'mb-2')}>{helperText}</div>
                                 {renderAppearanceFields({
                                     tree,
                                     node: contextNode,
@@ -250,7 +256,7 @@ export default function AppearancePanel({
                         ) : null}
                     </>
                 ) : (
-                    <div className="text-muted">
+                    <div className={EDITOR_MUTED}>
                         <em>{emptyStateText}</em>
                     </div>
                 )}
