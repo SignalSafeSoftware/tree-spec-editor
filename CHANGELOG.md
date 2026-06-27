@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **UI-kit agnostic shell:** panels, modals, and toolbar no longer require `react-bootstrap` or Bootstrap CSS. Components emit semantic `graph-editor-*` class hooks; hosts style with Bootstrap, Material UI, or custom CSS.
+- Raise minimum supported Node.js to **>=20.19.0** (`engines.node`); CI matrix tests **20.19**, **22**, and **24** (Node 18 dropped).
 - **`getIssueSeverityBadgeClass`** returns `graph-editor-badge--*` classes instead of Bootstrap `text-bg-*` strings.
 - **`LIST_SELECTION_CLASS`**, **`CANVAS_SELECTION_CLASS`**, and related selection helpers use `graph-editor-*` tokens instead of Bootstrap list/canvas classes.
 - **`ToolbarPanel`** renders plain HTML (`<button>`, `<details>` dropdown) instead of `react-bootstrap` components. Legacy Bootstrap `variant` strings on toolbar items are mapped to tone hooks.

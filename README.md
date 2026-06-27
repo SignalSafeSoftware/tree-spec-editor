@@ -84,7 +84,7 @@ If your host already uses Bootstrap, add **host-owned** CSS that maps hooks to B
 
 ## Development
 
-Requires Node.js **>=18** (`engines.node`). CI runs checks, tests, and smoke across Node **18**, **20**, **22**, and **24**; publish uses Node **24**.
+Requires Node.js **>=20.19.0** (`engines.node`). CI runs checks, tests, and smoke across Node **20.19**, **22**, and **24**; publish uses Node **24**.
 
 `yarn build` uses `tsconfig.build.json` and resolves `@signalsafe/*` from `node_modules`. Ecosystem sibling `paths` in `tsconfig.json` apply to local typecheck/tests only.
 

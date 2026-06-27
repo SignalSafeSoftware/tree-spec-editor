@@ -14,6 +14,10 @@ When shipping the UI-kit agnostic line, publish dependencies **before** this pac
 
 Until `@signalsafe/tree-spec-editor-react@0.2.0` is published, `yarn install` and `yarn smoke:package` in this repo may fail resolving `^0.2.0`. After publishing `-react`, run `yarn install` here to refresh `yarn.lock`, then smoke and publish this package.
 
+## Requirements
+
+- Node.js **>=20.19.0** for local development, CI, and publish smoke (see `package.json` `engines`).
+
 ## CI publish policy
 
 - **Checks and tests** run on every pull request.
