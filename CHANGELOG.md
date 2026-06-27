@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`getIssueSeverityBadgeClass`** returns `graph-editor-badge--*` classes instead of Bootstrap `text-bg-*` strings.
 - **`LIST_SELECTION_CLASS`**, **`CANVAS_SELECTION_CLASS`**, and related selection helpers use `graph-editor-*` tokens instead of Bootstrap list/canvas classes.
 - **`ToolbarPanel`** renders plain HTML (`<button>`, `<details>` dropdown) instead of `react-bootstrap` components. Legacy Bootstrap `variant` strings on toolbar items are mapped to tone hooks.
+- Bump `@signalsafe/tree-spec-editor-react` to `^0.2.0` (UI-kit agnostic canvas; requires host `graph-editor-*` CSS for canvas chrome).
 
 ### Added
 
