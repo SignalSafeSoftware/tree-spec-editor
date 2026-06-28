@@ -131,7 +131,7 @@ function renderItem(item: ToolbarItem): ReactNode {
                         {item.entries.map((entry, idx) => {
                             const entryKey = entry.id ?? `entry-${idx}`;
                             if (entry.divider) {
-                                return <div key={entryKey} className={EDITOR_DROPDOWN_DIVIDER} role="separator" />;
+                                return <hr key={entryKey} className={EDITOR_DROPDOWN_DIVIDER} />;
                             }
                             return (
                                 <button

@@ -143,7 +143,7 @@ export default function NodesPanel({
                     </EditorIconButton>
                 ) : null}
             </div>
-            <div className={!expanded ? EDITOR_HIDDEN : undefined} aria-hidden={!expanded}>
+            <div className={expanded ? undefined : EDITOR_HIDDEN} aria-hidden={expanded ? undefined : true}>
                 <EditorInput
                     className="graph-editor-input--list-search"
                     placeholder={searchPlaceholder}
@@ -222,7 +222,7 @@ export default function NodesPanel({
                                                 >
                                                     {n.prompt || '(empty)'}
                                                 </p>
-                                                <small className={!isSelected ? EDITOR_MUTED : undefined}>
+                                                <small className={isSelected ? undefined : EDITOR_MUTED}>
                                                     {choiceLine(n)}
                                                 </small>
                                             </button>
