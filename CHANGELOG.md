@@ -7,38 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
-
-- Raise minimum supported Node.js to **>=22.12.0** (`engines.node`); CI matrix tests **22** and **24** only (Node 20 dropped due to GitHub Actions Node 20 deprecation).
-
-### Added
-
-- Tests: expanded toolbar/modal/panel render-slot and denylist coverage.
-
-## [0.3.0] - 2026-06-24
+## [0.3.0] - 2026-06-28
 
 ### Changed
 
-- **UI-kit agnostic shell:** panels, modals, and toolbar no longer require `react-bootstrap` or Bootstrap CSS. Components emit semantic `graph-editor-*` class hooks; hosts style with Bootstrap, Material UI, or custom CSS.
-- Raise minimum supported Node.js to **>=20.19.0** (`engines.node`); CI matrix tests **20.19**, **22**, and **24** (Node 18 dropped).
-- **`getIssueSeverityBadgeClass`** returns `graph-editor-badge--*` classes instead of Bootstrap `text-bg-*` strings.
-- **`LIST_SELECTION_CLASS`**, **`CANVAS_SELECTION_CLASS`**, and related selection helpers use `graph-editor-*` tokens instead of Bootstrap list/canvas classes.
-- **`ToolbarPanel`** renders plain HTML (`<button>`, `<details>` dropdown) instead of `react-bootstrap` components. Legacy Bootstrap `variant` strings on toolbar items are mapped to tone hooks.
-- Bump `@signalsafe/tree-spec-editor-react` to `^0.2.0` (UI-kit agnostic canvas; requires host `graph-editor-*` CSS for canvas chrome).
+- Removed Bootstrap-specific runtime styling assumptions from the tree-spec editor shell.
+- Updated the editor shell to use UI-kit-agnostic `graph-editor-*` class hooks.
+- Updated internal SignalSafe dependency ranges for the current package release line:
+  - `@signalsafe/tree-spec@^0.3.3`
+  - `@signalsafe/tree-spec-editor-core@^0.1.4`
+  - `@signalsafe/tree-spec-editor-react@^0.2.0`
+- Raised the supported Node.js baseline to Node 22.12+.
 
-### Added
+### Notes
 
-- **`getIssueSeverityToken`** — semantic severity token for host UI mapping.
-- **`src/ui/`** — internal primitives and `editorClasses` tokens (documented in [docs/UI_KIT_AGNOSTIC_USAGE.md](./docs/UI_KIT_AGNOSTIC_USAGE.md)).
-- **`tests/package-metadata.test.ts`** and **`tests/import-without-react-bootstrap.test.ts`** — verify the package does not require `react-bootstrap`.
-
-### Removed
-
-- **`react-bootstrap`** from `peerDependencies`, `devDependencies`, and package keywords.
-
-### Migration
-
-- Hosts on 0.2.x that relied on implicit Bootstrap styling must add CSS mapping `graph-editor-*` classes or pin 0.2.x until ready. See [docs/UI_KIT_AGNOSTIC_USAGE.md](./docs/UI_KIT_AGNOSTIC_USAGE.md) for DeliveryPlus guidance.
+- This release does not include `react-bootstrap` or `bootstrap`.
+- Host applications are responsible for providing styling for the emitted `graph-editor-*` hooks.
 
 ## [0.2.3] - 2026-06-26
 
