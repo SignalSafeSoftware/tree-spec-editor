@@ -16,7 +16,7 @@ Until `@signalsafe/tree-spec-editor-react@0.2.0` is published, `yarn install` an
 
 ## Requirements
 
-- Node.js **>=20.19.0** for local development, CI, and publish smoke (see `package.json` `engines`).
+- Node.js **>=22.12.0** for local development, CI, and publish smoke (see `package.json` `engines`). Node 20 is no longer supported (GitHub Actions Node 20 deprecation).
 
 ## CI publish policy
 
