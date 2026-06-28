@@ -1,7 +1,22 @@
 import { useState } from 'react';
-import { Button, Card } from 'react-bootstrap';
 
-import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets';
+import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets.js';
+
+import {
+    EDITOR_CARD,
+    EDITOR_CARD_BODY,
+    EDITOR_CARD_HEADER,
+    EDITOR_FLEX_BETWEEN,
+    EDITOR_FLEX_ROW,
+    EDITOR_FLEX_WRAP,
+    EDITOR_HIDDEN,
+    EDITOR_MUTED,
+    EDITOR_SPACING_MB_0,
+    EDITOR_SPACING_MB_3,
+    EDITOR_SPACING_PY_2,
+    joinClasses,
+} from '../ui/editorClasses.js';
+import { EditorButton } from '../ui/primitives.js';
 
 /**
  * Preset choice bundles for quick insertion into a node.
@@ -38,32 +53,35 @@ export default function ChoiceTemplatesPanel({
     const disabled = isPublished || !selectedNodeId;
 
     return (
-        <Card className="mb-3">
-            <Card.Header className="d-flex align-items-center justify-content-between py-2">
-                <span className="fw-semibold">Choice templates</span>
+        <div className={joinClasses(EDITOR_CARD, EDITOR_SPACING_MB_3)}>
+            <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_BETWEEN)}>
+                <span className="graph-editor-text--semibold">Choice templates</span>
                 <PanelHeaderCollapseCarets expanded={expanded} onToggle={() => setExpanded((value) => !value)} />
-            </Card.Header>
-            <div className={`card-body py-2${expanded ? '' : ' d-none'}`} aria-hidden={!expanded}>
+            </div>
+            <div
+                className={joinClasses(EDITOR_CARD_BODY, EDITOR_SPACING_PY_2, !expanded && EDITOR_HIDDEN)}
+                aria-hidden={!expanded}
+            >
                 {selectedNodeId ? (
-                    <div className="d-flex flex-wrap gap-2">
+                    <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_WRAP, 'graph-editor-flex--gap')}>
                         {templates.map((template) => (
-                            <Button
+                            <EditorButton
                                 key={template.id}
-                                type="button"
-                                size="sm"
-                                variant="outline-secondary"
+                                tone="neutral"
                                 disabled={disabled}
                                 title={template.choices.map((choice) => choice.label).join(' · ')}
                                 onClick={() => onApplyTemplate(template)}
                             >
                                 {template.label}
-                            </Button>
+                            </EditorButton>
                         ))}
                     </div>
                 ) : (
-                    <p className="text-muted small mb-0">Select a node to add preset choices.</p>
+                    <p className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_MB_0)}>
+                        Select a node to add preset choices.
+                    </p>
                 )}
             </div>
-        </Card>
+        </div>
     );
 }

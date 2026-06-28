@@ -3,9 +3,27 @@ import { useState } from 'react';
 
 import type { EditorNode, EditorTree } from '@signalsafe/tree-spec-editor-core';
 
-import PanelHeaderCollapseCarets from '../../lib/PanelHeaderCollapseCarets';
-import ChoiceEditorCard from './ChoiceEditorCard';
-import type { ChoiceTypeOption, InspectorChoiceRenderContext } from './types';
+import PanelHeaderCollapseCarets from '../../lib/PanelHeaderCollapseCarets.js';
+import {
+    EDITOR_CARD,
+    EDITOR_CARD_BODY,
+    EDITOR_CARD_HEADER,
+    EDITOR_FLEX_BETWEEN,
+    EDITOR_FLEX_ROW,
+    EDITOR_FLEX_SHRINK_0,
+    EDITOR_HIDDEN,
+    EDITOR_LIST,
+    EDITOR_MIN_W_0,
+    EDITOR_MUTED,
+    EDITOR_SCROLL,
+    EDITOR_SPACING_MT_3,
+    EDITOR_SPACING_PX_3,
+    EDITOR_SPACING_PY_3,
+    joinClasses,
+} from '../../ui/editorClasses.js';
+import { EditorIconButton } from '../../ui/primitives.js';
+import ChoiceEditorCard from './ChoiceEditorCard.js';
+import type { ChoiceTypeOption, InspectorChoiceRenderContext } from './types.js';
 
 export default function ChoiceEditorList({
     tree,
@@ -47,40 +65,40 @@ export default function ChoiceEditorList({
     const usedChoiceTypeIds = new Set(choices.map((choice) => choice.id));
 
     return (
-        <div className="card mt-3">
-            <div className="card-header bg-body-secondary py-2 px-2 d-flex justify-content-between align-items-center gap-2">
-                <div className="d-flex align-items-center min-w-0">
-                    <span className="fw-semibold">Choices</span>
+        <div className={joinClasses(EDITOR_CARD, EDITOR_SPACING_MT_3)}>
+            <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_BETWEEN)}>
+                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_MIN_W_0)}>
+                    <span className="graph-editor-text--semibold">Choices</span>
                     <PanelHeaderCollapseCarets
                         expanded={choicesExpanded}
                         onToggle={() => setChoicesExpanded((v) => !v)}
                     />
                 </div>
-                <div className="d-flex align-items-center gap-1 flex-shrink-0">
-                    <button
-                        type="button"
-                        className="btn p-0 border-0 bg-transparent flex-shrink-0"
+                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_SHRINK_0)}>
+                    <EditorIconButton
+                        className={joinClasses(
+                            EDITOR_FLEX_SHRINK_0,
+                            isPublished ? 'graph-editor-btn--disabled' : 'graph-editor-btn--primary',
+                        )}
                         aria-label="Add choice"
                         title="Add choice"
                         disabled={isPublished}
                         onClick={onAddChoice}
                     >
-                        <i
-                            className={`bi bi-plus-lg action-icon${
-                                isPublished ? ' text-secondary opacity-50' : ' text-primary cursor-pointer'
-                            }`}
-                            aria-hidden
-                        />
-                    </button>
+                        +
+                    </EditorIconButton>
                 </div>
             </div>
-            <div className={`card-body p-0${choicesExpanded ? '' : ' d-none'}`} aria-hidden={!choicesExpanded}>
+            <div
+                className={joinClasses(EDITOR_CARD_BODY, 'graph-editor-card__body--flush', !choicesExpanded && EDITOR_HIDDEN)}
+                aria-hidden={!choicesExpanded}
+            >
                 {choices.length === 0 ? (
-                    <div className="text-muted small py-3 px-3">
+                    <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_PY_3, EDITOR_SPACING_PX_3)}>
                         <em>No choices</em>
                     </div>
                 ) : (
-                    <div className="list-group list-group-flush overflow-auto-max-h-320">
+                    <div className={joinClasses(EDITOR_LIST, EDITOR_SCROLL, 'overflow-auto-max-h-320')}>
                         {choices.map((choice, index) => (
                             <ChoiceEditorCard
                                 key={choice.id}

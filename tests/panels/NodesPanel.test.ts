@@ -56,8 +56,8 @@ function findNodeRows(root: TestRenderer.ReactTestInstance) {
         (node) =>
             node.type === 'div' &&
             typeof node.props.className === 'string' &&
-            node.props.className.includes('list-group-item') &&
-            !node.props.className.includes('list-group-item-action')
+            node.props.className.includes('graph-editor-list__item') &&
+            !node.props.className.includes('graph-editor-list__item-action')
     );
 }
 
@@ -66,7 +66,7 @@ function findNodeSelectButtons(root: TestRenderer.ReactTestInstance) {
         (node) =>
             node.type === 'button' &&
             typeof node.props.className === 'string' &&
-            node.props.className.includes('flex-grow-1')
+            node.props.className.includes('graph-editor-flex-grow-1')
     );
 }
 
@@ -200,7 +200,7 @@ describe('NodesPanel', () => {
         expect(onNodeSelect).toHaveBeenCalledWith('start');
     });
 
-    it('highlights the selected node with list-group-item-primary', async () => {
+    it('highlights the selected node with graph-editor-list__item--selected', async () => {
         await act(async () => {
             renderer = TestRenderer.create(
                 React.createElement(NodesPanel, {
@@ -217,8 +217,8 @@ describe('NodesPanel', () => {
 
         const rows = findNodeRows(renderer!.root);
         const classNames = rows.map((b) => String(b.props.className));
-        expect(classNames.filter((c) => c.includes('list-group-item-primary'))).toHaveLength(1);
-        expect(classNames.filter((c) => !c.includes('list-group-item-primary'))).toHaveLength(2);
+        expect(classNames.filter((c) => c.includes('graph-editor-list__item--selected'))).toHaveLength(1);
+        expect(classNames.filter((c) => !c.includes('graph-editor-list__item--selected'))).toHaveLength(2);
     });
 
     it('highlights focusNodeId when selection is an edge', async () => {
@@ -239,8 +239,8 @@ describe('NodesPanel', () => {
 
         const rows = findNodeRows(renderer!.root);
         const classNames = rows.map((b) => String(b.props.className));
-        expect(classNames.filter((c) => c.includes('list-group-item-primary'))).toHaveLength(1);
-        expect(classNames.some((c) => c.includes('list-group-item-primary'))).toBe(true);
+        expect(classNames.filter((c) => c.includes('graph-editor-list__item--selected'))).toHaveLength(1);
+        expect(classNames.some((c) => c.includes('graph-editor-list__item--selected'))).toBe(true);
     });
 
     it('forwards search input changes to onNodeSearchChange', async () => {

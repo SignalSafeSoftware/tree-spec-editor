@@ -42,7 +42,6 @@ export default defineConfig({
                     "@signalsafe/tree-spec-editor-core",
                     "@signalsafe/tree-spec-editor-react",
                     "@signalsafe/tree-spec",
-                    "react-bootstrap",
                 ],
             },
         },

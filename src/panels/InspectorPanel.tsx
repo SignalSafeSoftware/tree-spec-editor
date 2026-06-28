@@ -13,13 +13,13 @@
  *   - `renderExtraChoiceFields`: render additional UI below each choice card.
  *   - `choiceTypes` / `onSetChoiceType`: host-defined choice type catalog (stable ids).
  */
-import ChoiceEditorList from './inspector/ChoiceEditorList';
-import RequiredNodeCard from './inspector/RequiredNodeCard';
+import ChoiceEditorList from './inspector/ChoiceEditorList.js';
+import RequiredNodeCard from './inspector/RequiredNodeCard.js';
 import {
     DEFAULT_OUTCOME_OPTIONS,
     DEFAULT_TYPE_HELPER_TEXT,
     type InspectorPanelProps,
-} from './inspector/types';
+} from './inspector/types.js';
 
 export {
     DEFAULT_OUTCOME_OPTIONS,
@@ -27,7 +27,7 @@ export {
     type InspectorChoiceRenderContext,
     type InspectorNodeRenderContext,
     type InspectorPanelProps,
-} from './inspector/types';
+} from './inspector/types.js';
 
 export default function InspectorPanel({
     tree,
@@ -86,7 +86,7 @@ export default function InspectorPanel({
                     />
                 </>
             ) : (
-                <div className="text-muted"><em>{emptyStateText}</em></div>
+                <div className="graph-editor-muted"><em>{emptyStateText}</em></div>
             )}
         </div>
     );

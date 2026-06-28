@@ -1,8 +1,24 @@
 import type { ReactNode } from 'react';
 import { useState } from 'react';
-import { Button } from 'react-bootstrap';
 
-import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets';
+import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets.js';
+
+import {
+    EDITOR_CARD,
+    EDITOR_CARD_BODY,
+    EDITOR_CARD_HEADER,
+    EDITOR_FLEX_BETWEEN,
+    EDITOR_FLEX_ROW,
+    EDITOR_FLEX_SHRINK_0,
+    EDITOR_FLEX_WRAP,
+    EDITOR_HIDDEN,
+    EDITOR_MIN_W_0,
+    EDITOR_MUTED,
+    EDITOR_SPACING_MS_AUTO,
+    EDITOR_SPACING_MT_3,
+    joinClasses,
+} from '../ui/editorClasses.js';
+import { EditorButton } from '../ui/primitives.js';
 
 export interface AdvancedJsonPanelProps {
     /** The JSON editor (or any content) rendered inside the panel body. */
@@ -25,7 +41,7 @@ export interface AdvancedJsonPanelProps {
     expandAllLabel?: string;
     /** Optional override for the collapse button label (default "Compress all"). */
     collapseAllLabel?: string;
-    /** Optional extra class names applied to the outer `card` element. */
+    /** Optional extra class names applied to the outer card element. */
     className?: string;
 }
 
@@ -43,37 +59,39 @@ export default function AdvancedJsonPanel({
 }: Readonly<AdvancedJsonPanelProps>) {
     const [expanded, setExpanded] = useState(true);
     const hasButtons = Boolean(onExpandAll) || Boolean(onCollapseAll);
-    const cardClassName = ['card', 'mt-3', className].filter(Boolean).join(' ');
 
     return (
-        <div className={cardClassName}>
-            <div className="card-header d-flex justify-content-between align-items-start gap-2 flex-wrap bg-body-secondary py-2 px-2">
-                <div className="min-w-0">
-                    <div className="d-flex align-items-center flex-wrap gap-1">
-                        <span className="fw-bold">{title}</span>
+        <div className={joinClasses(EDITOR_CARD, EDITOR_SPACING_MT_3, className)}>
+            <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_BETWEEN, EDITOR_FLEX_WRAP)}>
+                <div className={EDITOR_MIN_W_0}>
+                    <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_WRAP)}>
+                        <span className="graph-editor-text--bold">{title}</span>
                         <PanelHeaderCollapseCarets
                             expanded={expanded}
                             onToggle={() => setExpanded((v) => !v)}
                         />
                     </div>
-                    {subtitle ? <div className="text-muted font-size-12">{subtitle}</div> : null}
+                    {subtitle ? <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>{subtitle}</div> : null}
                 </div>
                 {hasButtons ? (
-                    <div className="btn-group btn-group-sm flex-shrink-0 ms-auto">
+                    <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_SHRINK_0, EDITOR_SPACING_MS_AUTO, 'graph-editor-btn-group')}>
                         {onExpandAll ? (
-                            <Button type="button" variant="outline-secondary" onClick={onExpandAll}>
+                            <EditorButton tone="neutral" onClick={onExpandAll}>
                                 {expandAllLabel}
-                            </Button>
+                            </EditorButton>
                         ) : null}
                         {onCollapseAll ? (
-                            <Button type="button" variant="outline-secondary" onClick={onCollapseAll}>
+                            <EditorButton tone="neutral" onClick={onCollapseAll}>
                                 {collapseAllLabel}
-                            </Button>
+                            </EditorButton>
                         ) : null}
                     </div>
                 ) : null}
             </div>
-            <div className={`card-body p-0${expanded ? '' : ' d-none'}`} aria-hidden={!expanded}>
+            <div
+                className={joinClasses(EDITOR_CARD_BODY, 'graph-editor-card__body--flush', !expanded && EDITOR_HIDDEN)}
+                aria-hidden={!expanded}
+            >
                 {children}
             </div>
         </div>

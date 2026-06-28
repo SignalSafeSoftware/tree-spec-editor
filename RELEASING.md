@@ -2,7 +2,21 @@
 
 Standalone repository: [SignalSafeSoftware/tree-spec-editor](https://github.com/SignalSafeSoftware/tree-spec-editor).
 
-**Depends on:** `@signalsafe/tree-spec`, `@signalsafe/tree-spec-editor-core`, `@signalsafe/tree-spec-editor-react`. **Peer deps:** `react`, `react-dom`, `reactflow`, `react-bootstrap`.
+**Depends on:** `@signalsafe/tree-spec`, `@signalsafe/tree-spec-editor-core`, `@signalsafe/tree-spec-editor-react`. **Peer deps:** `react`, `react-dom`, `reactflow`.
+
+## UI-kit release publish order
+
+When shipping the UI-kit agnostic line, publish dependencies **before** this package:
+
+1. `@signalsafe/tree-spec-editor-core@0.1.3` (unchanged unless core changed)
+2. `@signalsafe/tree-spec-editor-react@0.2.0` — canvas `graph-editor-*` hooks
+3. **`@signalsafe/tree-spec-editor@0.3.0`** (this package) — requires `^0.2.0` of `-react` on the registry
+
+Until `@signalsafe/tree-spec-editor-react@0.2.0` is published, `yarn install` and `yarn smoke:package` in this repo may fail resolving `^0.2.0`. After publishing `-react`, run `yarn install` here to refresh `yarn.lock`, then smoke and publish this package.
+
+## Requirements
+
+- Node.js **>=22.12.0** for local development, CI, and publish smoke (see `package.json` `engines`). Node 20 is no longer supported (GitHub Actions Node 20 deprecation).
 
 ## CI publish policy
 

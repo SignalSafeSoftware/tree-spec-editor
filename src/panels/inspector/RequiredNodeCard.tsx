@@ -1,12 +1,24 @@
 import type { ChangeEvent, ReactNode } from 'react';
 import { useState } from 'react';
-import { Form } from 'react-bootstrap';
 
 import type { EditorNode, EditorTree } from '@signalsafe/tree-spec-editor-core';
 
-import PanelHeaderCollapseCarets from '../../lib/PanelHeaderCollapseCarets';
-import NodeTypeField from './NodeTypeField';
-import type { InspectorNodeRenderContext } from './types';
+import PanelHeaderCollapseCarets from '../../lib/PanelHeaderCollapseCarets.js';
+import {
+    EDITOR_CARD,
+    EDITOR_CARD_BODY,
+    EDITOR_CARD_HEADER,
+    EDITOR_FLEX_BETWEEN,
+    EDITOR_FLEX_ROW,
+    EDITOR_FLEX_SHRINK_0,
+    EDITOR_HIDDEN,
+    EDITOR_MIN_W_0,
+    EDITOR_SPACING_MB_2,
+    joinClasses,
+} from '../../ui/editorClasses.js';
+import { EditorField, EditorIconButton, EditorLabel, EditorTextarea } from '../../ui/primitives.js';
+import NodeTypeField from './NodeTypeField.js';
+import type { InspectorNodeRenderContext } from './types.js';
 
 export default function RequiredNodeCard({
     tree,
@@ -30,51 +42,50 @@ export default function RequiredNodeCard({
     const [requiredExpanded, setRequiredExpanded] = useState(true);
 
     return (
-        <div className="card">
-            <div className="card-header bg-body-secondary py-2 px-2 d-flex justify-content-between align-items-center gap-2">
-                <div className="d-flex align-items-center min-w-0">
-                    <span className="fw-semibold">{title}</span>
+        <div className={EDITOR_CARD}>
+            <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_BETWEEN)}>
+                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_MIN_W_0)}>
+                    <span className="graph-editor-text--semibold">{title}</span>
                     <PanelHeaderCollapseCarets
                         expanded={requiredExpanded}
                         onToggle={() => setRequiredExpanded((v) => !v)}
                     />
                 </div>
                 {onDeleteSelectedNode ? (
-                    <button
-                        type="button"
-                        className="btn p-0 border-0 bg-transparent flex-shrink-0"
+                    <EditorIconButton
+                        className={joinClasses(
+                            EDITOR_FLEX_SHRINK_0,
+                            isPublished ? 'graph-editor-btn--disabled' : 'graph-editor-btn--danger',
+                        )}
                         aria-label="Delete node"
                         title="Delete node"
                         disabled={isPublished}
                         onClick={onDeleteSelectedNode}
                     >
-                        <i
-                            className={`bi bi-trash action-icon cursor-pointer${
-                                isPublished ? ' text-secondary opacity-50' : ' text-danger'
-                            }`}
-                            aria-hidden
-                        />
-                    </button>
+                        🗑
+                    </EditorIconButton>
                 ) : null}
             </div>
-            <div className={`card-body${requiredExpanded ? '' : ' d-none'}`} aria-hidden={!requiredExpanded}>
+            <div
+                className={joinClasses(EDITOR_CARD_BODY, !requiredExpanded && EDITOR_HIDDEN)}
+                aria-hidden={!requiredExpanded}
+            >
                 <NodeTypeField
                     selectedNode={selectedNode}
                     isPublished={isPublished}
                     onUpdateSelectedNode={onUpdateSelectedNode}
                     typeHelperText={typeHelperText}
                 />
-                <Form.Group className="mb-2">
-                    <Form.Label>Prompt</Form.Label>
-                    <Form.Control
-                        as="textarea"
+                <EditorField className={EDITOR_SPACING_MB_2}>
+                    <EditorLabel>Prompt</EditorLabel>
+                    <EditorTextarea
                         rows={4}
                         value={selectedNode.prompt}
                         onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                             onUpdateSelectedNode({ prompt: e.target.value })
                         }
                     />
-                </Form.Group>
+                </EditorField>
                 {renderExtraNodeFields
                     ? renderExtraNodeFields({
                           tree,

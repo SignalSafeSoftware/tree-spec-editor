@@ -1,17 +1,17 @@
 # `@signalsafe/tree-spec-editor`
 
-React **Bootstrap UI shell** for authoring TreeSpec graphs: canvas (from `@signalsafe/tree-spec-editor-react`), sidebar panels, modals, and toolbar helpers.
+React **UI-kit agnostic shell** for authoring TreeSpec graphs: canvas (from `@signalsafe/tree-spec-editor-react`), sidebar panels, modals, and toolbar helpers. Hosts style panels with Bootstrap, Material UI, or custom CSS via `graph-editor-*` class hooks.
 
 | | |
 |---|---|
 | **npm** | `@signalsafe/tree-spec-editor` |
 | **GitHub** | [SignalSafeSoftware/tree-spec-editor](https://github.com/SignalSafeSoftware/tree-spec-editor) |
-| **Peer deps** | `react`, `react-dom`, `reactflow`, `react-bootstrap` |
+| **Peer deps** | `react`, `react-dom`, `reactflow` |
 
 ## What this package does
 
 - Ships a ready-to-embed **graph editor UI** (`TreeSpecGraphEditor` re-export, panels, modals, toolbar).
-- Re-exports selected **editor-core helpers** and types for one-stop imports in Bootstrap hosts.
+- Re-exports selected **editor-core helpers** and types for one-stop imports in React hosts.
 
 ## What this package does not do
 
@@ -26,17 +26,65 @@ React **Bootstrap UI shell** for authoring TreeSpec graphs: canvas (from `@signa
 | Wire | `@signalsafe/tree-spec` |
 | Editor model | `@signalsafe/tree-spec-editor-core` |
 | React Flow canvas | `@signalsafe/tree-spec-editor-react` |
-| **Bootstrap shell (this package)** | `@signalsafe/tree-spec-editor` |
+| **UI shell (this package)** | `@signalsafe/tree-spec-editor` |
 
 ## Install
 
 ```bash
-npm install @signalsafe/tree-spec-editor @signalsafe/tree-spec-editor-react @signalsafe/tree-spec-editor-core @signalsafe/tree-spec react react-dom reactflow react-bootstrap bootstrap
+npm install @signalsafe/tree-spec-editor @signalsafe/tree-spec-editor-react @signalsafe/tree-spec-editor-core @signalsafe/tree-spec react react-dom reactflow
 ```
 
-Load Bootstrap CSS in your app. Import React Flow CSS as documented in `@signalsafe/tree-spec-editor-react`.
+Import React Flow CSS as documented in `@signalsafe/tree-spec-editor-react`. **Bootstrap is not required** — the host styles panels via `graph-editor-*` class hooks (see below).
+
+## UI-kit agnostic styling
+
+This package renders **semantic HTML** with stable **`graph-editor-*` classes**. Your app owns Bootstrap, Material UI, Tailwind, or plain CSS.
+
+**Docs:** [docs/UI_KIT_AGNOSTIC_USAGE.md](./docs/UI_KIT_AGNOSTIC_USAGE.md) (class hooks, render props, DeliveryPlus migration).
+
+### Minimal plain HTML example
+
+Panels work without any UI library once you map the hooks:
+
+```tsx
+import { ToolbarPanel, IssuesPanel } from '@signalsafe/tree-spec-editor';
+
+// Host CSS (global stylesheet or CSS module)
+const editorStyles = `
+  .graph-editor-card { border: 1px solid #ccc; border-radius: 6px; margin-bottom: 1rem; }
+  .graph-editor-card__header { padding: 0.5rem 0.75rem; background: #f5f5f5; font-weight: 600; }
+  .graph-editor-list__item { padding: 0.5rem 0.75rem; border-top: 1px solid #eee; }
+  .graph-editor-list__item--selected { background: #e7f1ff; }
+  .graph-editor-btn { padding: 0.25rem 0.75rem; border: 1px solid #999; border-radius: 4px; background: #fff; }
+  .graph-editor-badge--error { background: #dc3545; color: #fff; padding: 0.1rem 0.4rem; border-radius: 4px; }
+`;
+
+export function EditorChrome() {
+  return (
+    <>
+      <style>{editorStyles}</style>
+      <ToolbarPanel items={[{ kind: 'button', id: 'save', label: 'Save', onClick: () => {} }]} />
+      <IssuesPanel issues={[]} lastValidatedAt={null} onSelectIssue={() => {}} />
+    </>
+  );
+}
+```
+
+### Optional: Bootstrap styling in the host app (not a package requirement)
+
+If your host already uses Bootstrap, add **host-owned** CSS that maps hooks to Bootstrap utilities — the package does not import Bootstrap:
+
+```css
+/* Host app: graph-editor-bootstrap-bridge.css (example) */
+.graph-editor-card { /* mirror .card rules or @import bootstrap */ }
+.graph-editor-btn--neutral { /* mirror .btn.btn-outline-secondary */ }
+.graph-editor-list__item--selected { /* mirror .list-group-item-primary */ }
+.graph-editor-badge--error { /* mirror .badge.text-bg-danger */ }
+```
 
 ## Development
+
+Requires Node.js **>=22.12.0** (`engines.node`). CI runs checks, tests, and smoke on Node **22** and **24**; publish uses Node **24**. Node 20 is no longer supported (GitHub Actions Node 20 deprecation).
 
 `yarn build` uses `tsconfig.build.json` and resolves `@signalsafe/*` from `node_modules`. Ecosystem sibling `paths` in `tsconfig.json` apply to local typecheck/tests only.
 
@@ -71,13 +119,14 @@ Published consumers import only the package root. Layer stack:
 | Wire | [`@signalsafe/tree-spec`](../tree-spec/README.md) | TreeSpec wire types, constants, compile/lint. Pure TS. |
 | Core | [`@signalsafe/tree-spec-editor-core`](../tree-spec-editor-core/README.md) | Editor model, tree operations, layout/autosave/keyboard helpers, constants. Pure TS. |
 | React | [`@signalsafe/tree-spec-editor-react`](../tree-spec-editor-react/README.md) | React Flow canvas (`TreeSpecGraphEditor`). React-specific, UI-library-agnostic. |
-| Shell | **`@signalsafe/tree-spec-editor`** (this package) | React + Bootstrap panels, modals, toolbar, Bootstrap badge helper. Re-exports the canvas from `-react` and the framework-agnostic surface from `-core` for one-stop import. |
+| Shell | **`@signalsafe/tree-spec-editor`** (this package) | UI-kit agnostic panels, modals, toolbar (`graph-editor-*` hooks). Re-exports canvas from `-react` and helpers from `-core`. |
 
 | Directory | Contents |
 |-----------|----------|
-| `src/panels/` | Sidebar, toolbar, inspector, and JSON chrome components (React + `react-bootstrap`) |
-| `src/modals/` | Publish review, draft history, and audit log dialogs (React + `react-bootstrap`) |
-| `src/lib/panelHelpers.ts` | `getIssueSeverityBadgeClass` (Bootstrap-flavored — Material / Angular shells ship their own equivalent) |
+| `src/panels/` | Sidebar, toolbar, inspector, and JSON chrome components (UI-kit agnostic React) |
+| `src/modals/` | Publish review, draft history, and audit log dialogs (UI-kit agnostic React) |
+| `src/ui/` | UI-kit agnostic primitives and `graph-editor-*` class tokens |
+| `src/lib/panelHelpers.ts` | `getIssueSeverityToken`, `getIssueSeverityBadgeClass` (semantic badge hooks) |
 | `src/index.ts` | Public barrel — **do not** import from subpaths in apps. Re-exports the canvas from `@signalsafe/tree-spec-editor-react` and the framework-agnostic surface from `@signalsafe/tree-spec-editor-core` |
 
 Tests live under `tests/panels/`, `tests/modals/`, and `tests/index.test.ts` in this repo. Canvas tests live in **`tree-spec-editor-react`**; core helper tests live in **`tree-spec-editor-core`**.
@@ -86,7 +135,7 @@ Tests live under `tests/panels/`, `tests/modals/`, and `tests/index.test.ts` in 
 
 | You want… | Import from |
 |----------|-------------|
-| The full React + Bootstrap editor (canvas + panels + modals + toolbar) | `@signalsafe/tree-spec-editor` (this package) |
+| The full React editor shell (canvas + panels + modals + toolbar) | `@signalsafe/tree-spec-editor` (this package) |
 | Just the canvas, with your own UI library (Material / Tailwind / custom) | `@signalsafe/tree-spec-editor-react` |
 | Just the framework-agnostic helpers (CLI, server-side preview, Angular shell) | `@signalsafe/tree-spec-editor-core` |
 | Just the wire contract (validation, compile, lint) | `@signalsafe/tree-spec` |
@@ -99,7 +148,7 @@ Tests live under `tests/panels/`, `tests/modals/`, and `tests/index.test.ts` in 
 | Angular editor | `@signalsafe/tree-spec-editor-angular` (planned) + `-core` |
 | Vue editor | `@signalsafe/tree-spec-editor-vue` (planned) + `-core` |
 
-This package (`@signalsafe/tree-spec-editor`) **remains the Bootstrap reference shell** — it does not become Material, Angular, or Vue.
+This package is **UI-kit agnostic** — it does not ship Material, Angular, or Vue implementations. Hosts style with their own UI library or CSS. A future `@signalsafe/tree-spec-editor-bootstrap` may offer a reference Bootstrap skin.
 
 See package READMEs in the [`tree-spec-editor-core`](https://github.com/SignalSafeSoftware/tree-spec-editor-core) and [`tree-spec-editor-react`](https://github.com/SignalSafeSoftware/tree-spec-editor-react) repos for layer rules.
 
@@ -108,7 +157,7 @@ See package READMEs in the [`tree-spec-editor-core`](https://github.com/SignalSa
 Typical host apps import from **three** packages:
 
 ```tsx
-// Bootstrap UI shell — panels, modals, toolbar, canvas default export
+// UI shell — panels, modals, toolbar, canvas default export
 import TreeSpecGraphEditor, { AppearancePanel, buildDefaultToolbarSpec, … } from '@signalsafe/tree-spec-editor';
 
 // Stateful orchestration hook (not re-exported from the shell barrel)
@@ -211,7 +260,7 @@ export function ExampleTreeSpecEditor(): JSX.Element {
 - `LIST_SELECTION_CLASS`, `CANVAS_SELECTION_CLASS`, …: shared CSS class helpers for list/canvas selection highlighting.
 - `buildDefaultToolbarSpec`: builds the default action toolbar (`+ Add`, Templates, layout, Undo/Redo, validate/history/audit/snapshot/clone, save/publish/preview) without status chrome — draft/autosave live in `GraphEditorInfoPanel`.
 - `PublishReviewModal`, `DraftHistoryModal`, `AuditLogModal`: presentational modals for the publish-review / draft-snapshot / audit-log authoring flows; all strings are overridable.
-- `ToolbarPanel`: data-driven toolbar that takes an `items: ToolbarItem[]` array (`button` / `dropdown` / `badge` / `text` / `custom` kinds) and renders Bootstrap chrome in a single flex wrapper.
+- `ToolbarPanel`: data-driven toolbar that takes an `items: ToolbarItem[]` array (`button` / `dropdown` / `badge` / `text` / `custom` kinds) and renders semantic HTML with `graph-editor-*` classes in a single flex wrapper.
 - `duplicateNode`, `deleteNode`, `computeTreeDiffSummary`, `applyTreeTemplate`: project-agnostic tree-operation helpers (clone a node, delete a node with cascade, summarize a structural diff, insert a reusable subgraph template).
 - `getAutosaveStatusLabel`, `getKeyboardShortcutAction`, `shouldQueueInitialValidation`: editor-lifecycle helpers (default autosave label, default keyboard-shortcut mapper, "should we validate on load?" tri-state policy).
 - `AUTOSAVE_STATUS`, `KEYBOARD_SHORTCUT_ACTION`, `GRAPH_SELECTION_KIND`, `TOOLBAR_ITEM_KIND`: runtime constant objects for the matching string-union types. Use these instead of bare string literals (`AUTOSAVE_STATUS.SAVING`, `KEYBOARD_SHORTCUT_ACTION.SAVE`, `GRAPH_SELECTION_KIND.NODE`, `TOOLBAR_ITEM_KIND.BUTTON`). The types (`AutosaveStatus`, `KeyboardShortcutAction`, `GraphSelectionKind`, `ToolbarItemKind`) are derived from these constants.
@@ -221,7 +270,7 @@ export function ExampleTreeSpecEditor(): JSX.Element {
 - `GraphSelection` and `GraphEditorIssue`: optional selection and issue-display types.
 - `autoLayoutTree` and `getNextSpawnPosition`: layout helpers for placing nodes.
 - `lintEditorTree`, `getTransition`, `upsertTransition`, `deleteTransitionsForChoice`: editor helpers for validation and transition updates.
-- `buildStableEntries`, `getIssueSeverityBadgeClass`: small helpers reused by the sidebar panels and available for hosts that compose their own UI.
+- `buildStableEntries`, `getIssueSeverityBadgeClass`, `getIssueSeverityToken`: small helpers reused by the sidebar panels and available for hosts that compose their own UI.
 
 ## Feature Examples
 
@@ -391,7 +440,7 @@ The package also ships two presentational components for the editor's left rail.
 
 ### `IssuesPanel`
 
-Renders a Bootstrap **card** matching **`NodesPanel`** chrome (`card-header` + `bg-body-secondary`): the body is **`card-body p-0`** with **`list-group list-group-flush`**. Each issue row mirrors the **Nodes** header rhythm: **truncated `node id, type`** on the left (type resolved from the optional **`tree`** prop), **severity** as a **`badge`** on the right, then the **message** (monospace) and optional **choice id** line. The empty state is a single flush list item. Clicking a row invokes `onSelectIssue`.
+Renders a **card** (`graph-editor-card`) matching **`NodesPanel`** chrome: header plus flush list body. Each issue row mirrors the **Nodes** header rhythm: **truncated `node id, type`** on the left (type resolved from the optional **`tree`** prop), **severity** as a **`graph-editor-badge`** on the right, then the **message** (monospace) and optional **choice id** line. The empty state is a single list item. Clicking a row invokes `onSelectIssue`.
 
 ```tsx
 import { useMemo, useState, type JSX } from 'react';
@@ -530,7 +579,7 @@ export function CompiledTreeSpecPanel({ tree }: Props): JSX.Element {
 
 ### `InspectorPanel`
 
-The right-rail node inspector. When a node is in context (selected directly, or as the source of a selected edge), it renders two Bootstrap cards: **Required** (Type, Prompt, and `renderExtraNodeFields`) and **Choices** (list-group rows). The universal fields the package owns:
+The right-rail node inspector. When a node is in context (selected directly, or as the source of a selected edge), it renders two cards: **Required** (Type, Prompt, and `renderExtraNodeFields`) and **Choices** (list rows). The universal fields the package owns:
 
 - **Type** `<select>` (with the package's `TREE_SPEC_NODE_TYPE_PRESETS` + custom-value input, or a host-supplied **choice type** catalog via `choiceTypes` / `onSetChoiceType`).
 - **Prompt** `<textarea>`.
@@ -696,7 +745,7 @@ Optional compact read-only card that surfaces the currently selected transition.
 
 ## Modals
 
-Three presentational modals cover the standard TreeSpec authoring flows. Each renders Bootstrap-styled chrome via a native `<dialog>` element, owns its list/empty/loading rendering, and exposes overridable `title` / `subtitle` / `emptyStateText` / button-label props so the package stays free of project-specific wording. Hosts wire the data, fetch on `show`, and provide callbacks.
+Three presentational modals cover the standard TreeSpec authoring flows. Each uses a native `<dialog>` with `graph-editor-modal-*` classes, owns its list/empty/loading rendering, and exposes overridable `title` / `subtitle` / `emptyStateText` / button-label props so the package stays free of project-specific wording. Hosts wire the data, fetch on `show`, and provide callbacks.
 
 ### `PublishReviewModal`
 
@@ -809,7 +858,7 @@ function DraftHistoryModalContainer({
 
 ### `AuditLogModal`
 
-A modal that lists authoring audit events for the current tree_spec version. Each row shows the `action` as a Bootstrap badge, the formatted `created_at` timestamp, the optional `actor` (numeric id or string), and the optional `detail` JSON. The host owns the `auditEvents: TreeSpecAuditEventItem[]` array and the `loadingAudit` flag.
+A modal that lists authoring audit events for the current tree_spec version. Each row shows the `action` as a badge, the formatted `created_at` timestamp, the optional `actor` (numeric id or string), and the optional `detail` JSON. The host owns the `auditEvents: TreeSpecAuditEventItem[]` array and the `loadingAudit` flag.
 
 ```tsx
 import { AuditLogModal, type TreeSpecAuditEventItem } from '@signalsafe/tree-spec-editor';
@@ -878,7 +927,7 @@ const items = buildDefaultToolbarSpec({
 ### `ToolbarPanel`
 
 A data-driven toolbar for editor pages. Hosts pass an `items: ToolbarItem[]`
-array; the package renders Bootstrap chrome (`Button`, `Dropdown`, badge,
+array; the package renders semantic toolbar markup (`<button>`, `<details>` menu, badges,
 muted text) inside a single flex wrapper. Project-specific concerns —
 adapter capability gates, dropdown vocabularies, button labels, and disabled
 rules — stay in the host as closures inside each item. Prefer
@@ -911,10 +960,10 @@ const items: ToolbarItem[] = [
 
 **Item kinds.** Each `ToolbarItem` is one of:
 
-- `kind: 'button'`: `label`, `onClick`, optional `variant` (Bootstrap variant string, default `outline-secondary`), `disabled`, `title`, `className`.
-- `kind: 'dropdown'`: `label`, `entries` (array of `{ id?, label, onClick?, disabled?, divider? }`), optional `variant` (toggle variant, default `outline-secondary`), `disabled`, `className`. Entries with `divider: true` render a `<Dropdown.Divider />`.
-- `kind: 'badge'`: `label`, optional `variant` (Bootstrap badge variant, default `secondary`) or full `className` override.
-- `kind: 'text'`: `content`, optional `className` (default `"ms-2 text-muted font-size-12"`).
+- `kind: 'button'`: `label`, `onClick`, optional `variant` (tone hook or legacy Bootstrap variant string — mapped to `graph-editor-btn--*`), `disabled`, `title`, `className`.
+- `kind: 'dropdown'`: `label`, `entries` (array of `{ id?, label, onClick?, disabled?, divider? }`), optional `variant` (toggle tone), `disabled`, `className`. Entries with `divider: true` render a menu divider.
+- `kind: 'badge'`: `label`, optional `variant` (tone hook) or full `className` override.
+- `kind: 'text'`: `content`, optional `className` (default muted toolbar text classes).
 - `kind: 'custom'`: `render: () => ReactNode` for one-offs the package shouldn't know about (e.g. `<Link>` from `react-router-dom`).
 
 Every item supports an optional `id` used as the React key. `ToolbarPanel` also accepts an optional `className` to override the outer wrapper styling.
@@ -1195,7 +1244,7 @@ function addPromptNode(tree: EditorTree): EditorTree {
 ## Notes
 
 - Import from the package root only.
-- Install `react`, `react-dom`, `reactflow`, and `react-bootstrap` in the consuming app, and load Bootstrap CSS as usual.
+- Install `react`, `react-dom`, and `reactflow` in the consuming app. Style panels with your UI library or CSS targeting `graph-editor-*` classes.
 - If you need wire-format compile/decompile helpers, use `@signalsafe/tree-spec`.
 
 ## Repository

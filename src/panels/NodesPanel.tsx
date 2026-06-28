@@ -1,6 +1,5 @@
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
-import { Form } from 'react-bootstrap';
 
 import {
     GRAPH_SELECTION_KIND,
@@ -10,8 +9,30 @@ import {
     type GraphSelection,
 } from '@signalsafe/tree-spec-editor-core';
 
-import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets';
-import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../lib/selectionStyles';
+import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets.js';
+import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../lib/selectionStyles.js';
+import {
+    EDITOR_CARD,
+    EDITOR_CARD_FOOTER,
+    EDITOR_CARD_HEADER,
+    EDITOR_FLEX_BETWEEN,
+    EDITOR_FLEX_GROW_1,
+    EDITOR_FLEX_ROW,
+    EDITOR_FLEX_SHRINK_0,
+    EDITOR_HIDDEN,
+    EDITOR_LIST,
+    EDITOR_LIST_ITEM,
+    EDITOR_MIN_W_0,
+    EDITOR_MUTED,
+    EDITOR_SCROLL,
+    EDITOR_SPACING_MB_1,
+    EDITOR_SPACING_ME_2,
+    EDITOR_SPACING_MT_3,
+    EDITOR_TEXT_BREAK,
+    EDITOR_TEXT_START,
+    joinClasses,
+} from '../ui/editorClasses.js';
+import { EditorIconButton, EditorInput, EditorSwitch } from '../ui/primitives.js';
 
 export interface NodesPanelProps {
     tree: EditorTree;
@@ -105,128 +126,145 @@ export default function NodesPanel({
         .sort(compareNodesByTypeThenId);
 
     return (
-        <div className="card mt-3">
-            <div className="card-header bg-body-secondary py-2 px-2 d-flex justify-content-between align-items-center gap-2">
-                <div className="d-flex align-items-center min-w-0">
-                    <span className="fw-semibold">Nodes</span>
+        <div className={joinClasses(EDITOR_CARD, EDITOR_SPACING_MT_3)}>
+            <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_BETWEEN)}>
+                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_MIN_W_0)}>
+                    <span className="graph-editor-text--semibold">Nodes</span>
                     <PanelHeaderCollapseCarets expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
                 </div>
                 {onAddNode ? (
-                    <button
-                        type="button"
-                        className="btn p-0 border-0 bg-transparent flex-shrink-0"
+                    <EditorIconButton
+                        className={joinClasses(EDITOR_FLEX_SHRINK_0, 'graph-editor-btn--primary')}
                         aria-label="Add node"
                         title="Add node"
                         onClick={onAddNode}
                     >
-                        <i className="bi bi-plus-lg text-primary action-icon cursor-pointer" aria-hidden />
-                    </button>
+                        +
+                    </EditorIconButton>
                 ) : null}
             </div>
-            <div className={expanded ? undefined : 'd-none'} aria-hidden={!expanded}>
-                    <Form.Control
-                        className="rounded-0 border-0 border-bottom shadow-none"
-                        placeholder={searchPlaceholder}
-                        value={nodeSearch}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => onNodeSearchChange(e.target.value)}
-                    />
-                    <div className="overflow-auto-max-h-320">
-                {filteredNodes.length === 0 ? (
-                    <div className="list-group list-group-flush">
-                        <div className="list-group-item text-muted small py-2 px-3">No matching nodes.</div>
-                    </div>
-                ) : (
-                    <div className="list-group list-group-flush">
-                        {filteredNodes.map((n) => {
-                            const isSelected = isNodeRowSelected(n.id, selection, focusNodeId);
-                            const typeLabel = n.type || 'unknown';
-                            return (
-                                <div
-                                    key={n.id}
-                                    className={`list-group-item px-3 py-2${
-                                        isSelected
-                                            ? ` ${LIST_SELECTION_CLASS} ${LIST_SELECTION_TEXT_CLASS}`
-                                            : ''
-                                    }`}
-                                    aria-current={isSelected ? 'true' : undefined}
-                                >
-                                    <div className="d-flex w-100 justify-content-between align-items-start gap-2 min-w-0">
-                                        <button
-                                            type="button"
-                                            className="btn p-0 border-0 bg-transparent flex-grow-1 text-start min-w-0"
-                                            onClick={() => onNodeSelect(n.id)}
-                                        >
-                                            <div className="d-flex w-100 justify-content-between align-items-center gap-2 mb-1 min-w-0">
-                                                <div
-                                                    className="min-w-0 flex-grow-1 text-break text-start"
-                                                    title={`${n.id}, ${typeLabel}`}
-                                                >
-                                                    <span
-                                                        className={`fs-6 fw-semibold text-uppercase${
-                                                            isSelected ? '' : ' text-body-secondary'
-                                                        }`}
-                                                    >
-                                                        {n.id}
-                                                    </span>
-                                                    <span
-                                                        className={`fs-6 text-uppercase${
-                                                            isSelected ? '' : ' text-body-secondary'
-                                                        }`}
-                                                    >
-                                                        {`, ${typeLabel}`}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <p
-                                                className={`mb-1 small text-break${
-                                                    isSelected ? '' : ' text-body-secondary'
-                                                }`}
-                                            >
-                                                {n.prompt || '(empty)'}
-                                            </p>
-                                            <small className={isSelected ? '' : ' text-body-secondary'}>
-                                                {choiceLine(n)}
-                                            </small>
-                                        </button>
-                                        {onDeleteNode ? (
+            <div className={!expanded ? EDITOR_HIDDEN : undefined} aria-hidden={!expanded}>
+                <EditorInput
+                    className="graph-editor-input--list-search"
+                    placeholder={searchPlaceholder}
+                    value={nodeSearch}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => onNodeSearchChange(e.target.value)}
+                />
+                <div className={joinClasses(EDITOR_SCROLL, 'overflow-auto-max-h-320')}>
+                    {filteredNodes.length === 0 ? (
+                        <div className={EDITOR_LIST}>
+                            <div className={joinClasses(EDITOR_LIST_ITEM, EDITOR_MUTED, 'graph-editor-text--sm')}>
+                                No matching nodes.
+                            </div>
+                        </div>
+                    ) : (
+                        <div className={EDITOR_LIST}>
+                            {filteredNodes.map((n) => {
+                                const isSelected = isNodeRowSelected(n.id, selection, focusNodeId);
+                                const typeLabel = n.type || 'unknown';
+                                return (
+                                    <div
+                                        key={n.id}
+                                        className={joinClasses(
+                                            EDITOR_LIST_ITEM,
+                                            isSelected && LIST_SELECTION_CLASS,
+                                            isSelected && LIST_SELECTION_TEXT_CLASS,
+                                        )}
+                                        aria-current={isSelected ? 'true' : undefined}
+                                    >
+                                        <div className={joinClasses(EDITOR_FLEX_BETWEEN, EDITOR_MIN_W_0)}>
                                             <button
                                                 type="button"
-                                                className="btn p-0 border-0 bg-transparent flex-shrink-0"
-                                                aria-label={`Delete node ${n.id}`}
-                                                title="Delete node"
-                                                disabled={isPublished}
-                                                onClick={() => onDeleteNode(n.id)}
+                                                className={joinClasses(
+                                                    'graph-editor-list__item-action',
+                                                    EDITOR_FLEX_GROW_1,
+                                                    EDITOR_TEXT_START,
+                                                    EDITOR_MIN_W_0,
+                                                )}
+                                                onClick={() => onNodeSelect(n.id)}
                                             >
-                                                <i
-                                                    className={`bi bi-trash action-icon cursor-pointer${
-                                                        isPublished ? ' text-secondary opacity-50' : ' text-danger'
-                                                    }`}
-                                                    aria-hidden
-                                                />
+                                                <div className={joinClasses(EDITOR_FLEX_BETWEEN, EDITOR_SPACING_MB_1, EDITOR_MIN_W_0)}>
+                                                    <div
+                                                        className={joinClasses(
+                                                            EDITOR_MIN_W_0,
+                                                            EDITOR_FLEX_GROW_1,
+                                                            EDITOR_TEXT_BREAK,
+                                                            EDITOR_TEXT_START,
+                                                        )}
+                                                        title={`${n.id}, ${typeLabel}`}
+                                                    >
+                                                        <span
+                                                            className={joinClasses(
+                                                                'graph-editor-text--uppercase',
+                                                                'graph-editor-text--semibold',
+                                                                !isSelected && EDITOR_MUTED,
+                                                            )}
+                                                        >
+                                                            {n.id}
+                                                        </span>
+                                                        <span
+                                                            className={joinClasses(
+                                                                'graph-editor-text--uppercase',
+                                                                !isSelected && EDITOR_MUTED,
+                                                            )}
+                                                        >
+                                                            {`, ${typeLabel}`}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <p
+                                                    className={joinClasses(
+                                                        'graph-editor-text--sm',
+                                                        EDITOR_TEXT_BREAK,
+                                                        EDITOR_SPACING_MB_1,
+                                                        !isSelected && EDITOR_MUTED,
+                                                    )}
+                                                >
+                                                    {n.prompt || '(empty)'}
+                                                </p>
+                                                <small className={!isSelected ? EDITOR_MUTED : undefined}>
+                                                    {choiceLine(n)}
+                                                </small>
                                             </button>
-                                        ) : null}
+                                            {onDeleteNode ? (
+                                                <EditorIconButton
+                                                    className={joinClasses(
+                                                        EDITOR_FLEX_SHRINK_0,
+                                                        isPublished
+                                                            ? 'graph-editor-btn--disabled'
+                                                            : 'graph-editor-btn--danger',
+                                                    )}
+                                                    aria-label={`Delete node ${n.id}`}
+                                                    title="Delete node"
+                                                    disabled={isPublished}
+                                                    onClick={() => onDeleteNode(n.id)}
+                                                >
+                                                    🗑
+                                                </EditorIconButton>
+                                            ) : null}
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                )}
-                    </div>
-                    <div className="card-footer p-2 border-top">
-                        <div className="d-flex justify-content-between align-items-center">
-                            <div className="text-muted font-size-12 text-break min-w-0 flex-grow-1 me-2">{tipText}</div>
-                            <Form.Check
-                                type="switch"
-                                id="showMiniMapToggle"
-                                label="Mini-map"
-                                checked={showMiniMap}
-                                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                                    onShowMiniMapChange(e.target.checked)
-                                }
-                                className="font-size-12"
-                            />
+                                );
+                            })}
                         </div>
+                    )}
+                </div>
+                <div className={joinClasses(EDITOR_CARD_FOOTER, 'graph-editor-card__footer--border-top')}>
+                    <div className={EDITOR_FLEX_BETWEEN}>
+                        <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_TEXT_BREAK, EDITOR_MIN_W_0, EDITOR_FLEX_GROW_1, EDITOR_SPACING_ME_2)}>
+                            {tipText}
+                        </div>
+                        <EditorSwitch
+                            id="showMiniMapToggle"
+                            label="Mini-map"
+                            checked={showMiniMap}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                onShowMiniMapChange(e.target.checked)
+                            }
+                            className="graph-editor-text--sm"
+                        />
                     </div>
+                </div>
             </div>
         </div>
     );

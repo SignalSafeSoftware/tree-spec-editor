@@ -1,5 +1,4 @@
 import { type ChangeEvent, useMemo, useState } from 'react';
-import { Form } from 'react-bootstrap';
 import type { TreeSpecIssue } from '@signalsafe/tree-spec';
 
 import {
@@ -9,9 +8,31 @@ import {
     type GraphSelection,
 } from '@signalsafe/tree-spec-editor-core';
 
-import { getIssueSeverityBadgeClass } from '../lib/panelHelpers';
-import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets';
-import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../lib/selectionStyles';
+import { getIssueSeverityBadgeClass } from '../lib/panelHelpers.js';
+import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets.js';
+import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../lib/selectionStyles.js';
+import {
+    EDITOR_CARD,
+    EDITOR_CARD_BODY,
+    EDITOR_CARD_HEADER,
+    EDITOR_FLEX_BETWEEN,
+    EDITOR_FLEX_GROW_1,
+    EDITOR_FLEX_ROW,
+    EDITOR_FLEX_SHRINK_0,
+    EDITOR_HIDDEN,
+    EDITOR_LIST,
+    EDITOR_LIST_ITEM,
+    EDITOR_MIN_W_0,
+    EDITOR_MONO,
+    EDITOR_MUTED,
+    EDITOR_SCROLL,
+    EDITOR_SPACING_MB_1,
+    EDITOR_TEXT_BREAK,
+    EDITOR_TEXT_END,
+    EDITOR_TEXT_START,
+    joinClasses,
+} from '../ui/editorClasses.js';
+import { EditorInput } from '../ui/primitives.js';
 
 export interface IssuesPanelProps {
     issues: TreeSpecIssue[];
@@ -113,42 +134,45 @@ export default function IssuesPanel({
     );
 
     return (
-        <div className="card">
-            <div className="card-header bg-body-secondary py-2 px-2 d-flex justify-content-between align-items-center gap-2">
-                <div className="d-flex align-items-center min-w-0">
-                    <span className="fw-semibold">{title}</span>
+        <div className={EDITOR_CARD}>
+            <div className={joinClasses(EDITOR_CARD_HEADER, EDITOR_FLEX_BETWEEN)}>
+                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_MIN_W_0)}>
+                    <span className="graph-editor-text--semibold">{title}</span>
                     <PanelHeaderCollapseCarets expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
                 </div>
                 {showValidationSummaryInHeader ? (
-                    <span className="text-muted font-size-12 text-end flex-shrink-0">
+                    <span className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_TEXT_END, EDITOR_FLEX_SHRINK_0)}>
                         {lastValidatedAt ? `Validated ${formatTimestamp(lastValidatedAt)}` : 'Not validated'}
                     </span>
                 ) : null}
             </div>
-            <div className={`card-body p-0${expanded ? '' : ' d-none'}`} aria-hidden={!expanded}>
+            <div
+                className={joinClasses(EDITOR_CARD_BODY, 'graph-editor-card__body--flush', !expanded && EDITOR_HIDDEN)}
+                aria-hidden={!expanded}
+            >
                 {issues.length === 0 ? (
-                    <div className="list-group list-group-flush">
-                        <div className="list-group-item text-muted small py-2 px-3 border-0">
+                    <div className={EDITOR_LIST}>
+                        <div className={joinClasses(EDITOR_LIST_ITEM, EDITOR_MUTED, 'graph-editor-text--sm')}>
                             <em>No issues</em>
                         </div>
                     </div>
                 ) : (
                     <>
-                        <Form.Control
-                            className="rounded-0 border-0 border-bottom shadow-none"
+                        <EditorInput
+                            className="graph-editor-input--list-search"
                             placeholder={searchPlaceholder}
                             value={issueSearch}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => onIssueSearchChange(e.target.value)}
                         />
-                        <div className="overflow-auto-max-h-320">
+                        <div className={joinClasses(EDITOR_SCROLL, 'overflow-auto-max-h-320')}>
                             {issueEntries.length === 0 ? (
-                                <div className="list-group list-group-flush">
-                                    <div className="list-group-item text-muted small py-2 px-3 border-0">
+                                <div className={EDITOR_LIST}>
+                                    <div className={joinClasses(EDITOR_LIST_ITEM, EDITOR_MUTED, 'graph-editor-text--sm')}>
                                         <em>No matching issues.</em>
                                     </div>
                                 </div>
                             ) : (
-                                <div className="list-group list-group-flush">
+                                <div className={EDITOR_LIST}>
                                     {issueEntries.map(({ item: issue, key }) => {
                                         const typeLabel = nodeTypeLabel(tree, issue.node_id);
                                         const headerTitle = issueHeaderTitle(issue, typeLabel);
@@ -157,48 +181,64 @@ export default function IssuesPanel({
                                             <button
                                                 key={key}
                                                 type="button"
-                                                className={`list-group-item px-3 py-2 text-start w-100 min-w-0${
-                                                    isSelected
-                                                        ? ` ${LIST_SELECTION_CLASS} ${LIST_SELECTION_TEXT_CLASS}`
-                                                        : ''
-                                                }`}
+                                                className={joinClasses(
+                                                    EDITOR_LIST_ITEM,
+                                                    'graph-editor-list__item--button',
+                                                    isSelected && LIST_SELECTION_CLASS,
+                                                    isSelected && LIST_SELECTION_TEXT_CLASS,
+                                                )}
                                                 aria-current={isSelected ? 'true' : undefined}
                                                 onClick={() => onSelectIssue(issue)}
                                             >
-                                                <div className="d-flex w-100 justify-content-between align-items-start gap-2 mb-1 min-w-0">
+                                                <div className={joinClasses(EDITOR_FLEX_BETWEEN, EDITOR_SPACING_MB_1, EDITOR_MIN_W_0)}>
                                                     <div
-                                                        className="min-w-0 flex-grow-1 text-break text-start"
+                                                        className={joinClasses(
+                                                            EDITOR_MIN_W_0,
+                                                            EDITOR_FLEX_GROW_1,
+                                                            EDITOR_TEXT_BREAK,
+                                                            EDITOR_TEXT_START,
+                                                        )}
                                                         title={headerTitle}
                                                     >
-                                                        <span className="fs-6 fw-semibold text-uppercase">
+                                                        <span className="graph-editor-text--uppercase graph-editor-text--semibold">
                                                             {issue.node_id ?? '—'}
                                                         </span>
                                                         <span
-                                                            className={`fs-6 text-uppercase${
-                                                                isSelected ? '' : ' text-body-secondary'
-                                                            }`}
+                                                            className={joinClasses(
+                                                                'graph-editor-text--uppercase',
+                                                                !isSelected && EDITOR_MUTED,
+                                                            )}
                                                         >
                                                             {`, ${typeLabel}`}
                                                         </span>
                                                     </div>
                                                     <span
-                                                        className={`badge flex-shrink-0 text-uppercase ${getIssueSeverityBadgeClass(issue.severity)}`}
+                                                        className={joinClasses(
+                                                            getIssueSeverityBadgeClass(issue.severity),
+                                                            EDITOR_FLEX_SHRINK_0,
+                                                            'graph-editor-text--uppercase',
+                                                        )}
                                                     >
                                                         {issue.severity}
                                                     </span>
                                                 </div>
                                                 <p
-                                                    className={`mb-1 small text-break font-monospace${
-                                                        isSelected ? '' : ' text-body-secondary'
-                                                    }`}
+                                                    className={joinClasses(
+                                                        EDITOR_MONO,
+                                                        'graph-editor-text--sm',
+                                                        EDITOR_TEXT_BREAK,
+                                                        EDITOR_SPACING_MB_1,
+                                                        !isSelected && EDITOR_MUTED,
+                                                    )}
                                                 >
                                                     {issue.message}
                                                 </p>
                                                 {issue.choice_id ? (
                                                     <small
-                                                        className={`text-break${
-                                                            isSelected ? '' : ' text-body-secondary'
-                                                        }`}
+                                                        className={joinClasses(
+                                                            EDITOR_TEXT_BREAK,
+                                                            !isSelected && EDITOR_MUTED,
+                                                        )}
                                                     >
                                                         {issue.choice_id}
                                                     </small>

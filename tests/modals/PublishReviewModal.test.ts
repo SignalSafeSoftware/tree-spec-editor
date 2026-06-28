@@ -65,7 +65,7 @@ describe('PublishReviewModal', () => {
         const root = renderer!.root;
         const titles = root.findAll(
             (n) =>
-                n.type === 'h5' &&
+                n.type === 'h2' &&
                 Array.isArray(n.children) &&
                 n.children.includes('Review changes before publishing')
         );
@@ -95,14 +95,14 @@ describe('PublishReviewModal', () => {
             (n) =>
                 n.type === 'div' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('alert-danger')
+                n.props.className.includes('graph-editor-alert--danger')
         );
         expect(alerts).toHaveLength(1);
         const publishButton = root.find(
             (n) =>
                 n.type === 'button' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('btn-success')
+                n.props.className.includes('graph-editor-btn--success')
         );
         expect(publishButton.props.disabled).toBe(true);
     });
@@ -127,7 +127,7 @@ describe('PublishReviewModal', () => {
             (n) =>
                 n.type === 'button' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('btn-success')
+                n.props.className.includes('graph-editor-btn--success')
         );
         expect(publishButton.props.disabled).toBe(false);
         await act(async () => {
@@ -155,7 +155,7 @@ describe('PublishReviewModal', () => {
             (n) =>
                 n.type === 'button' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('btn-success')
+                n.props.className.includes('graph-editor-btn--success')
         );
         expect(publishButton.props.disabled).toBe(true);
         const buttonText = JSON.stringify(publishButton.children);
@@ -183,7 +183,7 @@ describe('PublishReviewModal', () => {
         const root = renderer!.root;
         const titles = root.findAll(
             (n) =>
-                n.type === 'h5' &&
+                n.type === 'h2' &&
                 Array.isArray(n.children) &&
                 n.children.includes('Confirm release')
         );
@@ -192,7 +192,7 @@ describe('PublishReviewModal', () => {
             (n) =>
                 n.type === 'div' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('alert-info') &&
+                n.props.className.includes('graph-editor-alert--info') &&
                 Array.isArray(n.children) &&
                 n.children.includes('This release will be permanent.')
         );
@@ -201,7 +201,7 @@ describe('PublishReviewModal', () => {
             (n) =>
                 n.type === 'button' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('btn-success') &&
+                n.props.className.includes('graph-editor-btn--success') &&
                 Array.isArray(n.children) &&
                 n.children.includes('Release now')
         );

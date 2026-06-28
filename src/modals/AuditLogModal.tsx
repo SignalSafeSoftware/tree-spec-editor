@@ -1,14 +1,28 @@
 /**
  * Audit-log modal for the TreeSpec graph editor.
- *
- * Presentational only: receives the audit events list, a loading flag, and a close
- * callback. The package owns the chrome (modal + list rendering); host owns data
- * shape and the source of events.
  */
 import type { ReactNode } from 'react';
-import { Button, CloseButton } from 'react-bootstrap';
 
 import type { TreeSpecAuditEventItem } from '@signalsafe/tree-spec-editor-core';
+
+import {
+    EDITOR_BADGE,
+    EDITOR_FLEX_BETWEEN,
+    EDITOR_MODAL,
+    EDITOR_MODAL_BODY,
+    EDITOR_MODAL_CONTENT,
+    EDITOR_MODAL_DIALOG,
+    EDITOR_MODAL_FOOTER,
+    EDITOR_MODAL_HEADER,
+    EDITOR_MODAL_TITLE,
+    EDITOR_MONO,
+    EDITOR_MUTED,
+    EDITOR_SCROLL,
+    EDITOR_SPACING_MB_0,
+    EDITOR_SPACING_MT_1,
+    joinClasses,
+} from '../ui/editorClasses.js';
+import { EditorButton, EditorCloseButton } from '../ui/primitives.js';
 
 export interface AuditLogModalProps {
     show: boolean;
@@ -16,17 +30,11 @@ export interface AuditLogModalProps {
     auditEvents: TreeSpecAuditEventItem[];
     onClose: () => void;
 
-    /** Override the modal title (default "Audit log"). */
     title?: string;
-    /** Override the muted subtitle below the title. */
     subtitle?: string;
-    /** Override the loading state text. */
     loadingText?: string;
-    /** Override the empty-state text (when there are zero events). */
     emptyStateText?: string;
-    /** Override the "Actor ID:" label prefix shown for events that have an actor. */
     actorLabel?: string;
-    /** Override the Close button label in the footer. */
     closeLabel?: string;
 }
 
@@ -53,29 +61,33 @@ export default function AuditLogModal({
 
     let auditContent: ReactNode;
     if (loadingAudit) {
-        auditContent = <div className="text-muted">{loadingText}</div>;
+        auditContent = <div className={EDITOR_MUTED}>{loadingText}</div>;
     } else if (auditEvents.length === 0) {
         auditContent = (
-            <div className="text-muted"><em>{emptyStateText}</em></div>
+            <div className={EDITOR_MUTED}>
+                <em>{emptyStateText}</em>
+            </div>
         );
     } else {
         auditContent = (
-            <ul className="list-unstyled mb-0 overflow-auto-max-h-400">
+            <ul className={joinClasses('graph-editor-list--plain', EDITOR_SCROLL, EDITOR_SPACING_MB_0)}>
                 {auditEvents.map((e) => (
-                    <li key={e.id} className="border-bottom py-2">
-                        <div className="d-flex justify-content-between align-items-start">
-                            <span className="badge bg-secondary me-2">{e.action}</span>
-                            <span className="text-muted font-size-12">
+                    <li key={e.id} className="graph-editor-list__plain-item">
+                        <div className={EDITOR_FLEX_BETWEEN}>
+                            <span className={joinClasses(EDITOR_BADGE, 'graph-editor-badge--neutral')}>
+                                {e.action}
+                            </span>
+                            <span className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>
                                 {new Date(e.created_on).toLocaleString()}
                             </span>
                         </div>
                         {e.actor == null ? null : (
-                            <span className="text-muted font-size-12">
+                            <span className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>
                                 {actorLabel} {e.actor}
                             </span>
                         )}
                         {e.detail && Object.keys(e.detail).length > 0 ? (
-                            <pre className="mb-0 mt-1 small text-muted font-size-11">
+                            <pre className={joinClasses(EDITOR_MONO, EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_MB_0, EDITOR_SPACING_MT_1)}>
                                 {JSON.stringify(e.detail)}
                             </pre>
                         ) : null}
@@ -86,19 +98,21 @@ export default function AuditLogModal({
     }
 
     return (
-        <dialog className="modal d-block modal-backdrop-dark" open>
-            <div className="modal-dialog modal-lg">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title">{title}</h5>
-                        <CloseButton aria-label="Close" onClick={onClose} />
+        <dialog className={joinClasses(EDITOR_MODAL, 'graph-editor-modal--open')} open>
+            <div className={joinClasses(EDITOR_MODAL_DIALOG, 'graph-editor-modal__dialog--lg')}>
+                <div className={EDITOR_MODAL_CONTENT}>
+                    <div className={EDITOR_MODAL_HEADER}>
+                        <h2 className={EDITOR_MODAL_TITLE}>{title}</h2>
+                        <EditorCloseButton onClick={onClose} />
                     </div>
-                    <div className="modal-body">
-                        <p className="text-muted font-size-13">{subtitle}</p>
+                    <div className={EDITOR_MODAL_BODY}>
+                        <p className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>{subtitle}</p>
                         {auditContent}
                     </div>
-                    <div className="modal-footer">
-                        <Button variant="secondary" onClick={onClose}>{closeLabel}</Button>
+                    <div className={EDITOR_MODAL_FOOTER}>
+                        <EditorButton tone="neutral" onClick={onClose}>
+                            {closeLabel}
+                        </EditorButton>
                     </div>
                 </div>
             </div>

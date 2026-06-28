@@ -123,7 +123,7 @@ describe('DraftHistoryModal', () => {
             (n) =>
                 n.type === 'button' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('btn-outline-warning')
+                n.props.className.includes('graph-editor-btn--warning')
         );
         expect(restoreButtons).toHaveLength(2);
     });
@@ -149,7 +149,7 @@ describe('DraftHistoryModal', () => {
             (n) =>
                 n.type === 'button' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('btn-outline-warning')
+                n.props.className.includes('graph-editor-btn--warning')
         );
         await act(async () => {
             restoreButtons[0].props.onClick();
@@ -178,7 +178,7 @@ describe('DraftHistoryModal', () => {
             (n) =>
                 n.type === 'button' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('btn-outline-primary')
+                n.props.className.includes('graph-editor-btn--primary')
         );
         await act(async () => {
             createButton.props.onClick();
@@ -206,7 +206,7 @@ describe('DraftHistoryModal', () => {
             (n) =>
                 n.type === 'button' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('btn-outline-primary')
+                n.props.className.includes('graph-editor-btn--primary')
         );
         expect(createButton.props.disabled).toBe(true);
         expect(JSON.stringify(createButton.children)).toContain('Creating');
@@ -234,7 +234,7 @@ describe('DraftHistoryModal', () => {
         const root = renderer!.root;
         const titles = root.findAll(
             (n) =>
-                n.type === 'h5' &&
+                n.type === 'h2' &&
                 Array.isArray(n.children) &&
                 n.children.includes('Custom snapshots')
         );

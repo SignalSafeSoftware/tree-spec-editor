@@ -22,8 +22,7 @@
       "react": ["./node_modules/@types/react/index.d.ts"],
       "react/jsx-runtime": ["./node_modules/@types/react/jsx-runtime.d.ts"],
       "react-dom": ["./node_modules/@types/react-dom/index.d.ts"],
-      "reactflow": ["./node_modules/reactflow/dist/esm/index.d.ts"],
-      "react-bootstrap": ["./node_modules/react-bootstrap/esm/index.d.ts"]
+      "reactflow": ["./node_modules/reactflow/dist/esm/index.d.ts"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],

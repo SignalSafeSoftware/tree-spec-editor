@@ -7,9 +7,21 @@
  * host-specific diff logic.
  */
 import { TREE_SPEC_ISSUE_SEVERITY, type TreeSpecIssue } from '@signalsafe/tree-spec';
-import { Button, CloseButton } from 'react-bootstrap';
 
 import { buildStableEntries, type EditorTree } from '@signalsafe/tree-spec-editor-core';
+
+import {
+    EDITOR_MODAL,
+    EDITOR_MODAL_BODY,
+    EDITOR_MODAL_CONTENT,
+    EDITOR_MODAL_DIALOG,
+    EDITOR_MODAL_FOOTER,
+    EDITOR_MODAL_HEADER,
+    EDITOR_MODAL_TITLE,
+    editorAlertToneClass,
+    joinClasses,
+} from '../ui/editorClasses.js';
+import { EditorButton, EditorCloseButton } from '../ui/primitives.js';
 
 export interface PublishReviewModalProps {
     show: boolean;
@@ -70,33 +82,35 @@ export default function PublishReviewModal({
     );
 
     return (
-        <dialog className="modal d-block modal-backdrop-dark" open>
-            <div className="modal-dialog modal-lg">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title">{title}</h5>
-                        <CloseButton aria-label="Close" onClick={onClose} />
+        <dialog className={joinClasses(EDITOR_MODAL, 'graph-editor-modal--open')} open>
+            <div className={joinClasses(EDITOR_MODAL_DIALOG, 'graph-editor-modal__dialog--lg')}>
+                <div className={EDITOR_MODAL_CONTENT}>
+                    <div className={EDITOR_MODAL_HEADER}>
+                        <h2 className={EDITOR_MODAL_TITLE}>{title}</h2>
+                        <EditorCloseButton onClick={onClose} />
                     </div>
-                    <div className="modal-body">
-                        <div className="alert alert-info font-size-13">{summaryText}</div>
+                    <div className={EDITOR_MODAL_BODY}>
+                        <div className={editorAlertToneClass('info')}>{summaryText}</div>
                         <ul>
                             {diffLineEntries.map(({ item: line, key }) => (
                                 <li key={key}>{line}</li>
                             ))}
                         </ul>
                         {hasErrors ? (
-                            <div className="alert alert-danger">{errorAlertText}</div>
+                            <div className={editorAlertToneClass('danger')}>{errorAlertText}</div>
                         ) : null}
                     </div>
-                    <div className="modal-footer">
-                        <Button variant="outline-secondary" onClick={onClose}>{cancelLabel}</Button>
-                        <Button
-                            variant="success"
+                    <div className={EDITOR_MODAL_FOOTER}>
+                        <EditorButton tone="neutral" onClick={onClose}>
+                            {cancelLabel}
+                        </EditorButton>
+                        <EditorButton
+                            tone="success"
                             disabled={publishing || hasErrors}
                             onClick={onPublish}
                         >
                             {publishing ? publishingLabel : publishLabel}
-                        </Button>
+                        </EditorButton>
                     </div>
                 </div>
             </div>
