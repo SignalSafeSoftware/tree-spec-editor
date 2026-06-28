@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets';
+import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets.js';
 
 import {
     EDITOR_CARD,
@@ -15,8 +15,8 @@ import {
     EDITOR_SPACING_MB_3,
     EDITOR_SPACING_PY_2,
     joinClasses,
-} from '../ui/editorClasses';
-import { EditorButton } from '../ui/primitives';
+} from '../ui/editorClasses.js';
+import { EditorButton } from '../ui/primitives.js';
 
 /**
  * Preset choice bundles for quick insertion into a node.

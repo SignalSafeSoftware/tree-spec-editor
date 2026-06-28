@@ -10,7 +10,7 @@ import {
     EDITOR_TEXTAREA,
     editorBtnToneClass,
     joinClasses,
-} from './editorClasses';
+} from './editorClasses.js';
 
 export function EditorButton({
     tone,

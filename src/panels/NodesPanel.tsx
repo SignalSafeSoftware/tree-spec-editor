@@ -9,8 +9,8 @@ import {
     type GraphSelection,
 } from '@signalsafe/tree-spec-editor-core';
 
-import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets';
-import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../lib/selectionStyles';
+import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets.js';
+import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../lib/selectionStyles.js';
 import {
     EDITOR_CARD,
     EDITOR_CARD_FOOTER,
@@ -31,8 +31,8 @@ import {
     EDITOR_TEXT_BREAK,
     EDITOR_TEXT_START,
     joinClasses,
-} from '../ui/editorClasses';
-import { EditorIconButton, EditorInput, EditorSwitch } from '../ui/primitives';
+} from '../ui/editorClasses.js';
+import { EditorIconButton, EditorInput, EditorSwitch } from '../ui/primitives.js';
 
 export interface NodesPanelProps {
     tree: EditorTree;

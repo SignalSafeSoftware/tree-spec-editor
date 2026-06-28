@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent, type ReactNode } from 'react';
 
-import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets';
+import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets.js';
 
 import {
     EDITOR_EDGE_TYPE_OPTIONS,
@@ -29,8 +29,8 @@ import {
     EDITOR_TEXT_BREAK,
     editorBadgeToneClass,
     joinClasses,
-} from '../ui/editorClasses';
-import { EditorField, EditorLabel, EditorSelect } from '../ui/primitives';
+} from '../ui/editorClasses.js';
+import { EditorField, EditorLabel, EditorSelect } from '../ui/primitives.js';
 
 export interface GraphEditorInfoPanelProps {
     scenarioId: string;

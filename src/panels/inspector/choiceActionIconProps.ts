@@ -1,6 +1,6 @@
 import type { KeyboardEvent, MouseEvent, ReactNode } from 'react';
 
-import { joinClasses } from '../../ui/editorClasses';
+import { joinClasses } from '../../ui/editorClasses.js';
 
 export function choiceActionIconProps(
     onClick: () => void,

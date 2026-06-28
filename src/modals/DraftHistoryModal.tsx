@@ -19,8 +19,8 @@ import {
     EDITOR_SPACING_MB_0,
     EDITOR_SPACING_MB_3,
     joinClasses,
-} from '../ui/editorClasses';
-import { EditorButton, EditorCloseButton } from '../ui/primitives';
+} from '../ui/editorClasses.js';
+import { EditorButton, EditorCloseButton } from '../ui/primitives.js';
 
 export interface DraftHistoryModalProps {
     show: boolean;

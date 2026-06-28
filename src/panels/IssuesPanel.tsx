@@ -8,9 +8,9 @@ import {
     type GraphSelection,
 } from '@signalsafe/tree-spec-editor-core';
 
-import { getIssueSeverityBadgeClass } from '../lib/panelHelpers';
-import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets';
-import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../lib/selectionStyles';
+import { getIssueSeverityBadgeClass } from '../lib/panelHelpers.js';
+import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets.js';
+import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../lib/selectionStyles.js';
 import {
     EDITOR_CARD,
     EDITOR_CARD_BODY,
@@ -31,8 +31,8 @@ import {
     EDITOR_TEXT_END,
     EDITOR_TEXT_START,
     joinClasses,
-} from '../ui/editorClasses';
-import { EditorInput } from '../ui/primitives';
+} from '../ui/editorClasses.js';
+import { EditorInput } from '../ui/primitives.js';
 
 export interface IssuesPanelProps {
     issues: TreeSpecIssue[];

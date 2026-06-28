@@ -1,6 +1,6 @@
 import { TREE_SPEC_ISSUE_SEVERITY } from '@signalsafe/tree-spec';
 
-import { EDITOR_BADGE } from '../ui/editorClasses';
+import { EDITOR_BADGE } from '../ui/editorClasses.js';
 
 /** Semantic severity token for host UI mapping. */
 export type IssueSeverityToken = 'error' | 'warning' | 'info' | 'neutral';

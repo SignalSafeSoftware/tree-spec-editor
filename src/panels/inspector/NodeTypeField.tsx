@@ -11,8 +11,8 @@ import {
     EDITOR_SPACING_MT_1,
     EDITOR_SPACING_MT_2,
     joinClasses,
-} from '../../ui/editorClasses';
-import { EditorField, EditorInput, EditorLabel, EditorSelect } from '../../ui/primitives';
+} from '../../ui/editorClasses.js';
+import { EditorField, EditorInput, EditorLabel, EditorSelect } from '../../ui/primitives.js';
 
 export default function NodeTypeField({
     selectedNode,

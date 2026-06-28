@@ -14,8 +14,8 @@ import {
     type EditorTree,
 } from '@signalsafe/tree-spec-editor-core';
 
-import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets';
-import { PanelNodeLink } from '../lib/panelNodeLink';
+import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets.js';
+import { PanelNodeLink } from '../lib/panelNodeLink.js';
 import {
     EDITOR_CARD,
     EDITOR_CARD_BODY,
@@ -28,9 +28,9 @@ import {
     EDITOR_SPACING_MB_3,
     EDITOR_SPACING_MT_3,
     joinClasses,
-} from '../ui/editorClasses';
-import ChoiceEdgeAppearanceFields from './ChoiceEdgeAppearanceFields';
-import type { InspectorNodeRenderContext } from './InspectorPanel';
+} from '../ui/editorClasses.js';
+import ChoiceEdgeAppearanceFields from './ChoiceEdgeAppearanceFields.js';
+import type { InspectorNodeRenderContext } from './InspectorPanel.js';
 
 export interface AppearancePanelProps {
     tree: EditorTree;

@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import type { EditorTransition } from '@signalsafe/tree-spec-editor-core';
 
-import { EDITOR_BTN, joinClasses } from '../ui/editorClasses';
+import { EDITOR_BTN, joinClasses } from '../ui/editorClasses.js';
 
 export interface PanelNodeLinkContext {
     onNodeSelect?: (nodeId: string) => void;

@@ -8,17 +8,17 @@ import type { ReactNode } from 'react';
 
 import type { EditorTransition } from '@signalsafe/tree-spec-editor-core';
 
-import { renderDefaultEdgeBreadcrumb, type PanelNodeLinkContext } from '../lib/panelNodeLink';
+import { renderDefaultEdgeBreadcrumb, type PanelNodeLinkContext } from '../lib/panelNodeLink.js';
 import {
     EDITOR_CARD,
     EDITOR_CARD_BODY,
     EDITOR_MUTED,
     EDITOR_SPACING_MT_3,
     joinClasses,
-} from '../ui/editorClasses';
+} from '../ui/editorClasses.js';
 
 export type SelectedEdgeDetailsContext = PanelNodeLinkContext;
-export { PanelNodeLink } from '../lib/panelNodeLink';
+export { PanelNodeLink } from '../lib/panelNodeLink.js';
 
 export interface SelectedEdgePanelProps {
     selectedEdge: EditorTransition | null;

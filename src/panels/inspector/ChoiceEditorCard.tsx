@@ -8,7 +8,7 @@ import {
     type EditorTree,
 } from '@signalsafe/tree-spec-editor-core';
 
-import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../../lib/selectionStyles';
+import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../../lib/selectionStyles.js';
 import {
     EDITOR_FLEX_ALIGN_END,
     EDITOR_FLEX_BETWEEN,
@@ -24,15 +24,15 @@ import {
     EDITOR_SPACING_MT_0,
     EDITOR_SPACING_MT_2,
     joinClasses,
-} from '../../ui/editorClasses';
+} from '../../ui/editorClasses.js';
 import {
     EditorField,
     EditorInput,
     EditorLabel,
     EditorSelect,
-} from '../../ui/primitives';
-import { choiceActionIconProps } from './choiceActionIconProps';
-import type { ChoiceTypeOption, InspectorChoiceRenderContext } from './types';
+} from '../../ui/primitives.js';
+import { choiceActionIconProps } from './choiceActionIconProps.js';
+import type { ChoiceTypeOption, InspectorChoiceRenderContext } from './types.js';
 
 export default function ChoiceEditorCard({
     choice,

@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import type { EditorNode, EditorTree } from '@signalsafe/tree-spec-editor-core';
 
-import PanelHeaderCollapseCarets from '../../lib/PanelHeaderCollapseCarets';
+import PanelHeaderCollapseCarets from '../../lib/PanelHeaderCollapseCarets.js';
 import {
     EDITOR_CARD,
     EDITOR_CARD_BODY,
@@ -20,10 +20,10 @@ import {
     EDITOR_SPACING_PX_3,
     EDITOR_SPACING_PY_3,
     joinClasses,
-} from '../../ui/editorClasses';
-import { EditorIconButton } from '../../ui/primitives';
-import ChoiceEditorCard from './ChoiceEditorCard';
-import type { ChoiceTypeOption, InspectorChoiceRenderContext } from './types';
+} from '../../ui/editorClasses.js';
+import { EditorIconButton } from '../../ui/primitives.js';
+import ChoiceEditorCard from './ChoiceEditorCard.js';
+import type { ChoiceTypeOption, InspectorChoiceRenderContext } from './types.js';
 
 export default function ChoiceEditorList({
     tree,

@@ -1,4 +1,4 @@
-import { EditorIconButton } from '../ui/primitives';
+import { EditorIconButton } from '../ui/primitives.js';
 
 export interface PanelHeaderCollapseCaretsProps {
     expanded: boolean;

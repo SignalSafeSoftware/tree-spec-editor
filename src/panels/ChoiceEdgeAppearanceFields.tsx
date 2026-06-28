@@ -16,7 +16,7 @@ import {
     EDITOR_SPACING_MT_3,
     EDITOR_SPACING_PT_2,
     joinClasses,
-} from '../ui/editorClasses';
+} from '../ui/editorClasses.js';
 import {
     EditorButton,
     EditorField,
@@ -24,7 +24,7 @@ import {
     EditorLabel,
     EditorSelect,
     EditorSwitch,
-} from '../ui/primitives';
+} from '../ui/primitives.js';
 
 export interface ChoiceEdgeAppearanceFieldsProps {
     choice: EditorChoice;

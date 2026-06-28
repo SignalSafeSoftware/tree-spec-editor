@@ -20,8 +20,8 @@ import {
     EDITOR_MODAL_TITLE,
     editorAlertToneClass,
     joinClasses,
-} from '../ui/editorClasses';
-import { EditorButton, EditorCloseButton } from '../ui/primitives';
+} from '../ui/editorClasses.js';
+import { EditorButton, EditorCloseButton } from '../ui/primitives.js';
 
 export interface PublishReviewModalProps {
     show: boolean;

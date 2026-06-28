@@ -10,7 +10,7 @@ import {
     editorBadgeToneClass,
     editorBtnToneClass,
     joinClasses,
-} from '../ui/editorClasses';
+} from '../ui/editorClasses.js';
 
 /**
  * Discriminator values used by the `kind` field on every {@link ToolbarItem}.

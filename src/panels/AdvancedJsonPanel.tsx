@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 
-import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets';
+import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets.js';
 
 import {
     EDITOR_CARD,
@@ -17,8 +17,8 @@ import {
     EDITOR_SPACING_MS_AUTO,
     EDITOR_SPACING_MT_3,
     joinClasses,
-} from '../ui/editorClasses';
-import { EditorButton } from '../ui/primitives';
+} from '../ui/editorClasses.js';
+import { EditorButton } from '../ui/primitives.js';
 
 export interface AdvancedJsonPanelProps {
     /** The JSON editor (or any content) rendered inside the panel body. */

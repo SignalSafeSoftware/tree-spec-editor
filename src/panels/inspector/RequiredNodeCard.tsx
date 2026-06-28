@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import type { EditorNode, EditorTree } from '@signalsafe/tree-spec-editor-core';
 
-import PanelHeaderCollapseCarets from '../../lib/PanelHeaderCollapseCarets';
+import PanelHeaderCollapseCarets from '../../lib/PanelHeaderCollapseCarets.js';
 import {
     EDITOR_CARD,
     EDITOR_CARD_BODY,
@@ -15,10 +15,10 @@ import {
     EDITOR_MIN_W_0,
     EDITOR_SPACING_MB_2,
     joinClasses,
-} from '../../ui/editorClasses';
-import { EditorField, EditorIconButton, EditorLabel, EditorTextarea } from '../../ui/primitives';
-import NodeTypeField from './NodeTypeField';
-import type { InspectorNodeRenderContext } from './types';
+} from '../../ui/editorClasses.js';
+import { EditorField, EditorIconButton, EditorLabel, EditorTextarea } from '../../ui/primitives.js';
+import NodeTypeField from './NodeTypeField.js';
+import type { InspectorNodeRenderContext } from './types.js';
 
 export default function RequiredNodeCard({
     tree,
