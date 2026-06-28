@@ -1,17 +1,16 @@
-/**
- * Data-driven toolbar for the TreeSpec graph editor (and similar editor pages).
- *
- * Hosts pass an array of `ToolbarItem`s describing the visual elements they want in
- * the toolbar — buttons, dropdowns, badges, plain text, or arbitrary custom render
- * functions. The package owns layout (wrap, gap, alignment) and Bootstrap chrome;
- * the host owns every label, disabled rule, adapter-gated visibility, and callback
- * (encoded as closures inside each item).
- *
- * The `custom` item kind exists for one-offs like router-aware links — that way
- * the package stays free of `react-router` (or any other) routing concerns.
- */
 import { Fragment, type ReactNode } from 'react';
-import { Button, Dropdown } from 'react-bootstrap';
+
+import {
+    EDITOR_DROPDOWN,
+    EDITOR_DROPDOWN_DIVIDER,
+    EDITOR_DROPDOWN_ITEM,
+    EDITOR_DROPDOWN_MENU,
+    EDITOR_FLEX,
+    EDITOR_MUTED,
+    editorBadgeToneClass,
+    editorBtnToneClass,
+    joinClasses,
+} from '../ui/editorClasses.js';
 
 /**
  * Discriminator values used by the `kind` field on every {@link ToolbarItem}.
@@ -35,7 +34,7 @@ export interface ToolbarButtonItem {
     id?: string;
     label: ReactNode;
     onClick: () => void;
-    /** Bootstrap variant. Default: `"outline-secondary"`. */
+    /** Visual tone hook (e.g. `neutral`, `success`, `primary`). Default: `neutral`. Legacy Bootstrap variant strings are mapped. */
     variant?: string;
     disabled?: boolean;
     title?: string;
@@ -49,7 +48,7 @@ export interface ToolbarDropdownEntry {
     label: ReactNode;
     onClick?: () => void;
     disabled?: boolean;
-    /** When true, render a `<Dropdown.Divider />` and ignore label/onClick. */
+    /** When true, render a menu divider and ignore label/onClick. */
     divider?: boolean;
 }
 
@@ -58,7 +57,7 @@ export interface ToolbarDropdownItem {
     id?: string;
     label: ReactNode;
     entries: ToolbarDropdownEntry[];
-    /** Bootstrap variant for the toggle. Default: `"outline-secondary"`. */
+    /** Toggle tone hook. Default: `neutral`. Legacy Bootstrap variant strings are mapped. */
     variant?: string;
     disabled?: boolean;
     className?: string;
@@ -68,7 +67,7 @@ export interface ToolbarBadgeItem {
     kind: typeof TOOLBAR_ITEM_KIND.BADGE;
     id?: string;
     label: ReactNode;
-    /** Bootstrap badge variant (e.g. `"success"`, `"secondary"`). Default: `"secondary"`. */
+    /** Badge tone hook (e.g. `success`, `neutral`). Default: `neutral`. */
     variant?: string;
     className?: string;
 }
@@ -77,7 +76,7 @@ export interface ToolbarTextItem {
     kind: typeof TOOLBAR_ITEM_KIND.TEXT;
     id?: string;
     content: ReactNode;
-    /** Override the default `"ms-2 text-muted font-size-12"` styling. */
+    /** Override default muted toolbar text styling. */
     className?: string;
 }
 
@@ -97,65 +96,66 @@ export type ToolbarItem =
 
 export interface ToolbarPanelProps {
     items: ToolbarItem[];
-    /** Override the outer wrapper className. Default: `"d-flex gap-2 align-items-center flex-wrap"`. */
+    /** Override the outer wrapper className. */
     className?: string;
 }
 
-const DEFAULT_BUTTON_VARIANT = 'outline-secondary';
-const DEFAULT_DROPDOWN_VARIANT = 'outline-secondary';
-const DEFAULT_BADGE_VARIANT = 'secondary';
-const DEFAULT_TEXT_CLASS = 'ms-2 text-muted font-size-12';
-const DEFAULT_WRAPPER_CLASS = 'd-flex gap-2 align-items-center flex-wrap';
+const DEFAULT_TEXT_CLASS = `${EDITOR_MUTED} graph-editor-toolbar__text`;
 
 function renderItem(item: ToolbarItem): ReactNode {
     switch (item.kind) {
         case TOOLBAR_ITEM_KIND.BUTTON:
             return (
-                <Button
-                    variant={item.variant ?? DEFAULT_BUTTON_VARIANT}
+                <button
+                    type="button"
+                    className={joinClasses(editorBtnToneClass(item.variant), item.className)}
                     onClick={item.onClick}
                     disabled={item.disabled}
                     title={item.title}
-                    className={item.className}
                 >
                     {item.label}
-                </Button>
+                </button>
             );
         case TOOLBAR_ITEM_KIND.DROPDOWN:
             return (
-                <Dropdown className={item.className ?? 'd-inline'}>
-                    <Dropdown.Toggle
-                        variant={item.variant ?? DEFAULT_DROPDOWN_VARIANT}
-                        disabled={item.disabled}
+                <details className={joinClasses(EDITOR_DROPDOWN, item.className)}>
+                    <summary
+                        className={joinClasses(
+                            editorBtnToneClass(item.variant),
+                            item.disabled && 'graph-editor-btn--disabled',
+                        )}
                     >
                         {item.label}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    </summary>
+                    <div className={EDITOR_DROPDOWN_MENU} role="menu">
                         {item.entries.map((entry, idx) => {
                             const entryKey = entry.id ?? `entry-${idx}`;
                             if (entry.divider) {
-                                return <Dropdown.Divider key={entryKey} />;
+                                return <div key={entryKey} className={EDITOR_DROPDOWN_DIVIDER} role="separator" />;
                             }
                             return (
-                                <Dropdown.Item
+                                <button
                                     key={entryKey}
-                                    onClick={entry.onClick}
+                                    type="button"
+                                    role="menuitem"
+                                    className={EDITOR_DROPDOWN_ITEM}
+                                    onClick={
+                                        entry.disabled || !entry.onClick
+                                            ? undefined
+                                            : () => entry.onClick!()
+                                    }
                                     disabled={entry.disabled}
                                 >
                                     {entry.label}
-                                </Dropdown.Item>
+                                </button>
                             );
                         })}
-                    </Dropdown.Menu>
-                </Dropdown>
+                    </div>
+                </details>
             );
         case TOOLBAR_ITEM_KIND.BADGE:
             return (
-                <span
-                    className={
-                        item.className ?? `badge bg-${item.variant ?? DEFAULT_BADGE_VARIANT}`
-                    }
-                >
+                <span className={item.className ?? editorBadgeToneClass(item.variant)}>
                     {item.label}
                 </span>
             );
@@ -172,7 +172,7 @@ function renderItem(item: ToolbarItem): ReactNode {
 
 export default function ToolbarPanel({
     items,
-    className = DEFAULT_WRAPPER_CLASS,
+    className = `${EDITOR_FLEX} graph-editor-toolbar`,
 }: Readonly<ToolbarPanelProps>) {
     return (
         <div className={className}>

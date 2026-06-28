@@ -134,7 +134,7 @@ describe('AuditLogModal', () => {
             (n) =>
                 n.type === 'span' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('font-size-12') &&
+                n.props.className.includes('graph-editor-text--sm') &&
                 Array.isArray(n.children) &&
                 n.children.includes('Actor ID:')
         );
@@ -175,7 +175,7 @@ describe('AuditLogModal', () => {
             (n) =>
                 n.type === 'button' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('btn-secondary')
+                n.props.className.includes('graph-editor-btn--neutral')
         );
         await act(async () => {
             closeButton.props.onClick();
@@ -200,7 +200,7 @@ describe('AuditLogModal', () => {
         const root = renderer!.root;
         const titles = root.findAll(
             (n) =>
-                n.type === 'h5' &&
+                n.type === 'h2' &&
                 Array.isArray(n.children) &&
                 n.children.includes('Activity')
         );

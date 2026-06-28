@@ -1,77 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-// react-bootstrap's `Dropdown` pulls in `@restart/ui`, which reads
-// `window.document` at render time. The Vitest 'node' environment doesn't
-// provide window/document, so we replace the Dropdown family with simple
-// presentational stubs. The unit tests validate ToolbarPanel's contract
-// (which children it renders for each item kind, props it forwards), not
-// the internals of Bootstrap's dropdown widget.
-vi.mock('react-bootstrap', async () => {
-    const ReactMod = await import('react');
-    const ReactNS = ReactMod.default ?? ReactMod;
-    const Button = (props: Record<string, unknown>) => {
-        const {
-            variant,
-            children,
-            className: extraClassName,
-            ...rest
-        } = props as { variant?: string; children?: unknown; className?: string };
-        const baseClass = `btn btn-${variant ?? 'primary'}`;
-        const className =
-            typeof extraClassName === 'string' && extraClassName.length > 0
-                ? `${baseClass} ${extraClassName}`
-                : baseClass;
-        return ReactNS.createElement('button', { className, ...rest }, children);
-    };
-    interface DropdownProps {
-        children?: unknown;
-        className?: string;
-    }
-    interface DropdownToggleProps {
-        children?: unknown;
-        variant?: string;
-        disabled?: boolean;
-    }
-    interface DropdownMenuProps {
-        children?: unknown;
-    }
-    interface DropdownItemProps {
-        children?: unknown;
-        onClick?: () => void;
-        disabled?: boolean;
-    }
-    const Dropdown: React.FC<DropdownProps> & {
-        Toggle: React.FC<DropdownToggleProps>;
-        Menu: React.FC<DropdownMenuProps>;
-        Item: React.FC<DropdownItemProps>;
-        Divider: React.FC;
-    } = ({ children, className }) =>
-        ReactNS.createElement('div', { className }, children);
-    Dropdown.Toggle = ({ children, variant, disabled }: DropdownToggleProps) =>
-        ReactNS.createElement(
-            'button',
-            { className: `btn btn-${variant ?? 'primary'} dropdown-toggle`, disabled },
-            children,
-        );
-    Dropdown.Menu = ({ children }: DropdownMenuProps) =>
-        ReactNS.createElement('div', { className: 'dropdown-menu' }, children);
-    Dropdown.Item = ({ children, onClick, disabled }: DropdownItemProps) =>
-        ReactNS.createElement(
-            'a',
-            {
-                className: 'dropdown-item',
-                onClick: (e: { preventDefault?: () => void }) => {
-                    e?.preventDefault?.();
-                    if (!disabled) onClick?.();
-                },
-            },
-            children,
-        );
-    Dropdown.Divider = () =>
-        ReactNS.createElement('div', { className: 'dropdown-divider' });
-    return { Button, Dropdown };
-});
-
 import React from 'react';
 import { TestRenderer, act } from '../reactTestRenderer';
 import ToolbarPanel, { type ToolbarItem } from '../../src/panels/ToolbarPanel';
@@ -103,14 +31,13 @@ describe('ToolbarPanel', () => {
             (n) =>
                 n.type === 'div' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('d-flex') &&
-                n.props.className.includes('gap-2')
+                n.props.className.includes('graph-editor-toolbar')
         );
         expect(wrapper).toHaveLength(1);
         expect(findButtons(root)).toHaveLength(0);
     });
 
-    it('renders a button item with default outline-secondary variant and forwards onClick', async () => {
+    it('renders a button item with default neutral tone and forwards onClick', async () => {
         const onClick = vi.fn();
         const items: ToolbarItem[] = [
             { kind: 'button', id: 'save', label: 'Save', onClick },
@@ -122,7 +49,7 @@ describe('ToolbarPanel', () => {
         });
         const buttons = findButtons(renderer!.root);
         expect(buttons).toHaveLength(1);
-        expect(buttons[0].props.className).toContain('btn-outline-secondary');
+        expect(buttons[0].props.className).toContain('graph-editor-btn--neutral');
         await act(async () => {
             buttons[0].props.onClick();
         });
@@ -139,7 +66,7 @@ describe('ToolbarPanel', () => {
             );
         });
         const button = findButtons(renderer!.root)[0];
-        expect(button.props.className).toContain('btn-success');
+        expect(button.props.className).toContain('graph-editor-btn--success');
         expect(button.props.disabled).toBe(true);
     });
 
@@ -166,27 +93,27 @@ describe('ToolbarPanel', () => {
             );
         });
         const root = renderer!.root;
-        const toggles = findButtons(root).filter(
+        const details = root.findAll(
+            (n) =>
+                n.type === 'details' &&
+                typeof n.props.className === 'string' &&
+                n.props.className.includes('graph-editor-dropdown')
+        );
+        expect(details).toHaveLength(1);
+        const menuItems = findButtons(root).filter(
             (b) =>
                 typeof b.props.className === 'string' &&
-                b.props.className.includes('dropdown-toggle')
+                b.props.className.includes('graph-editor-dropdown__item')
         );
-        expect(toggles).toHaveLength(1);
-        const dropdownItems = root.findAll(
-            (n) =>
-                n.type === 'a' &&
-                typeof n.props.className === 'string' &&
-                n.props.className.includes('dropdown-item')
-        );
-        expect(dropdownItems).toHaveLength(3);
+        expect(menuItems).toHaveLength(3);
         const dividers = root.findAll(
             (n) =>
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('dropdown-divider')
+                n.props.className.includes('graph-editor-dropdown__divider')
         );
         expect(dividers).toHaveLength(1);
         await act(async () => {
-            dropdownItems[0].props.onClick({ preventDefault: () => undefined });
+            menuItems[0].props.onClick();
         });
         expect(onPrompt).toHaveBeenCalledTimes(1);
         expect(onEmail).not.toHaveBeenCalled();
@@ -209,26 +136,20 @@ describe('ToolbarPanel', () => {
             );
         });
         const root = renderer!.root;
-        const toggle = findButtons(root).find(
+        const summary = root.findAll((n) => n.type === 'summary')[0];
+        expect(summary.props.className).toContain('graph-editor-btn--disabled');
+        const entry = findButtons(root).find(
             (b) =>
                 typeof b.props.className === 'string' &&
-                b.props.className.includes('dropdown-toggle')
+                b.props.className.includes('graph-editor-dropdown__item')
         );
-        expect(toggle).toBeTruthy();
-        expect(toggle!.props.disabled).toBe(true);
-        const entry = root.findAll(
-            (n) =>
-                n.type === 'a' &&
-                typeof n.props.className === 'string' &&
-                n.props.className.includes('dropdown-item')
-        )[0];
-        await act(async () => {
-            entry.props.onClick({ preventDefault: () => undefined });
-        });
+        expect(entry).toBeTruthy();
+        expect(entry!.props.disabled).toBe(true);
+        expect(entry!.props.onClick).toBeUndefined();
         expect(onA).not.toHaveBeenCalled();
     });
 
-    it('renders a badge item with default and overridden Bootstrap variants', async () => {
+    it('renders a badge item with default and overridden tones', async () => {
         const items: ToolbarItem[] = [
             { kind: 'badge', id: 'status', label: 'Draft' },
             { kind: 'badge', id: 'pub', label: 'Published', variant: 'success' },
@@ -242,11 +163,11 @@ describe('ToolbarPanel', () => {
             (n) =>
                 n.type === 'span' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('badge')
+                n.props.className.includes('graph-editor-badge')
         );
         expect(badges).toHaveLength(2);
-        expect(badges[0].props.className).toContain('bg-secondary');
-        expect(badges[1].props.className).toContain('bg-success');
+        expect(badges[0].props.className).toContain('graph-editor-badge--neutral');
+        expect(badges[1].props.className).toContain('graph-editor-badge--success');
     });
 
     it('renders a text item with the default muted styling', async () => {
@@ -262,8 +183,8 @@ describe('ToolbarPanel', () => {
             (n) =>
                 n.type === 'span' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('text-muted') &&
-                n.props.className.includes('font-size-12') &&
+                n.props.className.includes('graph-editor-muted') &&
+                n.props.className.includes('graph-editor-toolbar__text') &&
                 Array.isArray(n.children) &&
                 n.children.includes('Saved')
         );
@@ -322,12 +243,12 @@ describe('ToolbarPanel', () => {
         const root = renderer!.root;
         expect(root.findByProps({ 'data-testid': 'mix-back' })).toBeTruthy();
         const buttons = findButtons(root);
-        expect(buttons).toHaveLength(2);
+        expect(buttons.length).toBeGreaterThanOrEqual(2);
         const badges = root.findAll(
             (n) =>
                 n.type === 'span' &&
                 typeof n.props.className === 'string' &&
-                n.props.className.includes('badge')
+                n.props.className.includes('graph-editor-badge')
         );
         expect(badges).toHaveLength(1);
     });

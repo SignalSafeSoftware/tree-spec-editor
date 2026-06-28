@@ -20,7 +20,7 @@ function findHeaderButtons(root: TestRenderer.ReactTestInstance) {
         (node) =>
             node.type === 'button' &&
             typeof node.props.className === 'string' &&
-            node.props.className.includes('btn-outline-secondary')
+            node.props.className.includes('graph-editor-btn--neutral')
     );
 }
 
@@ -41,7 +41,7 @@ describe('AdvancedJsonPanel', () => {
             (node) =>
                 node.type === 'span' &&
                 typeof node.props.className === 'string' &&
-                node.props.className.includes('fw-bold') &&
+                node.props.className.includes('graph-editor-text--bold') &&
                 Array.isArray(node.children) &&
                 node.children.includes('Advanced JSON (read-only)')
         );
@@ -70,7 +70,7 @@ describe('AdvancedJsonPanel', () => {
             (node) =>
                 node.type === 'span' &&
                 typeof node.props.className === 'string' &&
-                node.props.className.includes('fw-bold') &&
+                node.props.className.includes('graph-editor-text--bold') &&
                 Array.isArray(node.children) &&
                 node.children.includes('Compiled tree_spec')
         );
@@ -80,7 +80,7 @@ describe('AdvancedJsonPanel', () => {
             (node) =>
                 node.type === 'div' &&
                 typeof node.props.className === 'string' &&
-                node.props.className.includes('text-muted') &&
+                node.props.className.includes('graph-editor-muted') &&
                 Array.isArray(node.children) &&
                 node.children.includes('Read-only preview')
         );
@@ -103,7 +103,7 @@ describe('AdvancedJsonPanel', () => {
             (node) =>
                 node.type === 'div' &&
                 typeof node.props.className === 'string' &&
-                node.props.className.includes('btn-group')
+                node.props.className.includes('graph-editor-btn-group')
         );
         expect(buttonGroups).toHaveLength(0);
     });
@@ -200,7 +200,7 @@ describe('AdvancedJsonPanel', () => {
             (node) =>
                 node.type === 'div' &&
                 typeof node.props.className === 'string' &&
-                node.props.className.startsWith('card mt-3') &&
+                node.props.className.includes('graph-editor-card') &&
                 node.props.className.includes('shadow-sm')
         );
         expect(cards).toHaveLength(1);

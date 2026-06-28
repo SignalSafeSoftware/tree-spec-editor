@@ -1,10 +1,18 @@
 import type { ChangeEvent } from 'react';
-import { Form } from 'react-bootstrap';
 
 import {
     TREE_SPEC_NODE_TYPE_PRESETS,
     type EditorNode,
 } from '@signalsafe/tree-spec-editor-core';
+
+import {
+    EDITOR_MUTED,
+    EDITOR_SPACING_MB_2,
+    EDITOR_SPACING_MT_1,
+    EDITOR_SPACING_MT_2,
+    joinClasses,
+} from '../../ui/editorClasses.js';
+import { EditorField, EditorInput, EditorLabel, EditorSelect } from '../../ui/primitives.js';
 
 export default function NodeTypeField({
     selectedNode,
@@ -20,9 +28,9 @@ export default function NodeTypeField({
     const isPreset = (TREE_SPEC_NODE_TYPE_PRESETS as readonly string[]).includes(selectedNode.type);
 
     return (
-        <Form.Group className="mb-2">
-            <Form.Label>Type</Form.Label>
-            <Form.Select
+        <EditorField className={EDITOR_SPACING_MB_2}>
+            <EditorLabel>Type</EditorLabel>
+            <EditorSelect
                 value={isPreset ? selectedNode.type : '__custom__'}
                 onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                     const nextType = e.target.value;
@@ -35,10 +43,10 @@ export default function NodeTypeField({
                     <option key={t} value={t}>{t}</option>
                 ))}
                 <option value="__custom__">custom…</option>
-            </Form.Select>
+            </EditorSelect>
             {isPreset ? null : (
-                <Form.Control
-                    className="mt-2"
+                <EditorInput
+                    className={EDITOR_SPACING_MT_2}
                     value={selectedNode.type}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         onUpdateSelectedNode({ type: e.target.value })
@@ -47,7 +55,7 @@ export default function NodeTypeField({
                     disabled={isPublished}
                 />
             )}
-            <div className="text-muted mt-1 font-size-12">{typeHelperText}</div>
-        </Form.Group>
+            <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_MT_1)}>{typeHelperText}</div>
+        </EditorField>
     );
 }
