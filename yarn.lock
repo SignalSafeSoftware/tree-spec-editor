@@ -417,7 +417,7 @@
     "@signalsafe/tree-spec" "^0.3.3"
     dagre "^0.8.5"
 
-"@signalsafe/tree-spec-editor-react@^0.2.0":
+"@signalsafe/tree-spec-editor-react@^0.2.1":
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@signalsafe/tree-spec-editor-react/-/tree-spec-editor-react-0.2.1.tgz#923df90f0c5cceb24a4d3dfe1bddc1167f2dd8f6"
   integrity sha512-UhYwOFwyCT6ZlEzk3aGoVdiyX0vK+ZvEMBgL4eAzv//bjji97kOSThFTdYvfWJJD5Iev+pQOHI6kcqkejzcR5g==
