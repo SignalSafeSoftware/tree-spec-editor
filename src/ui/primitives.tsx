@@ -1,4 +1,11 @@
-import type { ButtonHTMLAttributes, InputHTMLAttributes, LabelHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react';
+import type {
+    ButtonHTMLAttributes,
+    InputHTMLAttributes,
+    LabelHTMLAttributes,
+    ReactNode,
+    SelectHTMLAttributes,
+    TextareaHTMLAttributes,
+} from 'react';
 
 import {
     EDITOR_BTN,
@@ -17,7 +24,7 @@ export function EditorButton({
     className,
     children,
     ...rest
-}: ButtonHTMLAttributes<HTMLButtonElement> & { tone?: string }) {
+}: Readonly<ButtonHTMLAttributes<HTMLButtonElement> & { tone?: string }>) {
     return (
         <button type="button" className={joinClasses(editorBtnToneClass(tone), className)} {...rest}>
             {children}
@@ -29,7 +36,7 @@ export function EditorIconButton({
     className,
     children,
     ...rest
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
+}: Readonly<ButtonHTMLAttributes<HTMLButtonElement>>) {
     return (
         <button type="button" className={joinClasses(`${EDITOR_BTN} graph-editor-btn--icon`, className)} {...rest}>
             {children}
@@ -41,7 +48,7 @@ export function EditorCloseButton({
     className,
     label = 'Close',
     ...rest
-}: ButtonHTMLAttributes<HTMLButtonElement> & { label?: string }) {
+}: Readonly<ButtonHTMLAttributes<HTMLButtonElement> & { label?: string }>) {
     return (
         <button
             type="button"
@@ -57,7 +64,7 @@ export function EditorCloseButton({
 export function EditorInput({
     className,
     ...rest
-}: InputHTMLAttributes<HTMLInputElement>) {
+}: Readonly<InputHTMLAttributes<HTMLInputElement>>) {
     return <input className={joinClasses(EDITOR_INPUT, className)} {...rest} />;
 }
 
@@ -65,7 +72,7 @@ export function EditorSelect({
     className,
     children,
     ...rest
-}: SelectHTMLAttributes<HTMLSelectElement>) {
+}: Readonly<SelectHTMLAttributes<HTMLSelectElement>>) {
     return (
         <select className={joinClasses(EDITOR_SELECT, className)} {...rest}>
             {children}
@@ -76,17 +83,17 @@ export function EditorSelect({
 export function EditorTextarea({
     className,
     ...rest
-}: TextareaHTMLAttributes<HTMLTextAreaElement>) {
+}: Readonly<TextareaHTMLAttributes<HTMLTextAreaElement>>) {
     return <textarea className={joinClasses(EDITOR_TEXTAREA, className)} {...rest} />;
 }
 
 export function EditorField({
     className,
     children,
-}: {
+}: Readonly<{
     className?: string;
     children: ReactNode;
-}) {
+}>) {
     return <div className={joinClasses(EDITOR_FIELD, className)}>{children}</div>;
 }
 
@@ -94,7 +101,7 @@ export function EditorLabel({
     className,
     children,
     ...rest
-}: LabelHTMLAttributes<HTMLLabelElement>) {
+}: Readonly<LabelHTMLAttributes<HTMLLabelElement>>) {
     return (
         <label className={joinClasses(EDITOR_FIELD_LABEL, className)} {...rest}>
             {children}
@@ -106,7 +113,7 @@ export function EditorCheckbox({
     className,
     label,
     ...rest
-}: InputHTMLAttributes<HTMLInputElement> & { label?: ReactNode }) {
+}: Readonly<InputHTMLAttributes<HTMLInputElement> & { label?: ReactNode }>) {
     return (
         <label className={joinClasses(EDITOR_CHECKBOX, className)}>
             <input type="checkbox" {...rest} />
@@ -119,7 +126,7 @@ export function EditorSwitch({
     className,
     label,
     ...rest
-}: InputHTMLAttributes<HTMLInputElement> & { label?: ReactNode }) {
+}: Readonly<InputHTMLAttributes<HTMLInputElement> & { label?: ReactNode }>) {
     return (
         <label className={joinClasses(`${EDITOR_CHECKBOX} graph-editor-checkbox--switch`, className)}>
             <input type="checkbox" role="switch" {...rest} />
