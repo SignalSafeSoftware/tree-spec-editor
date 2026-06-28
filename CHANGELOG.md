@@ -19,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `@signalsafe/tree-spec-editor-react@^0.2.0`
 - Raised the supported Node.js baseline to Node 22.12+.
 
+### Fixed
+
+- Addressed SonarCloud maintainability findings by marking editor shell component props as read-only across panels, modals, inspector fields, toolbar helpers, and UI primitives.
+- Addressed SonarCloud consistency findings by using `export…from` for shared toolbar constant re-exports.
+
 ### Notes
 
 - This release does not include `react-bootstrap` or `bootstrap`.
