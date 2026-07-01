@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.4] - 2026-07-01
+
+### Added
+
+- Semantic class hooks for the choices inspector row layout: `graph-editor-list__item--choice-inspector`, `graph-editor-choice-inspector-header`, and `graph-editor-choice-inspector-actions`.
+- Exported the new hooks from the package barrel.
+- Tests asserting choice inspector semantic classes render on `ChoiceEditorCard`.
+
+### Notes
+
+- Additive release only — default layout is unchanged when host CSS does not target the new hooks.
+- Pairs with `@signalsafe/tree-spec-editor-theme-bootstrap@0.3.2` choice-inspector styling slice.
+- Republished under `v0.3.4` after `v0.3.3` was already tagged.
+
 ## [0.3.3] - 2026-07-01
 
 ### Added
@@ -19,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Additive release only — default layout is unchanged when host CSS does not target the new hooks.
 - Pairs with `@signalsafe/tree-spec-editor-theme-bootstrap@0.3.1` choice-inspector styling slice.
+- Superseded on npm by `0.3.4` (tag collision).
 
 ## [0.3.2] - 2026-06-30
 
