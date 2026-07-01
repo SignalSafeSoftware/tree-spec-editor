@@ -83,6 +83,9 @@ export {
     EDITOR_BTN_TOOLBAR_ADD,
     EDITOR_EMPTY_STATE,
     EDITOR_LIST_ITEM_WITH_DELETE,
+    EDITOR_LIST_ITEM_CHOICE_INSPECTOR,
+    EDITOR_CHOICE_INSPECTOR_HEADER,
+    EDITOR_CHOICE_INSPECTOR_ACTIONS,
 } from './ui/editorClasses.js';
 
 export { default as PanelHeaderCollapseCarets } from './lib/PanelHeaderCollapseCarets.js';

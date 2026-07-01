@@ -10,13 +10,14 @@ import {
 
 import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../../lib/selectionStyles.js';
 import {
-    EDITOR_FLEX_ALIGN_END,
+    EDITOR_CHOICE_INSPECTOR_ACTIONS,
+    EDITOR_CHOICE_INSPECTOR_HEADER,
     EDITOR_FLEX_BETWEEN,
     EDITOR_FLEX_FILL,
     EDITOR_FLEX_GROW_1,
     EDITOR_FLEX_ROW,
-    EDITOR_FLEX_SHRINK_0,
     EDITOR_LIST_ITEM,
+    EDITOR_LIST_ITEM_CHOICE_INSPECTOR,
     EDITOR_MIN_W_0,
     EDITOR_SPACING_MB_0,
     EDITOR_SPACING_MB_1,
@@ -89,12 +90,13 @@ export default function ChoiceEditorCard({
             id={`choice-editor-${selectedNode.id}-${choice.id}`}
             className={joinClasses(
                 EDITOR_LIST_ITEM,
+                EDITOR_LIST_ITEM_CHOICE_INSPECTOR,
                 isFocused && LIST_SELECTION_CLASS,
                 isFocused && LIST_SELECTION_TEXT_CLASS,
             )}
             onFocusCapture={() => onFocusChoice?.(choice.id)}
         >
-            <div className={joinClasses(EDITOR_FLEX_BETWEEN, EDITOR_SPACING_MB_2, EDITOR_FLEX_ALIGN_END)}>
+            <div className={joinClasses(EDITOR_CHOICE_INSPECTOR_HEADER, EDITOR_FLEX_BETWEEN, EDITOR_SPACING_MB_2)}>
                 <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_GROW_1, EDITOR_MIN_W_0, 'graph-editor-flex--gap')}>
                     {showTypeSelect ? (
                         <EditorField className={joinClasses(EDITOR_SPACING_MB_0, EDITOR_FLEX_FILL, EDITOR_MIN_W_0)}>
@@ -162,7 +164,7 @@ export default function ChoiceEditorCard({
                         </EditorField>
                     )}
                 </div>
-                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_SHRINK_0, 'graph-editor-flex--gap')}>
+                <div className={EDITOR_CHOICE_INSPECTOR_ACTIONS}>
                     {onMoveChoice ? (
                         <>
                             <span

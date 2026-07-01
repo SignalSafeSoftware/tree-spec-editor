@@ -15,7 +15,10 @@ import {
     EDITOR_BTN_PANEL_COLLAPSE,
     EDITOR_BTN_PANEL_EXPAND,
     EDITOR_BTN_TOOLBAR_ADD,
+    EDITOR_CHOICE_INSPECTOR_ACTIONS,
+    EDITOR_CHOICE_INSPECTOR_HEADER,
     EDITOR_EMPTY_STATE,
+    EDITOR_LIST_ITEM_CHOICE_INSPECTOR,
     EDITOR_LIST_ITEM_WITH_DELETE,
 } from '../../src/ui/editorClasses';
 import { choiceActionIconProps } from '../../src/panels/inspector/choiceActionIconProps';
@@ -205,6 +208,25 @@ describe('semantic icon and bridge classes', () => {
             (node) => node.props.role === 'button' && node.props['aria-label'] === 'Delete choice',
         )[0];
         expect(deleteChoice.props.className).toContain(EDITOR_ACTION_ICON_DELETE);
+
+        const choiceRow = renderer!.root.findByProps({
+            id: 'choice-editor-review-yes',
+        });
+        expect(choiceRow.props.className).toContain(EDITOR_LIST_ITEM_CHOICE_INSPECTOR);
+
+        const choiceHeader = choiceRow.findAll(
+            (node) =>
+                typeof node.props.className === 'string' &&
+                node.props.className.includes(EDITOR_CHOICE_INSPECTOR_HEADER),
+        )[0];
+        expect(choiceHeader).toBeDefined();
+
+        const choiceActions = choiceRow.findAll(
+            (node) =>
+                typeof node.props.className === 'string' &&
+                node.props.className.includes(EDITOR_CHOICE_INSPECTOR_ACTIONS),
+        )[0];
+        expect(choiceActions).toBeDefined();
     });
 
     it('InspectorPanel empty state uses graph-editor-empty-state', async () => {

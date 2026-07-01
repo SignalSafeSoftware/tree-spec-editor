@@ -1,6 +1,6 @@
 {
     "name": "@signalsafe/tree-spec-editor",
-    "version": "0.3.2",
+    "version": "0.3.3",
     "type": "module",
     "description": "UI-kit agnostic TreeSpec graph editor shell (React Flow canvas, panels, modals, toolbar).",
     "license": "MIT",

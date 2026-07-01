@@ -27,6 +27,9 @@ export const EDITOR_ACTION_ICON_MOVE_DOWN = 'graph-editor-action-icon--move-down
 export const EDITOR_ACTION_ICON_DELETE = 'graph-editor-action-icon--delete';
 export const EDITOR_EMPTY_STATE = 'graph-editor-empty-state';
 export const EDITOR_LIST_ITEM_WITH_DELETE = 'graph-editor-list__item--with-delete';
+export const EDITOR_LIST_ITEM_CHOICE_INSPECTOR = 'graph-editor-list__item--choice-inspector';
+export const EDITOR_CHOICE_INSPECTOR_HEADER = 'graph-editor-choice-inspector-header';
+export const EDITOR_CHOICE_INSPECTOR_ACTIONS = 'graph-editor-choice-inspector-actions';
 export const EDITOR_BADGE = 'graph-editor-badge';
 
 export const EDITOR_MODAL = 'graph-editor-modal';
