@@ -20,8 +20,12 @@ import {
     EDITOR_FLEX_ROW,
     EDITOR_FLEX_SHRINK_0,
     EDITOR_HIDDEN,
+    EDITOR_BTN_DELETE_NODE,
+    EDITOR_BTN_PANEL_ADD_NODE,
+    EDITOR_EMPTY_STATE,
     EDITOR_LIST,
     EDITOR_LIST_ITEM,
+    EDITOR_LIST_ITEM_WITH_DELETE,
     EDITOR_MIN_W_0,
     EDITOR_MUTED,
     EDITOR_SCROLL,
@@ -134,7 +138,11 @@ export default function NodesPanel({
                 </div>
                 {onAddNode ? (
                     <EditorIconButton
-                        className={joinClasses(EDITOR_FLEX_SHRINK_0, 'graph-editor-btn--primary')}
+                        className={joinClasses(
+                            EDITOR_FLEX_SHRINK_0,
+                            'graph-editor-btn--primary',
+                            EDITOR_BTN_PANEL_ADD_NODE,
+                        )}
                         aria-label="Add node"
                         title="Add node"
                         onClick={onAddNode}
@@ -152,8 +160,8 @@ export default function NodesPanel({
                 />
                 <div className={joinClasses(EDITOR_SCROLL, 'overflow-auto-max-h-320')}>
                     {filteredNodes.length === 0 ? (
-                        <div className={EDITOR_LIST}>
-                            <div className={joinClasses(EDITOR_LIST_ITEM, EDITOR_MUTED, 'graph-editor-text--sm')}>
+                            <div className={EDITOR_LIST}>
+                            <div className={joinClasses(EDITOR_LIST_ITEM, EDITOR_MUTED, EDITOR_EMPTY_STATE, 'graph-editor-text--sm')}>
                                 No matching nodes.
                             </div>
                         </div>
@@ -167,6 +175,7 @@ export default function NodesPanel({
                                         key={n.id}
                                         className={joinClasses(
                                             EDITOR_LIST_ITEM,
+                                            onDeleteNode && EDITOR_LIST_ITEM_WITH_DELETE,
                                             isSelected && LIST_SELECTION_CLASS,
                                             isSelected && LIST_SELECTION_TEXT_CLASS,
                                         )}
@@ -230,6 +239,7 @@ export default function NodesPanel({
                                                 <EditorIconButton
                                                     className={joinClasses(
                                                         EDITOR_FLEX_SHRINK_0,
+                                                        EDITOR_BTN_DELETE_NODE,
                                                         isPublished
                                                             ? 'graph-editor-btn--disabled'
                                                             : 'graph-editor-btn--danger',

@@ -15,6 +15,7 @@
  */
 import ChoiceEditorList from './inspector/ChoiceEditorList.js';
 import RequiredNodeCard from './inspector/RequiredNodeCard.js';
+import { EDITOR_EMPTY_STATE, EDITOR_MUTED, joinClasses } from '../ui/editorClasses.js';
 import {
     DEFAULT_OUTCOME_OPTIONS,
     DEFAULT_TYPE_HELPER_TEXT,
@@ -86,7 +87,7 @@ export default function InspectorPanel({
                     />
                 </>
             ) : (
-                <div className="graph-editor-muted"><em>{emptyStateText}</em></div>
+                <div className={joinClasses(EDITOR_MUTED, EDITOR_EMPTY_STATE)}><em>{emptyStateText}</em></div>
             )}
         </div>
     );

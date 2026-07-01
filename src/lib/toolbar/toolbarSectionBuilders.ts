@@ -1,4 +1,5 @@
 import { TOOLBAR_ITEM_KIND, type ToolbarItem } from '../../panels/ToolbarPanel.js';
+import { EDITOR_BTN_TOOLBAR_ADD } from '../../ui/editorClasses.js';
 
 import type {
     BuildDefaultToolbarSpecOptions,
@@ -49,6 +50,7 @@ export function appendAddDropdown(
         label: labels.add ?? '+ Add',
         disabled: isPublished,
         entries: addEntries,
+        summaryClassName: EDITOR_BTN_TOOLBAR_ADD,
     });
 }
 

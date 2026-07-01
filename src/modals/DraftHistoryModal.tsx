@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import type { EditorTree, TreeSpecSnapshotItem } from '@signalsafe/tree-spec-editor-core';
 
 import {
+    EDITOR_EMPTY_STATE,
     EDITOR_FLEX_BETWEEN,
     EDITOR_MODAL,
     EDITOR_MODAL_BODY,
@@ -85,7 +86,7 @@ export default function DraftHistoryModal({
         snapshotsContent = <div className={EDITOR_MUTED}>{loadingText}</div>;
     } else if (snapshots.length === 0) {
         snapshotsContent = (
-            <div className={EDITOR_MUTED}>
+            <div className={joinClasses(EDITOR_MUTED, EDITOR_EMPTY_STATE)}>
                 <em>{emptyStateText}</em>
             </div>
         );

@@ -1,3 +1,4 @@
+import { EDITOR_BTN_PANEL_COLLAPSE, EDITOR_BTN_PANEL_EXPAND } from '../ui/editorClasses.js';
 import { EditorIconButton } from '../ui/primitives.js';
 
 export interface PanelHeaderCollapseCaretsProps {
@@ -12,6 +13,7 @@ export default function PanelHeaderCollapseCarets({
 }: Readonly<PanelHeaderCollapseCaretsProps>) {
     return (
         <EditorIconButton
+            className={expanded ? EDITOR_BTN_PANEL_COLLAPSE : EDITOR_BTN_PANEL_EXPAND}
             aria-expanded={expanded}
             aria-label={expanded ? 'Collapse panel' : 'Expand panel'}
             onClick={onToggle}

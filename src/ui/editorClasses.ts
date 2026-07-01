@@ -15,6 +15,18 @@ export const EDITOR_CHECKBOX = 'graph-editor-checkbox';
 
 export const EDITOR_BTN = 'graph-editor-btn';
 export const EDITOR_BTN_ICON = 'graph-editor-btn graph-editor-btn--icon';
+export const EDITOR_BTN_TOOLBAR_ADD = 'graph-editor-btn--toolbar-add';
+export const EDITOR_BTN_PANEL_ADD_NODE = 'graph-editor-btn--panel-add-node';
+export const EDITOR_BTN_PANEL_ADD_CHOICE = 'graph-editor-btn--panel-add-choice';
+export const EDITOR_BTN_PANEL_COLLAPSE = 'graph-editor-btn--panel-collapse';
+export const EDITOR_BTN_PANEL_EXPAND = 'graph-editor-btn--panel-expand';
+export const EDITOR_BTN_DELETE_NODE = 'graph-editor-btn--delete-node';
+export const EDITOR_ACTION_ICON = 'graph-editor-action-icon';
+export const EDITOR_ACTION_ICON_MOVE_UP = 'graph-editor-action-icon--move-up';
+export const EDITOR_ACTION_ICON_MOVE_DOWN = 'graph-editor-action-icon--move-down';
+export const EDITOR_ACTION_ICON_DELETE = 'graph-editor-action-icon--delete';
+export const EDITOR_EMPTY_STATE = 'graph-editor-empty-state';
+export const EDITOR_LIST_ITEM_WITH_DELETE = 'graph-editor-list__item--with-delete';
 export const EDITOR_BADGE = 'graph-editor-badge';
 
 export const EDITOR_MODAL = 'graph-editor-modal';

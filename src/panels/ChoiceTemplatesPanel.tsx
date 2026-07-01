@@ -6,6 +6,7 @@ import {
     EDITOR_CARD,
     EDITOR_CARD_BODY,
     EDITOR_CARD_HEADER,
+    EDITOR_EMPTY_STATE,
     EDITOR_FLEX_BETWEEN,
     EDITOR_FLEX_ROW,
     EDITOR_FLEX_WRAP,
@@ -77,7 +78,7 @@ export default function ChoiceTemplatesPanel({
                         ))}
                     </div>
                 ) : (
-                    <p className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_MB_0)}>
+                    <p className={joinClasses(EDITOR_MUTED, EDITOR_EMPTY_STATE, 'graph-editor-text--sm', EDITOR_SPACING_MB_0)}>
                         Select a node to add preset choices.
                     </p>
                 )}

@@ -12,6 +12,7 @@ import {
     EDITOR_FLEX_ROW,
     EDITOR_FLEX_SHRINK_0,
     EDITOR_HIDDEN,
+    EDITOR_BTN_DELETE_NODE,
     EDITOR_MIN_W_0,
     EDITOR_SPACING_MB_2,
     joinClasses,
@@ -55,6 +56,7 @@ export default function RequiredNodeCard({
                     <EditorIconButton
                         className={joinClasses(
                             EDITOR_FLEX_SHRINK_0,
+                            EDITOR_BTN_DELETE_NODE,
                             isPublished ? 'graph-editor-btn--disabled' : 'graph-editor-btn--danger',
                         )}
                         aria-label="Delete node"

@@ -22,6 +22,7 @@ import {
     EDITOR_CARD_HEADER,
     EDITOR_FLEX_ROW,
     EDITOR_HIDDEN,
+    EDITOR_EMPTY_STATE,
     EDITOR_MIN_W_0,
     EDITOR_MUTED,
     EDITOR_SPACING_MB_2,
@@ -260,7 +261,7 @@ export default function AppearancePanel({
                         ) : null}
                     </>
                 ) : (
-                    <div className={EDITOR_MUTED}>
+                    <div className={joinClasses(EDITOR_MUTED, EDITOR_EMPTY_STATE)}>
                         <em>{emptyStateText}</em>
                     </div>
                 )}

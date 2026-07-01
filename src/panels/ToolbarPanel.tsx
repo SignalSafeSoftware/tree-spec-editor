@@ -61,6 +61,8 @@ export interface ToolbarDropdownItem {
     variant?: string;
     disabled?: boolean;
     className?: string;
+    /** Optional className on the dropdown `<summary>` toggle (e.g. icon hook modifiers). */
+    summaryClassName?: string;
 }
 
 export interface ToolbarBadgeItem {
@@ -122,6 +124,7 @@ function renderItem(item: ToolbarItem): ReactNode {
                     <summary
                         className={joinClasses(
                             editorBtnToneClass(item.variant),
+                            item.summaryClassName,
                             item.disabled && 'graph-editor-btn--disabled',
                         )}
                     >

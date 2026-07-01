@@ -172,6 +172,7 @@ export default function ChoiceEditorCard({
                                     undefined,
                                     isPublished || !canMoveUp,
                                     '↑',
+                                    'move-up',
                                 )}
                             />
                             <span
@@ -181,6 +182,7 @@ export default function ChoiceEditorCard({
                                     undefined,
                                     isPublished || !canMoveDown,
                                     '↓',
+                                    'move-down',
                                 )}
                             />
                         </>
@@ -192,6 +194,7 @@ export default function ChoiceEditorCard({
                             'graph-editor-action-icon--danger',
                             isPublished,
                             '×',
+                            'delete',
                         )}
                     />
                 </div>

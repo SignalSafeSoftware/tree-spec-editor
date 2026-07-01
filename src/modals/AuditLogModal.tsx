@@ -7,6 +7,7 @@ import type { TreeSpecAuditEventItem } from '@signalsafe/tree-spec-editor-core';
 
 import {
     EDITOR_BADGE,
+    EDITOR_EMPTY_STATE,
     EDITOR_FLEX_BETWEEN,
     EDITOR_MODAL,
     EDITOR_MODAL_BODY,
@@ -64,7 +65,7 @@ export default function AuditLogModal({
         auditContent = <div className={EDITOR_MUTED}>{loadingText}</div>;
     } else if (auditEvents.length === 0) {
         auditContent = (
-            <div className={EDITOR_MUTED}>
+            <div className={joinClasses(EDITOR_MUTED, EDITOR_EMPTY_STATE)}>
                 <em>{emptyStateText}</em>
             </div>
         );

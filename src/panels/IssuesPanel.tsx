@@ -20,6 +20,7 @@ import {
     EDITOR_FLEX_ROW,
     EDITOR_FLEX_SHRINK_0,
     EDITOR_HIDDEN,
+    EDITOR_EMPTY_STATE,
     EDITOR_LIST,
     EDITOR_LIST_ITEM,
     EDITOR_MIN_W_0,
@@ -152,7 +153,7 @@ export default function IssuesPanel({
             >
                 {issues.length === 0 ? (
                     <div className={EDITOR_LIST}>
-                        <div className={joinClasses(EDITOR_LIST_ITEM, EDITOR_MUTED, 'graph-editor-text--sm')}>
+                        <div className={joinClasses(EDITOR_LIST_ITEM, EDITOR_MUTED, EDITOR_EMPTY_STATE, 'graph-editor-text--sm')}>
                             <em>No issues</em>
                         </div>
                     </div>
@@ -167,7 +168,7 @@ export default function IssuesPanel({
                         <div className={joinClasses(EDITOR_SCROLL, 'overflow-auto-max-h-320')}>
                             {issueEntries.length === 0 ? (
                                 <div className={EDITOR_LIST}>
-                                    <div className={joinClasses(EDITOR_LIST_ITEM, EDITOR_MUTED, 'graph-editor-text--sm')}>
+                                    <div className={joinClasses(EDITOR_LIST_ITEM, EDITOR_MUTED, EDITOR_EMPTY_STATE, 'graph-editor-text--sm')}>
                                         <em>No matching issues.</em>
                                     </div>
                                 </div>

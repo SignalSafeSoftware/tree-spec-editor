@@ -12,6 +12,8 @@ import {
     EDITOR_FLEX_ROW,
     EDITOR_FLEX_SHRINK_0,
     EDITOR_HIDDEN,
+    EDITOR_BTN_PANEL_ADD_CHOICE,
+    EDITOR_EMPTY_STATE,
     EDITOR_LIST,
     EDITOR_MIN_W_0,
     EDITOR_MUTED,
@@ -78,6 +80,7 @@ export default function ChoiceEditorList({
                     <EditorIconButton
                         className={joinClasses(
                             EDITOR_FLEX_SHRINK_0,
+                            EDITOR_BTN_PANEL_ADD_CHOICE,
                             isPublished ? 'graph-editor-btn--disabled' : 'graph-editor-btn--primary',
                         )}
                         aria-label="Add choice"
@@ -94,7 +97,7 @@ export default function ChoiceEditorList({
                 aria-hidden={!choicesExpanded}
             >
                 {choices.length === 0 ? (
-                    <div className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm', EDITOR_SPACING_PY_3, EDITOR_SPACING_PX_3)}>
+                    <div className={joinClasses(EDITOR_MUTED, EDITOR_EMPTY_STATE, 'graph-editor-text--sm', EDITOR_SPACING_PY_3, EDITOR_SPACING_PX_3)}>
                         <em>No choices</em>
                     </div>
                 ) : (

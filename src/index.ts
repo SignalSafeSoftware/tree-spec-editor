@@ -70,6 +70,21 @@ export type { IssueSeverityToken } from './lib/panelHelpers.js';
 
 export { LIST_SELECTION_CLASS, CANVAS_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS, CANVAS_SELECTION_TEXT_CLASS } from './lib/selectionStyles.js';
 
+export {
+    EDITOR_ACTION_ICON,
+    EDITOR_ACTION_ICON_DELETE,
+    EDITOR_ACTION_ICON_MOVE_DOWN,
+    EDITOR_ACTION_ICON_MOVE_UP,
+    EDITOR_BTN_DELETE_NODE,
+    EDITOR_BTN_PANEL_ADD_CHOICE,
+    EDITOR_BTN_PANEL_ADD_NODE,
+    EDITOR_BTN_PANEL_COLLAPSE,
+    EDITOR_BTN_PANEL_EXPAND,
+    EDITOR_BTN_TOOLBAR_ADD,
+    EDITOR_EMPTY_STATE,
+    EDITOR_LIST_ITEM_WITH_DELETE,
+} from './ui/editorClasses.js';
+
 export { default as PanelHeaderCollapseCarets } from './lib/PanelHeaderCollapseCarets.js';
 
 export { buildDefaultToolbarSpec } from './lib/buildDefaultToolbarSpec.js';
