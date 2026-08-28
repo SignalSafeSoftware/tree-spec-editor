@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.6] - 2026-08-28
+
+### Changed
+
+- Require `@signalsafe/tree-spec` **^0.3.4**, `@signalsafe/tree-spec-editor-core` **^0.1.6**, and `@signalsafe/tree-spec-editor-react` **^0.2.5**.
+
 ## [0.3.5] - 2026-08-28
 
 ### Added
@@ -119,7 +125,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Checks and tests on every PR; Sonar **`scan`** is label-gated on PRs and runs on tag push and manual dispatch (Batch 1).
 - Publish only from manual **`main`** dispatch or **`v*`** tags (not PR labels); publish requires **`checks`**, **`tests`**, and **`scan`**.
 
-[Unreleased]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.3.5...HEAD
+[Unreleased]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.3.6...HEAD
+[0.3.6]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.3.5...v0.3.6
 [0.3.5]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.3.4...v0.3.5
 [0.3.1]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.2.3...v0.3.0
