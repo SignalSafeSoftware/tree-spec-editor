@@ -44,6 +44,10 @@ export interface GraphEditorInfoPanelProps {
     autosaveStatus: AutosaveStatus;
     /** Last validation time (ISO), or `null` if never validated in this session. */
     lastValidatedAt: string | null;
+    /** Optional number of nodes in the current tree. */
+    nodeCount?: number;
+    /** Optional number of transitions in the current tree. */
+    transitionCount?: number;
     /** Optional card header title. Defaults to "Info". */
     title?: string;
     /** Optional formatter for ISO timestamps. Defaults to `new Date(iso).toLocaleString()`. */
@@ -86,6 +90,8 @@ export default function GraphEditorInfoPanel({
     isPublished,
     autosaveStatus,
     lastValidatedAt,
+    nodeCount,
+    transitionCount,
     title = 'Info',
     formatTimestamp = defaultFormatTimestamp,
     defaultEdgeType = 'smoothstep',
@@ -116,6 +122,10 @@ export default function GraphEditorInfoPanel({
                                 </span>
                             }
                         />
+                        {nodeCount !== undefined ? <PropertyRow label="Nodes" value={nodeCount} /> : null}
+                        {transitionCount !== undefined ? (
+                            <PropertyRow label="Transitions" value={transitionCount} />
+                        ) : null}
                         <PropertyRow
                             label="Save state"
                             value={

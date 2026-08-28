@@ -61,6 +61,31 @@ describe('GraphEditorInfoPanel', () => {
         expect(text).toContain('Not validated');
     });
 
+    it('renders optional node and transition counts in the property table', async () => {
+        await act(async () => {
+            renderer = TestRenderer.create(
+                React.createElement(GraphEditorInfoPanel, {
+                    scenarioId: 'sc-1',
+                    versionId: 'ver-2',
+                    name: 'Phishing intro',
+                    createdAt: null,
+                    updatedAt: null,
+                    isPublished: false,
+                    autosaveStatus: AUTOSAVE_STATUS.IDLE,
+                    lastValidatedAt: null,
+                    nodeCount: 17,
+                    transitionCount: 74,
+                }),
+            );
+        });
+
+        const text = JSON.stringify(renderer!.toJSON());
+        expect(text).toContain('Nodes');
+        expect(text).toContain('17');
+        expect(text).toContain('Transitions');
+        expect(text).toContain('74');
+    });
+
     it('renders global default edge type when update callback is provided', async () => {
         const onUpdateDefaultEdgeType = vi.fn();
 

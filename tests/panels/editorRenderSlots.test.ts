@@ -2,6 +2,7 @@ import React from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import InspectorPanel from '../../src/panels/InspectorPanel';
+import type { InspectorNodeRenderContext } from '../../src/panels/InspectorPanel';
 import SelectedEdgePanel from '../../src/panels/SelectedEdgePanel';
 import type { EditorNode, EditorTree } from '@signalsafe/tree-spec-editor-core';
 
@@ -35,7 +36,16 @@ describe('editor render slots', () => {
         renderer = null;
     });
 
-    it('InspectorPanel renders renderExtraNodeFields and renderExtraChoiceFields slots', async () => {
+    it('InspectorPanel renders prompt, node, and choice extension slots', async () => {
+        const promptSlot = vi.fn((ctx: InspectorNodeRenderContext) => React.createElement(
+            'button',
+            {
+                type: 'button',
+                'data-testid': 'prompt-field',
+                onClick: () => ctx.onUpdateNode({ prompt: 'Updated prompt' }),
+            },
+            ctx.node.prompt,
+        ));
         const nodeSlot = vi.fn(() => React.createElement('div', { 'data-testid': 'extra-node' }, 'node slot'));
         const choiceSlot = vi.fn(() => React.createElement('div', { 'data-testid': 'extra-choice' }, 'choice slot'));
 
@@ -48,14 +58,18 @@ describe('editor render slots', () => {
                     onAddChoice: vi.fn(),
                     onDeleteChoice: vi.fn(),
                     onSetChoiceOutcome: vi.fn(),
+                    renderPromptField: promptSlot,
                     renderExtraNodeFields: nodeSlot,
                     renderExtraChoiceFields: choiceSlot,
                 }),
             );
         });
 
+        expect(renderer!.root.findByProps({ 'data-testid': 'prompt-field' })).toBeTruthy();
         expect(renderer!.root.findByProps({ 'data-testid': 'extra-node' })).toBeTruthy();
         expect(renderer!.root.findByProps({ 'data-testid': 'extra-choice' })).toBeTruthy();
+        expect(renderer!.root.findAll((node) => node.type === 'textarea')).toHaveLength(0);
+        expect(promptSlot).toHaveBeenCalled();
         expect(nodeSlot).toHaveBeenCalled();
         expect(choiceSlot).toHaveBeenCalled();
     });

@@ -29,6 +29,7 @@ export default function RequiredNodeCard({
     typeHelperText,
     onUpdateSelectedNode,
     onDeleteSelectedNode,
+    renderPromptField,
     renderExtraNodeFields,
 }: Readonly<{
     tree: EditorTree;
@@ -38,6 +39,7 @@ export default function RequiredNodeCard({
     typeHelperText: string;
     onUpdateSelectedNode: (patch: Partial<EditorNode>) => void;
     onDeleteSelectedNode?: () => void;
+    renderPromptField?: (ctx: InspectorNodeRenderContext) => ReactNode;
     renderExtraNodeFields?: (ctx: InspectorNodeRenderContext) => ReactNode;
 }>) {
     const [requiredExpanded, setRequiredExpanded] = useState(true);
@@ -78,16 +80,25 @@ export default function RequiredNodeCard({
                     onUpdateSelectedNode={onUpdateSelectedNode}
                     typeHelperText={typeHelperText}
                 />
-                <EditorField className={EDITOR_SPACING_MB_2}>
-                    <EditorLabel>Prompt</EditorLabel>
-                    <EditorTextarea
-                        rows={4}
-                        value={selectedNode.prompt}
-                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                            onUpdateSelectedNode({ prompt: e.target.value })
-                        }
-                    />
-                </EditorField>
+                {renderPromptField ? (
+                    renderPromptField({
+                        tree,
+                        node: selectedNode,
+                        isPublished,
+                        onUpdateNode: onUpdateSelectedNode,
+                    })
+                ) : (
+                    <EditorField className={EDITOR_SPACING_MB_2}>
+                        <EditorLabel>Prompt</EditorLabel>
+                        <EditorTextarea
+                            rows={4}
+                            value={selectedNode.prompt}
+                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                                onUpdateSelectedNode({ prompt: e.target.value })
+                            }
+                        />
+                    </EditorField>
+                )}
                 {renderExtraNodeFields
                     ? renderExtraNodeFields({
                           tree,

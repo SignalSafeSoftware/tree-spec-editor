@@ -1,14 +1,15 @@
 /**
  * Inspector panel for the TreeSpec graph editor.
  *
- * Renders a **Required** card (Type, Prompt, optional `renderExtraNodeFields`) and a **Choices**
+ * Renders a **Required** card (Type, Prompt, optional prompt/node-field slots) and a **Choices**
  * card (list-group rows with Label / Next / Outcome / delete). Hosts inject project-specific UI through optional render-prop slots:
  *
  *   - `outcomeOptions`: override the END-transition outcome `<select>` options
  *     (default = the three canonical `TerminalOutcome` values from `@signalsafe/tree-spec`).
  *   - `hideOutcomeField`: hide the outcome `<select>` entirely when the host manages outcomes
  *     elsewhere.
- *   - `renderExtraNodeFields`: render additional UI below the prompt textarea, scoped to the
+ *   - `renderPromptField`: replace the default prompt textarea with host-defined UI.
+ *   - `renderExtraNodeFields`: render additional UI below the prompt field, scoped to the
  *     currently-selected node.
  *   - `renderExtraChoiceFields`: render additional UI below each choice card.
  *   - `choiceTypes` / `onSetChoiceType`: host-defined choice type catalog (stable ids).
@@ -43,6 +44,7 @@ export default function InspectorPanel({
     onSetChoiceOutcome,
     outcomeOptions = DEFAULT_OUTCOME_OPTIONS,
     hideOutcomeField = false,
+    renderPromptField,
     renderExtraNodeFields,
     renderExtraChoiceFields,
     choiceTypes,
@@ -65,6 +67,7 @@ export default function InspectorPanel({
                         typeHelperText={typeHelperText}
                         onUpdateSelectedNode={onUpdateSelectedNode}
                         onDeleteSelectedNode={onDeleteSelectedNode}
+                        renderPromptField={renderPromptField}
                         renderExtraNodeFields={renderExtraNodeFields}
                     />
                     <ChoiceEditorList

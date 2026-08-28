@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.5] - 2026-08-28
+
+### Added
+
+- Optional node and transition counts in `GraphEditorInfoPanel`'s property table.
+- `renderPromptField`, an inspector extension point that lets host applications replace the default prompt textarea while preserving the selected-node update contract.
+
+### Notes
+
+- Existing hosts retain the default prompt textarea when `renderPromptField` is omitted.
+
 ## [0.3.4] - 2026-07-01
 
 ### Added
@@ -108,7 +119,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Checks and tests on every PR; Sonar **`scan`** is label-gated on PRs and runs on tag push and manual dispatch (Batch 1).
 - Publish only from manual **`main`** dispatch or **`v*`** tags (not PR labels); publish requires **`checks`**, **`tests`**, and **`scan`**.
 
-[Unreleased]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.3.5...HEAD
+[0.3.5]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.3.4...v0.3.5
 [0.3.1]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.2.3...v0.3.0
 [0.2.3]: https://github.com/SignalSafeSoftware/tree-spec-editor/releases/tag/v0.2.3

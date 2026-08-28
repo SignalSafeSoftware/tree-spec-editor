@@ -65,7 +65,13 @@ export interface InspectorPanelProps {
     /** Hide the outcome selector entirely. Useful when the host manages outcomes elsewhere. */
     hideOutcomeField?: boolean;
 
-    /** Render extra UI below the prompt textarea, scoped to the current node. */
+    /**
+     * Replace the built-in Prompt textarea while preserving the generic Type
+     * field and the rest of the inspector. The host owns the rendered editor
+     * and persists changes through `ctx.onUpdateNode`.
+     */
+    renderPromptField?: (ctx: InspectorNodeRenderContext) => ReactNode;
+    /** Render extra UI below the prompt field, scoped to the current node. */
     renderExtraNodeFields?: (ctx: InspectorNodeRenderContext) => ReactNode;
     /** Render extra UI below each choice card (after Next/Outcome). */
     renderExtraChoiceFields?: (ctx: InspectorChoiceRenderContext) => ReactNode;
