@@ -409,21 +409,21 @@
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.62.2.tgz#3671ce3f9b928d5c01f879792d5c0b60ae14d4ad"
   integrity sha512-BfzEnDJOt9T8M989/lA37EcJgat01wLRnoi5dQf3QzOH7jzpqTAzdDbVfRljVr5r+jzKqpbHeyOfAaXxAd0PAA==
 
-"@signalsafe/tree-spec-editor-core@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@signalsafe/tree-spec-editor-core/-/tree-spec-editor-core-0.1.6.tgz#7b6ed396b28d0a84033ae9aace3cd28a92408f55"
-  integrity sha512-PswEuNpSwSUngJ7o6Jn3EYVvgzQ6JPgrM7n4FKmidW+inc1LyhcWlwPHeMk33EIWMWZZufLoMWY7loS2IBV+mg==
+"@signalsafe/tree-spec-editor-core@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@signalsafe/tree-spec-editor-core/-/tree-spec-editor-core-0.2.1.tgz#d833fe82cc2f598fdffe36f12d2735e3be04bc03"
+  integrity sha512-042dZBZmA79l8K4jpsdJ2YfpYMw0YGnfZtY1Ibj7vOEy2atiycXjtJQBv27NMJnCjyxIKckvx3gIwBeEckWoTQ==
   dependencies:
     "@signalsafe/tree-spec" "^0.3.4"
     dagre "^0.8.5"
 
-"@signalsafe/tree-spec-editor-react@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@signalsafe/tree-spec-editor-react/-/tree-spec-editor-react-0.2.5.tgz#60f6d843d727cb4c9469ed421daa71b77d52fded"
-  integrity sha512-SsmV2Hx1j5EdOZsbyWOgIFnzAlri3PG4cf+z+RsP0EIXmhLoWK0kT7D3e14MDOZXHK44WOeXTTrBj5EAzhP/gw==
+"@signalsafe/tree-spec-editor-react@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@signalsafe/tree-spec-editor-react/-/tree-spec-editor-react-0.3.1.tgz#075757ee03a267e19a0d33b4262c2291914ee2b7"
+  integrity sha512-NYVDT3UZ1pXRwoFcwVNqlOxUJEZaTEF8Yy01FQ7QjrU3VkeyD9SKC0VdztlzvqAQGyC594wEuzryiVjD8SA2aA==
   dependencies:
     "@signalsafe/tree-spec" "^0.3.4"
-    "@signalsafe/tree-spec-editor-core" "^0.1.6"
+    "@signalsafe/tree-spec-editor-core" "^0.2.1"
 
 "@signalsafe/tree-spec@^0.3.4":
   version "0.3.4"

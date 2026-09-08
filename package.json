@@ -1,6 +1,6 @@
 {
     "name": "@signalsafe/tree-spec-editor",
-    "version": "0.3.6",
+    "version": "0.3.7",
     "type": "module",
     "description": "UI-kit agnostic TreeSpec graph editor shell (React Flow canvas, panels, modals, toolbar).",
     "license": "MIT",
@@ -66,8 +66,8 @@
     },
     "dependencies": {
         "@signalsafe/tree-spec": "^0.3.4",
-        "@signalsafe/tree-spec-editor-core": "^0.1.6",
-        "@signalsafe/tree-spec-editor-react": "^0.2.5"
+        "@signalsafe/tree-spec-editor-core": "^0.2.1",
+        "@signalsafe/tree-spec-editor-react": "^0.3.1"
     },
     "peerDependencies": {
         "react": "^18.0.0",
