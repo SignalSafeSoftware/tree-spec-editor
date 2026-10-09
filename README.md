@@ -689,6 +689,7 @@ function RightRail({
 - `onMoveChoice`: when set, shows up/down icon actions to reorder choices within the node.
 - `onFocusChoice`: invoked when the user focuses any control inside a choice card; use to sync canvas/node-list highlighting.
 - `renderExtraNodeFields({ tree, node, isPublished, onUpdateNode })`: render extra UI below the Prompt textarea, scoped to the currently-selected node. Use for project-specific node metadata (render hints, scoring, classification, etc.).
+- `collapsibleChoices`: render each choice as a collapsible card with a label toggle; one card is open at a time and all start collapsed (pair with `@signalsafe/tree-spec-editor-theme-bootstrap` >= 0.3.4 for toggle styling).
 - `renderExtraChoiceFields({ tree, node, choice, transition, isPublished, onUpdateNode })`: render extra UI below each choice card (after Next/Outcome). Use for project-specific per-choice metadata.
 - `onDeleteSelectedNode`: when set, shows a delete-node icon in the Required card header; wire to `useTreeSpecEditor().actions.deleteSelectedNode` (or equivalent). Disabled automatically when `isPublished` is true.
 - `title`: Required card header text (default `"Required"`).

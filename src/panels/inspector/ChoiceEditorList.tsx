@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { EditorNode, EditorTree } from '@signalsafe/tree-spec-editor-core';
 
@@ -44,6 +44,7 @@ export default function ChoiceEditorList({
     hideOutcomeField,
     renderExtraChoiceFields,
     onFocusChoice,
+    collapsibleChoices = false,
 }: Readonly<{
     tree: EditorTree;
     selectedNode: EditorNode;
@@ -61,10 +62,16 @@ export default function ChoiceEditorList({
     hideOutcomeField: boolean;
     renderExtraChoiceFields?: (ctx: InspectorChoiceRenderContext) => ReactNode;
     onFocusChoice?: (choiceId: string) => void;
+    collapsibleChoices?: boolean;
 }>) {
     const choices = selectedNode.choices ?? [];
     const [choicesExpanded, setChoicesExpanded] = useState(true);
     const usedChoiceTypeIds = new Set(choices.map((choice) => choice.id));
+    const [expandedChoiceId, setExpandedChoiceId] = useState<string | null>(null);
+
+    useEffect(() => {
+        setExpandedChoiceId(null);
+    }, [selectedNode.id]);
 
     return (
         <div className={joinClasses(EDITOR_CARD, EDITOR_SPACING_MT_3)}>
@@ -124,6 +131,11 @@ export default function ChoiceEditorList({
                                 hideOutcomeField={hideOutcomeField}
                                 renderExtraChoiceFields={renderExtraChoiceFields}
                                 onFocusChoice={onFocusChoice}
+                                collapsible={collapsibleChoices}
+                                expanded={expandedChoiceId === choice.id}
+                                onToggleExpanded={() =>
+                                    setExpandedChoiceId((current) => (current === choice.id ? null : choice.id))
+                                }
                             />
                         ))}
                     </div>

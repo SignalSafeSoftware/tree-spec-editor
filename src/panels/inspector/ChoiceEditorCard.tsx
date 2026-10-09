@@ -11,6 +11,7 @@ import {
 import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../../lib/selectionStyles.js';
 import {
     EDITOR_CHOICE_INSPECTOR_ACTIONS,
+    EDITOR_CHOICE_TOGGLE,
     EDITOR_CHOICE_INSPECTOR_HEADER,
     EDITOR_FLEX_BETWEEN,
     EDITOR_FLEX_FILL,
@@ -55,6 +56,9 @@ export default function ChoiceEditorCard({
     hideOutcomeField,
     renderExtraChoiceFields,
     onFocusChoice,
+    collapsible = false,
+    expanded = true,
+    onToggleExpanded,
 }: Readonly<{
     choice: EditorChoice;
     tree: EditorTree;
@@ -75,6 +79,9 @@ export default function ChoiceEditorCard({
     hideOutcomeField: boolean;
     renderExtraChoiceFields?: (ctx: InspectorChoiceRenderContext) => ReactNode;
     onFocusChoice?: (choiceId: string) => void;
+    collapsible?: boolean;
+    expanded?: boolean;
+    onToggleExpanded?: () => void;
 }>) {
     const transition = getTransition(tree, selectedNode.id, choice.id);
     const targetNodeId = transition?.toNodeId ?? '';
@@ -85,17 +92,9 @@ export default function ChoiceEditorCard({
     const showTypeSelect = Boolean(choiceTypes?.length && onSetChoiceType);
     const isCustomType = showTypeSelect && !knownTypeIds.has(choice.id);
 
-    return (
-        <div
-            id={`choice-editor-${selectedNode.id}-${choice.id}`}
-            className={joinClasses(
-                EDITOR_LIST_ITEM,
-                EDITOR_LIST_ITEM_CHOICE_INSPECTOR,
-                isFocused && LIST_SELECTION_CLASS,
-                isFocused && LIST_SELECTION_TEXT_CLASS,
-            )}
-            onFocusCapture={() => onFocusChoice?.(choice.id)}
-        >
+    const bodyId = `choice-editor-body-${selectedNode.id}-${choice.id}`;
+    const body = (
+        <>
             <div className={joinClasses(EDITOR_CHOICE_INSPECTOR_HEADER, EDITOR_FLEX_BETWEEN, EDITOR_SPACING_MB_2)}>
                 <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_GROW_1, EDITOR_MIN_W_0, 'graph-editor-flex--gap')}>
                     {showTypeSelect ? (
@@ -237,6 +236,38 @@ export default function ChoiceEditorCard({
                       onUpdateNode: onUpdateSelectedNode,
                   })
                 : null}
+        </>
+    );
+
+    return (
+        <div
+            id={`choice-editor-${selectedNode.id}-${choice.id}`}
+            className={joinClasses(
+                EDITOR_LIST_ITEM,
+                EDITOR_LIST_ITEM_CHOICE_INSPECTOR,
+                isFocused && LIST_SELECTION_CLASS,
+                isFocused && LIST_SELECTION_TEXT_CLASS,
+            )}
+            onFocusCapture={() => onFocusChoice?.(choice.id)}
+        >
+            {collapsible ? (
+                <>
+                    <button
+                        type="button"
+                        className={EDITOR_CHOICE_TOGGLE}
+                        aria-expanded={expanded}
+                        aria-controls={bodyId}
+                        onClick={onToggleExpanded}
+                    >
+                        {choice.label || choice.id}
+                    </button>
+                    <div id={bodyId} hidden={!expanded}>
+                        {body}
+                    </div>
+                </>
+            ) : (
+                body
+            )}
         </div>
     );
 }
