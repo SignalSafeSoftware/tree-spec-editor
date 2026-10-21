@@ -54,6 +54,7 @@ export default function InspectorPanel({
     typeHelperText = DEFAULT_TYPE_HELPER_TEXT,
     onDeleteSelectedNode,
     onFocusChoice,
+    collapsibleChoices,
 }: Readonly<InspectorPanelProps>) {
     return (
         <div>
@@ -87,6 +88,7 @@ export default function InspectorPanel({
                         choiceTypes={choiceTypes}
                         onSetChoiceType={onSetChoiceType}
                         onFocusChoice={onFocusChoice}
+                        collapsibleChoices={collapsibleChoices}
                     />
                 </>
             ) : (

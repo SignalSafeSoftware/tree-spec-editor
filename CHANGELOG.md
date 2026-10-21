@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No unreleased changes recorded.
 
+## [0.4.0] - 2026-10-09
+
+### Added
+
+- `InspectorPanel` `collapsibleChoices` renders each choice as a collapsible card with a label toggle (`graph-editor-choice-toggle`); one card is open at a time and all start collapsed.
+
+### Changed
+
+- Depend on `@signalsafe/tree-spec` `^0.4.1`, `@signalsafe/tree-spec-editor-core` `^0.2.2` and `@signalsafe/tree-spec-editor-react` `^0.3.2` so consumers resolve a single copy of each.
+
 ## [0.3.7] - 2026-09-08
 
 ### Changed

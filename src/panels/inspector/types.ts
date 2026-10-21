@@ -76,6 +76,12 @@ export interface InspectorPanelProps {
     /** Render extra UI below each choice card (after Next/Outcome). */
     renderExtraChoiceFields?: (ctx: InspectorChoiceRenderContext) => ReactNode;
 
+    /**
+     * Render each choice as a collapsible card with a label toggle; at most one is open
+     * at a time and all start collapsed when the selected node changes. Defaults to always expanded.
+     */
+    collapsibleChoices?: boolean;
+
     /** Host-defined choice types (stable ids) for the Type selector on each choice. */
     choiceTypes?: ReadonlyArray<ChoiceTypeOption>;
     onSetChoiceType?: (choiceId: string, typeId: string, defaultLabel?: string) => void;
