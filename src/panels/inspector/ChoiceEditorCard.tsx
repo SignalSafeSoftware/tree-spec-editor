@@ -195,6 +195,7 @@ export default function ChoiceEditorCard({
             </div>
             <EditorLabel className={EDITOR_SPACING_MT_0}>Label</EditorLabel>
             <EditorInput
+                disabled={isPublished}
                 value={choice.label}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                     const updatedChoices = (selectedNode.choices ?? []).map((existingChoice) =>
@@ -207,6 +208,7 @@ export default function ChoiceEditorCard({
             />
             <EditorLabel className={EDITOR_SPACING_MT_2}>Next</EditorLabel>
             <EditorSelect
+                disabled={isPublished}
                 value={targetNodeId}
                 onChange={(e: ChangeEvent<HTMLSelectElement>) => onSetChoiceTarget(choice.id, e.target.value)}
             >

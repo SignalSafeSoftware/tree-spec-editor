@@ -1,5 +1,7 @@
 # `@signalsafe/tree-spec-editor`
 
+Current source and planned customer-subdomain impact: [current-state summary](docs/current-release-candidate.md).
+
 React **UI-kit agnostic shell** for authoring TreeSpec graphs: canvas (from `@signalsafe/tree-spec-editor-react`), sidebar panels, modals, and toolbar helpers. Hosts style panels with Bootstrap, Material UI, or custom CSS via `graph-editor-*` class hooks.
 
 | | |
@@ -116,9 +118,9 @@ Published consumers import only the package root. Layer stack:
 
 | Layer | Package | Owns |
 |-------|---------|------|
-| Wire | [`@signalsafe/tree-spec`](../tree-spec/README.md) | TreeSpec wire types, constants, compile/lint. Pure TS. |
-| Core | [`@signalsafe/tree-spec-editor-core`](../tree-spec-editor-core/README.md) | Editor model, tree operations, layout/autosave/keyboard helpers, constants. Pure TS. |
-| React | [`@signalsafe/tree-spec-editor-react`](../tree-spec-editor-react/README.md) | React Flow canvas (`TreeSpecGraphEditor`). React-specific, UI-library-agnostic. |
+| Wire | [`@signalsafe/tree-spec`](https://github.com/SignalSafeSoftware/tree-spec#readme) | TreeSpec wire types, constants, compile/lint. Pure TS. |
+| Core | [`@signalsafe/tree-spec-editor-core`](https://github.com/SignalSafeSoftware/tree-spec-editor-core#readme) | Editor model, tree operations, layout/autosave/keyboard helpers, constants. Pure TS. |
+| React | [`@signalsafe/tree-spec-editor-react`](https://github.com/SignalSafeSoftware/tree-spec-editor-react#readme) | React Flow canvas (`TreeSpecGraphEditor`). React-specific, UI-library-agnostic. |
 | Shell | **`@signalsafe/tree-spec-editor`** (this package) | UI-kit agnostic panels, modals, toolbar (`graph-editor-*` hooks). Re-exports canvas from `-react` and helpers from `-core`. |
 
 | Directory | Contents |
@@ -732,7 +734,7 @@ import NodeAppearanceFields from '../ui/components/NodeAppearanceFields';
 />
 ```
 
-Wire format details: [`@signalsafe/tree-spec` README](../tree-spec/README.md) — **Graph editor metadata**.
+Wire format details: [`@signalsafe/tree-spec` README](https://github.com/SignalSafeSoftware/tree-spec#readme) — **Graph editor metadata**.
 
 ### `SelectedEdgePanel`
 
@@ -1253,3 +1255,11 @@ function addPromptNode(tree: EditorTree): EditorTree {
 Standalone source and releases: [SignalSafeSoftware/tree-spec-editor](https://github.com/SignalSafeSoftware/tree-spec-editor).
 
 Published as [`@signalsafe/tree-spec-editor`](https://www.npmjs.com/package/@signalsafe/tree-spec-editor) on npm.
+
+Choice inspector Label and Next controls honor the existing read-only state, including published versions. Choice disclosures remain available for inspection. No host blanket disabled fieldset is required.
+
+## Release and compatibility
+
+Release `0.4.1` preserves the installed Step 5 editor capabilities and the verified audit fixes. The coordinated dependency floor is TreeSpec `^0.4.4`, editor-core `^0.2.3`, and editor-react `^0.3.3` where declared. React integrations retain React 18 / React Flow 11. See [release preparation](./RELEASING.md) for verification and publication order. The coordinated release was approved on 2026-10-21; registry availability is recorded in release verification receipts.
+
+See the [current release documentation](docs/current-release-candidate.md) for release-specific compatibility and verification boundaries.

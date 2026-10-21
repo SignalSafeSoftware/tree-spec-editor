@@ -1,6 +1,6 @@
 # UI-kit agnostic editor refactor — design scan (Prompt 8)
 
-**Status:** Implemented on `cleanup` (Prompts 9–10, 9A). `@signalsafe/tree-spec-editor@0.3.0` and `@signalsafe/tree-spec-editor-react@0.2.0` are UI-kit agnostic. See [UI_KIT_AGNOSTIC_USAGE.md](./UI_KIT_AGNOSTIC_USAGE.md) and [`tree-spec-editor-react` canvas doc](../../tree-spec-editor-react/docs/UI_KIT_AGNOSTIC_CANVAS.md).
+**Status:** Implemented on `cleanup` (Prompts 9–10, 9A). `@signalsafe/tree-spec-editor@0.3.0` and `@signalsafe/tree-spec-editor-react@0.2.0` are UI-kit agnostic. See [UI_KIT_AGNOSTIC_USAGE.md](./UI_KIT_AGNOSTIC_USAGE.md) and [`tree-spec-editor-react` canvas doc](https://github.com/SignalSafeSoftware/tree-spec-editor-react/blob/main/docs/UI_KIT_AGNOSTIC_CANVAS.md).
 
 ---
 
