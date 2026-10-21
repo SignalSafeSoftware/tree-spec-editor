@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No unreleased changes recorded.
 
+## [0.4.1] - 2026-10-21
+
+### Changed
+
+- Disable label/target mutations in published or read-only choice inspectors, retain the inspected draft/history presentation and audit fixes, and align the coordinated editor dependency floors.
+- Refresh current README, release preparation and package compatibility documentation.
+
+## [0.4.1+step5.readonly.20261018.1] - 2026-10-18 (local candidate)
+
+- Disable choice Label and Next mutation controls under the existing published/read-only flag; preserve enabled disclosure inspection and default editable controls.
+- Hosts can remove blanket disabled fieldsets around editor panels while retaining their own prompt slot permission binding. No props, dependency minors or theme changes.
+
 ## [0.4.0] - 2026-10-09
 
 ### Added
@@ -146,7 +158,7 @@ No unreleased changes recorded.
 - Checks and tests on every PR; Sonar **`scan`** is label-gated on PRs and runs on tag push and manual dispatch (Batch 1).
 - Publish only from manual **`main`** dispatch or **`v*`** tags (not PR labels); publish requires **`checks`**, **`tests`**, and **`scan`**.
 
-[Unreleased]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.3.7...HEAD
+[Unreleased]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.4.0...HEAD
 [0.3.7]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.3.6...v0.3.7
 [0.3.6]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.3.5...v0.3.6
 [0.3.5]: https://github.com/SignalSafeSoftware/tree-spec-editor/compare/v0.3.4...v0.3.5

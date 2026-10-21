@@ -22,7 +22,7 @@ Peer dependencies: `react`, `react-dom`, `reactflow` only.
 |-------|---------|------------|
 | Wire | `@signalsafe/tree-spec` | None |
 | Model | `@signalsafe/tree-spec-editor-core` | None |
-| Canvas | `@signalsafe/tree-spec-editor-react` | None (React Flow only; canvas emits `graph-editor-*` hooks — see [`UI_KIT_AGNOSTIC_CANVAS.md`](../../tree-spec-editor-react/docs/UI_KIT_AGNOSTIC_CANVAS.md)) |
+| Canvas | `@signalsafe/tree-spec-editor-react` | None (React Flow only; canvas emits `graph-editor-*` hooks — see [`UI_KIT_AGNOSTIC_CANVAS.md`](https://github.com/SignalSafeSoftware/tree-spec-editor-react/blob/main/docs/UI_KIT_AGNOSTIC_CANVAS.md)) |
 | Shell | `@signalsafe/tree-spec-editor` | **Host-owned** — semantic hooks only |
 
 ---
