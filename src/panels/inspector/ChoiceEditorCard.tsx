@@ -36,6 +36,16 @@ import {
 import { choiceActionIconProps } from './choiceActionIconProps.js';
 import type { ChoiceTypeOption, InspectorChoiceRenderContext } from './types.js';
 
+function choiceTypeSelection(
+    choice: EditorChoice,
+    choiceTypes: ReadonlyArray<ChoiceTypeOption> | undefined,
+    hasTypeSetter: boolean,
+): { showTypeSelect: boolean; isCustomType: boolean } {
+    const knownTypeIds = new Set((choiceTypes ?? []).map((type) => type.id));
+    const showTypeSelect = Boolean(choiceTypes?.length && hasTypeSetter);
+    return { showTypeSelect, isCustomType: showTypeSelect && !knownTypeIds.has(choice.id) };
+}
+
 export default function ChoiceEditorCard({
     choice,
     tree,
@@ -88,9 +98,9 @@ export default function ChoiceEditorCard({
     const outcomeValue = transition?.outcome ?? outcomeOptions[0]?.value ?? '';
     const isFocused = focusChoiceId === choice.id;
     const showOutcome = !hideOutcomeField && targetNodeId === END_NODE_ID;
-    const knownTypeIds = new Set((choiceTypes ?? []).map((type) => type.id));
-    const showTypeSelect = Boolean(choiceTypes?.length && onSetChoiceType);
-    const isCustomType = showTypeSelect && !knownTypeIds.has(choice.id);
+    const { showTypeSelect, isCustomType } = choiceTypeSelection(
+        choice, choiceTypes, Boolean(onSetChoiceType),
+    );
 
     const bodyId = `choice-editor-body-${selectedNode.id}-${choice.id}`;
     const body = (
