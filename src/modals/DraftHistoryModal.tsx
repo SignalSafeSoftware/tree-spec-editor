@@ -8,20 +8,14 @@ import type { EditorTree, TreeSpecSnapshotItem } from '@signalsafe/tree-spec-edi
 import {
     EDITOR_EMPTY_STATE,
     EDITOR_FLEX_BETWEEN,
-    EDITOR_MODAL,
-    EDITOR_MODAL_BODY,
-    EDITOR_MODAL_CONTENT,
-    EDITOR_MODAL_DIALOG,
-    EDITOR_MODAL_FOOTER,
-    EDITOR_MODAL_HEADER,
-    EDITOR_MODAL_TITLE,
     EDITOR_MUTED,
     EDITOR_SCROLL,
     EDITOR_SPACING_MB_0,
     EDITOR_SPACING_MB_3,
     joinClasses,
 } from '../ui/editorClasses.js';
-import { EditorButton, EditorCloseButton } from '../ui/primitives.js';
+import { EditorButton } from '../ui/primitives.js';
+import EditorHistoryModalFrame from './EditorHistoryModalFrame.js';
 
 export interface DraftHistoryModalProps {
     show: boolean;
@@ -118,34 +112,18 @@ export default function DraftHistoryModal({
     }
 
     return (
-        <dialog className={joinClasses(EDITOR_MODAL, 'graph-editor-modal--open')} open>
-            <div className={joinClasses(EDITOR_MODAL_DIALOG, 'graph-editor-modal__dialog--lg')}>
-                <div className={EDITOR_MODAL_CONTENT}>
-                    <div className={EDITOR_MODAL_HEADER}>
-                        <h2 className={EDITOR_MODAL_TITLE}>{title}</h2>
-                        <EditorCloseButton onClick={onClose} />
-                    </div>
-                    <div className={EDITOR_MODAL_BODY}>
-                        <p className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>{subtitle}</p>
-                        <div className={joinClasses(EDITOR_FLEX_BETWEEN, EDITOR_SPACING_MB_3)}>
-                            <span className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>{listCaption}</span>
-                            <EditorButton
-                                tone="primary"
-                                onClick={onCreateSnapshot}
-                                disabled={!tree || creatingSnapshot}
-                            >
-                                {creatingSnapshot ? creatingSnapshotLabel : createSnapshotLabel}
-                            </EditorButton>
-                        </div>
-                        {snapshotsContent}
-                    </div>
-                    <div className={EDITOR_MODAL_FOOTER}>
-                        <EditorButton tone="neutral" onClick={onClose}>
-                            {closeLabel}
-                        </EditorButton>
-                    </div>
-                </div>
+        <EditorHistoryModalFrame title={title} subtitle={subtitle} closeLabel={closeLabel} onClose={onClose}>
+            <div className={joinClasses(EDITOR_FLEX_BETWEEN, EDITOR_SPACING_MB_3)}>
+                <span className={joinClasses(EDITOR_MUTED, 'graph-editor-text--sm')}>{listCaption}</span>
+                <EditorButton
+                    tone="primary"
+                    onClick={onCreateSnapshot}
+                    disabled={!tree || creatingSnapshot}
+                >
+                    {creatingSnapshot ? creatingSnapshotLabel : createSnapshotLabel}
+                </EditorButton>
             </div>
-        </dialog>
+            {snapshotsContent}
+        </EditorHistoryModalFrame>
     );
 }
