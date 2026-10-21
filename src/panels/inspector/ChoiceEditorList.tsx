@@ -1,7 +1,4 @@
-import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-
-import type { EditorNode, EditorTree } from '@signalsafe/tree-spec-editor-core';
 
 import PanelHeaderCollapseCarets from '../../lib/PanelHeaderCollapseCarets.js';
 import {
@@ -25,7 +22,7 @@ import {
 } from '../../ui/editorClasses.js';
 import { EditorIconButton } from '../../ui/primitives.js';
 import ChoiceEditorCard from './ChoiceEditorCard.js';
-import type { ChoiceTypeOption, InspectorChoiceRenderContext } from './types.js';
+import type { ChoiceEditorSharedProps } from './types.js';
 
 export default function ChoiceEditorList({
     tree,
@@ -45,23 +42,8 @@ export default function ChoiceEditorList({
     renderExtraChoiceFields,
     onFocusChoice,
     collapsibleChoices = false,
-}: Readonly<{
-    tree: EditorTree;
-    selectedNode: EditorNode;
-    focusChoiceId: string | null;
-    isPublished: boolean;
+}: Readonly<ChoiceEditorSharedProps & {
     onAddChoice: () => void;
-    onUpdateSelectedNode: (patch: Partial<EditorNode>) => void;
-    onDeleteChoice: (choiceId: string) => void;
-    onMoveChoice?: (choiceId: string, direction: 'up' | 'down') => void;
-    onSetChoiceTarget: (choiceId: string, targetNodeId: string) => void;
-    onSetChoiceOutcome: (choiceId: string, outcome: string) => void;
-    onSetChoiceType?: (choiceId: string, typeId: string, defaultLabel?: string) => void;
-    choiceTypes?: ReadonlyArray<ChoiceTypeOption>;
-    outcomeOptions: ReadonlyArray<{ value: string; label: string }>;
-    hideOutcomeField: boolean;
-    renderExtraChoiceFields?: (ctx: InspectorChoiceRenderContext) => ReactNode;
-    onFocusChoice?: (choiceId: string) => void;
     collapsibleChoices?: boolean;
 }>) {
     const choices = selectedNode.choices ?? [];

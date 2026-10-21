@@ -14,6 +14,25 @@ export type ChoiceTypeOption = {
     label: string;
 };
 
+/** Internal context and actions shared by the choice list and each choice card. */
+export interface ChoiceEditorSharedProps {
+    tree: EditorTree;
+    selectedNode: EditorNode;
+    focusChoiceId: string | null;
+    isPublished: boolean;
+    onUpdateSelectedNode: (patch: Partial<EditorNode>) => void;
+    onDeleteChoice: (choiceId: string) => void;
+    onMoveChoice?: (choiceId: string, direction: 'up' | 'down') => void;
+    onSetChoiceTarget: (choiceId: string, targetNodeId: string) => void;
+    onSetChoiceOutcome: (choiceId: string, outcome: string) => void;
+    onSetChoiceType?: (choiceId: string, typeId: string, defaultLabel?: string) => void;
+    choiceTypes?: ReadonlyArray<ChoiceTypeOption>;
+    outcomeOptions: ReadonlyArray<{ value: string; label: string }>;
+    hideOutcomeField: boolean;
+    renderExtraChoiceFields?: (ctx: InspectorChoiceRenderContext) => ReactNode;
+    onFocusChoice?: (choiceId: string) => void;
+}
+
 /**
  * Canonical outcome values from the `@signalsafe/tree-spec` wire contract.
  * Hosts can override via the `outcomeOptions` prop.

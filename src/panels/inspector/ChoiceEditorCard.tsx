@@ -1,11 +1,9 @@
-import type { ChangeEvent, ReactNode } from 'react';
+import type { ChangeEvent } from 'react';
 
 import {
     END_NODE_ID,
     getTransition,
     type EditorChoice,
-    type EditorNode,
-    type EditorTree,
 } from '@signalsafe/tree-spec-editor-core';
 
 import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../../lib/selectionStyles.js';
@@ -34,7 +32,7 @@ import {
     EditorSelect,
 } from '../../ui/primitives.js';
 import { choiceActionIconProps } from './choiceActionIconProps.js';
-import type { ChoiceTypeOption, InspectorChoiceRenderContext } from './types.js';
+import type { ChoiceEditorSharedProps, ChoiceTypeOption } from './types.js';
 
 function choiceTypeSelection(
     choice: EditorChoice,
@@ -69,26 +67,11 @@ export default function ChoiceEditorCard({
     collapsible = false,
     expanded = true,
     onToggleExpanded,
-}: Readonly<{
+}: Readonly<ChoiceEditorSharedProps & {
     choice: EditorChoice;
-    tree: EditorTree;
-    selectedNode: EditorNode;
-    focusChoiceId: string | null;
-    isPublished: boolean;
     canMoveUp: boolean;
     canMoveDown: boolean;
     usedChoiceTypeIds: Set<string>;
-    onUpdateSelectedNode: (patch: Partial<EditorNode>) => void;
-    onDeleteChoice: (choiceId: string) => void;
-    onMoveChoice?: (choiceId: string, direction: 'up' | 'down') => void;
-    onSetChoiceTarget: (choiceId: string, targetNodeId: string) => void;
-    onSetChoiceOutcome: (choiceId: string, outcome: string) => void;
-    onSetChoiceType?: (choiceId: string, typeId: string, defaultLabel?: string) => void;
-    choiceTypes?: ReadonlyArray<ChoiceTypeOption>;
-    outcomeOptions: ReadonlyArray<{ value: string; label: string }>;
-    hideOutcomeField: boolean;
-    renderExtraChoiceFields?: (ctx: InspectorChoiceRenderContext) => ReactNode;
-    onFocusChoice?: (choiceId: string) => void;
     collapsible?: boolean;
     expanded?: boolean;
     onToggleExpanded?: () => void;
