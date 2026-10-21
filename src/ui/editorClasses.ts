@@ -30,6 +30,7 @@ export const EDITOR_LIST_ITEM_WITH_DELETE = 'graph-editor-list__item--with-delet
 export const EDITOR_LIST_ITEM_CHOICE_INSPECTOR = 'graph-editor-list__item--choice-inspector';
 export const EDITOR_CHOICE_INSPECTOR_HEADER = 'graph-editor-choice-inspector-header';
 export const EDITOR_CHOICE_INSPECTOR_ACTIONS = 'graph-editor-choice-inspector-actions';
+export const EDITOR_CHOICE_TOGGLE = 'graph-editor-choice-toggle';
 export const EDITOR_BADGE = 'graph-editor-badge';
 
 export const EDITOR_MODAL = 'graph-editor-modal';
