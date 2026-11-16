@@ -72,7 +72,7 @@ Several panels accept host injection without replacing the whole component:
 | `hideOutcomeField` | Hide outcome field when host manages outcomes elsewhere |
 | `choiceTypes` / `onSetChoiceType` | Host-defined choice type catalog |
 
-### `AppearancePanel`
+### `EdgesPanel`
 
 | Prop | Purpose |
 |------|---------|

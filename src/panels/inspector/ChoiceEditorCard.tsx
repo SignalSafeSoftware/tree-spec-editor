@@ -15,6 +15,7 @@ import {
     EDITOR_FLEX_FILL,
     EDITOR_FLEX_GROW_1,
     EDITOR_FLEX_ROW,
+    EDITOR_FLEX_SHRINK_0,
     EDITOR_LIST_ITEM,
     EDITOR_LIST_ITEM_CHOICE_INSPECTOR,
     EDITOR_MIN_W_0,
@@ -83,6 +84,45 @@ export default function ChoiceEditorCard({
     const showOutcome = !hideOutcomeField && targetNodeId === END_NODE_ID;
     const { showTypeSelect, isCustomType } = choiceTypeSelection(
         choice, choiceTypes, Boolean(onSetChoiceType),
+    );
+
+    const actions = (
+        <div className={EDITOR_CHOICE_INSPECTOR_ACTIONS}>
+            {onMoveChoice ? (
+                <>
+                    <span
+                        {...choiceActionIconProps(
+                            () => onMoveChoice(choice.id, 'up'),
+                            'Move choice up',
+                            undefined,
+                            isPublished || !canMoveUp,
+                            '↑',
+                            'move-up',
+                        )}
+                    />
+                    <span
+                        {...choiceActionIconProps(
+                            () => onMoveChoice(choice.id, 'down'),
+                            'Move choice down',
+                            undefined,
+                            isPublished || !canMoveDown,
+                            '↓',
+                            'move-down',
+                        )}
+                    />
+                </>
+            ) : null}
+            <span
+                {...choiceActionIconProps(
+                    () => onDeleteChoice(choice.id),
+                    'Delete choice',
+                    'graph-editor-action-icon--danger',
+                    isPublished,
+                    '×',
+                    'delete',
+                )}
+            />
+        </div>
     );
 
     const bodyId = `choice-editor-body-${selectedNode.id}-${choice.id}`;
@@ -156,42 +196,7 @@ export default function ChoiceEditorCard({
                         </EditorField>
                     )}
                 </div>
-                <div className={EDITOR_CHOICE_INSPECTOR_ACTIONS}>
-                    {onMoveChoice ? (
-                        <>
-                            <span
-                                {...choiceActionIconProps(
-                                    () => onMoveChoice(choice.id, 'up'),
-                                    'Move choice up',
-                                    undefined,
-                                    isPublished || !canMoveUp,
-                                    '↑',
-                                    'move-up',
-                                )}
-                            />
-                            <span
-                                {...choiceActionIconProps(
-                                    () => onMoveChoice(choice.id, 'down'),
-                                    'Move choice down',
-                                    undefined,
-                                    isPublished || !canMoveDown,
-                                    '↓',
-                                    'move-down',
-                                )}
-                            />
-                        </>
-                    ) : null}
-                    <span
-                        {...choiceActionIconProps(
-                            () => onDeleteChoice(choice.id),
-                            'Delete choice',
-                            'graph-editor-action-icon--danger',
-                            isPublished,
-                            '×',
-                            'delete',
-                        )}
-                    />
-                </div>
+                {collapsible ? null : actions}
             </div>
             <EditorLabel className={EDITOR_SPACING_MT_0}>Label</EditorLabel>
             <EditorInput
@@ -247,15 +252,20 @@ export default function ChoiceEditorCard({
         >
             {collapsible ? (
                 <>
-                    <button
-                        type="button"
-                        className={EDITOR_CHOICE_TOGGLE}
-                        aria-expanded={expanded}
-                        aria-controls={bodyId}
-                        onClick={onToggleExpanded}
-                    >
-                        {choice.label || choice.id}
-                    </button>
+                    <div className={joinClasses(EDITOR_FLEX_BETWEEN, expanded && EDITOR_SPACING_MB_2)}>
+                        <div className={joinClasses(EDITOR_FLEX_GROW_1, EDITOR_MIN_W_0)}>
+                            <button
+                                type="button"
+                                className={EDITOR_CHOICE_TOGGLE}
+                                aria-expanded={expanded}
+                                aria-controls={bodyId}
+                                onClick={onToggleExpanded}
+                            >
+                                {choice.label || choice.id}
+                            </button>
+                        </div>
+                        <div className={EDITOR_FLEX_SHRINK_0}>{actions}</div>
+                    </div>
                     <div id={bodyId} hidden={!expanded}>
                         {body}
                     </div>

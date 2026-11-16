@@ -160,7 +160,7 @@ Typical host apps import from **three** packages:
 
 ```tsx
 // UI shell — panels, modals, toolbar, canvas default export
-import TreeSpecGraphEditor, { AppearancePanel, buildDefaultToolbarSpec, … } from '@signalsafe/tree-spec-editor';
+import TreeSpecGraphEditor, { EdgesPanel, buildDefaultToolbarSpec, … } from '@signalsafe/tree-spec-editor';
 
 // Stateful orchestration hook (not re-exported from the shell barrel)
 import { useTreeSpecEditor } from '@signalsafe/tree-spec-editor-react';
@@ -255,10 +255,10 @@ export function ExampleTreeSpecEditor(): JSX.Element {
 - `AdvancedJsonPanel`: presentational card chrome for displaying a host-owned JSON renderer (e.g. the compiled `tree_spec`).
 - `GraphEditorInfoPanel`: left-rail metadata card (scenario/version ids, draft/published badge, autosave status, validation timestamp, scenario-level default edge type).
 - `InspectorPanel`: right-rail node inspector (Type / Prompt / Choices with Type / Label / Next / Outcome / reorder-delete icon actions) with optional render-prop slots, `onFocusChoice` for selection sync, and overridable outcome options.
-- `AppearancePanel`: right-rail canvas-only styling for the selected node and/or the selected edge's source choice (node appearance + per-choice edge appearance in one panel).
-- `ChoiceEdgeAppearanceFields`: embeddable per-choice edge styling fields (used by `AppearancePanel`; also exported for custom layouts).
+- `EdgesPanel`: right-rail canvas-only styling for the selected node and/or the selected edge's source choice (node appearance + per-choice edge appearance in one panel).
+- `ChoiceEdgeAppearanceFields`: embeddable per-choice edge styling fields (used by `EdgesPanel`; also exported for custom layouts).
 - `ChoiceTemplatesPanel`: preset choice bundles for custom host layouts (**not wired** in the reference graph editor page; pair with `appendChoiceTemplate` from `-core`).
-- `SelectedEdgePanel`: optional compact **read-only** card for a selected transition (for editing, use `AppearancePanel`).
+- `SelectedEdgePanel`: optional compact **read-only** card for a selected transition (for editing, use `EdgesPanel`).
 - `LIST_SELECTION_CLASS`, `CANVAS_SELECTION_CLASS`, …: shared CSS class helpers for list/canvas selection highlighting.
 - `buildDefaultToolbarSpec`: builds the default action toolbar (`+ Add`, Templates, layout, Undo/Redo, validate/history/audit/snapshot/clone, save/publish/preview) without status chrome — draft/autosave live in `GraphEditorInfoPanel`.
 - `PublishReviewModal`, `DraftHistoryModal`, `AuditLogModal`: presentational modals for the publish-review / draft-snapshot / audit-log authoring flows; all strings are overridable.
@@ -592,7 +592,7 @@ For project-specific UI, `InspectorPanel` exposes **render-prop slots** so the p
 
 ```tsx
 import {
-    AppearancePanel,
+    EdgesPanel,
     InspectorPanel,
     type EditorNode,
     type EditorTree,
@@ -665,7 +665,7 @@ function RightRail({
                 />
             ) : null}
             {selectedNode || selectedEdge ? (
-                <AppearancePanel
+                <EdgesPanel
                     tree={tree}
                     selectedNode={selectedNode}
                     selectedEdge={selectedEdge}
@@ -704,7 +704,7 @@ Left-rail metadata card for the scenario version being edited. Shows scenario/ve
 
 Use this panel instead of duplicating draft/autosave badges in the top toolbar.
 
-### `AppearancePanel`
+### `EdgesPanel`
 
 Right-rail panel for **canvas-only** styling. Combines:
 
@@ -716,11 +716,11 @@ Scenario-level default edge routing lives in `GraphEditorInfoPanel`, not here.
 Hosts typically pair node fields with a project-specific component:
 
 ```tsx
-import { AppearancePanel, InspectorPanel } from '@signalsafe/tree-spec-editor';
+import { EdgesPanel, InspectorPanel } from '@signalsafe/tree-spec-editor';
 import NodeAppearanceFields from '../ui/components/NodeAppearanceFields';
 
 <InspectorPanel /* Required + Choices; pass inspectorNode when edge-selected */ />
-<AppearancePanel
+<EdgesPanel
     tree={tree}
     selectedNode={selectedNode}
     selectedEdge={selectedEdge}
@@ -738,7 +738,7 @@ Wire format details: [`@signalsafe/tree-spec` README](https://github.com/SignalS
 
 ### `SelectedEdgePanel`
 
-Optional compact read-only card that surfaces the currently selected transition. Returns `null` when `selectedEdge` is `null`. **For editing**, prefer `AppearancePanel` + `InspectorPanel` (edge selection keeps the source node's choices visible and focuses the source choice). Keep `SelectedEdgePanel` only when you want a minimal read-only summary without the full appearance UI.
+Optional compact read-only card that surfaces the currently selected transition. Returns `null` when `selectedEdge` is `null`. **For editing**, prefer `EdgesPanel` + `InspectorPanel` (edge selection keeps the source node's choices visible and focuses the source choice). Keep `SelectedEdgePanel` only when you want a minimal read-only summary without the full appearance UI.
 
 `SelectedEdgePanel` accepts these optional props:
 
@@ -1260,6 +1260,4 @@ Choice inspector Label and Next controls honor the existing read-only state, inc
 
 ## Release and compatibility
 
-Release `0.4.1` preserves the installed Step 5 editor capabilities and the verified audit fixes. The coordinated dependency floor is TreeSpec `^0.4.4`, editor-core `^0.2.3`, and editor-react `^0.3.3` where declared. React integrations retain React 18 / React Flow 11. See [release preparation](./RELEASING.md) for verification and publication order. The coordinated release was approved on 2026-10-21; registry availability is recorded in release verification receipts.
-
-See the [current release documentation](docs/current-release-candidate.md) for release-specific compatibility and verification boundaries.
+Release `0.5.0` replaces the public `AppearancePanel` / `AppearancePanelProps` exports with `EdgesPanel` / `EdgesPanelProps`. Migrate imports and JSX directly; no compatibility alias is shipped. The panel retains the existing host-rendered node controls and per-choice canvas styling contract. React 18 / React Flow 11 support is retained. See [current release preparation](docs/current-release-candidate.md) and [release gates](RELEASING.md).

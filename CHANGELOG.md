@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-No unreleased changes recorded.
+## [0.5.0] - 2026-11-15
+
+### Breaking
+
+- Replace `AppearancePanel` and `AppearancePanelProps` with `EdgesPanel` and `EdgesPanelProps`. Consumers must rename their direct imports and JSX; no compatibility alias remains.
+
+### Changed
+
+- Preserve selected-choice edge context, shared node links, choice inspection and host-owned appearance fields while reconciling existing editor and theme changes.
+- Refresh current examples, package exports, dependency verification and release documentation.
 
 ## [0.4.1] - 2026-10-21
 

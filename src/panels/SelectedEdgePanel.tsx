@@ -2,7 +2,7 @@
  * Compact read-only display of the currently selected transition.
  * Returns `null` when no edge is selected, so the host can render it unconditionally.
  *
- * For editing edge/choice appearance, use {@link AppearancePanel} instead.
+ * For editing edge/choice appearance, use {@link EdgesPanel} instead.
  */
 import type { ReactNode } from 'react';
 
