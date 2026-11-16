@@ -1,10 +1,12 @@
 # Releasing @signalsafe/tree-spec-editor
 
-## Release 0.5.0
+## Release 0.5.1
 
 The coordinated release was approved on 2026-10-21. Publish only the reviewed source revision and verified archive after the required checks; this document does not assert registry availability.
 
-The supported editor chain is TreeSpec `^0.4.5` → editor-core `^0.2.4` → editor-react `^0.3.4` → editor `0.5.0`, with the CSS-only theme `0.3.8`. Publish and verify each upstream registry archive before releasing its dependent. React packages retain React/React DOM 18 and React Flow 11; the theme has no runtime JavaScript dependencies.
+The supported editor chain is TreeSpec `^0.4.5` → editor-core `^0.2.4` → editor-react `^0.3.4` → editor `0.5.1`, with the CSS-only theme `0.3.8`. Publish and verify each upstream registry archive before releasing its dependent. React packages retain React/React DOM 18 and React Flow 11; the theme has no runtime JavaScript dependencies.
+
+The unpublished `v0.5.0` tag remains immutable after its main-branch Sonar new-code coverage failure (76.9% against 80%). Version 0.5.1 adds missing interaction regression coverage and must pass the unchanged complete workflow before publication.
 
 ## Verification
 
