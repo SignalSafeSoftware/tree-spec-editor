@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type ReactNode } from 'react';
+import { useId, useState, type ChangeEvent, type ReactNode } from 'react';
 
 import PanelHeaderCollapseCarets from '../lib/PanelHeaderCollapseCarets.js';
 
@@ -10,19 +10,15 @@ import {
 } from '@signalsafe/tree-spec-editor-core';
 
 import {
-    EDITOR_CARD,
     EDITOR_CARD_BODY,
-    EDITOR_CARD_HEADER,
     EDITOR_ALIGN_TOP,
     EDITOR_FLEX_ROW,
-    EDITOR_FLEX_WRAP,
     EDITOR_HIDDEN,
     EDITOR_MONO,
     EDITOR_MUTED,
     EDITOR_SPACING_M_0,
     EDITOR_SPACING_MB_0,
     EDITOR_SPACING_MB_1,
-    EDITOR_SPACING_MB_2,
     EDITOR_SPACING_MB_3,
     EDITOR_SPACING_MT_1,
     EDITOR_TABLE,
@@ -98,19 +94,44 @@ export default function GraphEditorInfoPanel({
     onUpdateDefaultEdgeType,
 }: Readonly<GraphEditorInfoPanelProps>) {
     const [expanded, setExpanded] = useState(true);
+    const [tab, setTab] = useState<'details' | 'global'>('details');
+    const id = useId();
+    const activeTab = onUpdateDefaultEdgeType ? tab : 'details';
 
     return (
-        <div className={joinClasses(EDITOR_CARD, EDITOR_SPACING_MB_3)}>
-            <div className={EDITOR_CARD_HEADER}>
-                <div className={joinClasses(EDITOR_FLEX_ROW, EDITOR_FLEX_WRAP)}>
-                    <h5 className={EDITOR_SPACING_MB_0}>{title}</h5>
-                    <PanelHeaderCollapseCarets expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
+        <div className={joinClasses('graph-editor-info', EDITOR_SPACING_MB_3)}>
+            <div className="graph-editor-info-tabs">
+                <div role="tablist" aria-label={title} className={joinClasses(EDITOR_FLEX_ROW, 'graph-editor-info-tablist')}>
+                    {(['details', ...(onUpdateDefaultEdgeType ? ['global'] as const : [])] as const).map((item) => (
+                        <button
+                            key={item}
+                            type="button"
+                            role="tab"
+                            id={`${id}-${item}-tab`}
+                            aria-controls={`${id}-${item}-panel`}
+                            aria-selected={activeTab === item}
+                            tabIndex={activeTab === item ? 0 : -1}
+                            className="graph-editor-info-tab"
+                            onClick={() => setTab(item)}
+                            onKeyDown={(event) => {
+                                if (!onUpdateDefaultEdgeType || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+                                event.preventDefault();
+                                const next = event.key === 'Home' ? 'details' : event.key === 'End' ? 'global' : activeTab === 'details' ? 'global' : 'details';
+                                setTab(next);
+                                event.currentTarget.parentElement?.querySelector<HTMLButtonElement>(`[id="${id}-${next}-tab"]`)?.focus();
+                            }}
+                        >
+                            {item === 'details' ? 'Details' : 'Global settings'}
+                        </button>
+                    ))}
                 </div>
+                <PanelHeaderCollapseCarets expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
             </div>
             <div
                 className={joinClasses(EDITOR_CARD_BODY, 'graph-editor-card__body--flush', !expanded && EDITOR_HIDDEN)}
                 aria-hidden={!expanded}
             >
+                <div role="tabpanel" id={`${id}-details-panel`} aria-labelledby={`${id}-details-tab`} hidden={activeTab !== 'details'}>
                 <table className={joinClasses(EDITOR_TABLE, EDITOR_SPACING_M_0)}>
                     <tbody>
                         <PropertyRow label="Name" value={name} />
@@ -160,9 +181,9 @@ export default function GraphEditorInfoPanel({
                         />
                     </tbody>
                 </table>
+                </div>
                 {onUpdateDefaultEdgeType ? (
-                    <div className="graph-editor-card__section graph-editor-card__section--border-top">
-                        <div className={joinClasses('graph-editor-text--sm', 'graph-editor-text--semibold', EDITOR_SPACING_MB_2)}>Global</div>
+                    <div role="tabpanel" id={`${id}-global-panel`} aria-labelledby={`${id}-global-tab`} hidden={activeTab !== 'global'} className="graph-editor-card__section">
                         <EditorField className={EDITOR_SPACING_MB_0}>
                             <EditorLabel className={joinClasses('graph-editor-text--sm', EDITOR_SPACING_MB_1)}>Scenario default edge type</EditorLabel>
                             <EditorSelect

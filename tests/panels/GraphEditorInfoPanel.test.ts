@@ -118,4 +118,25 @@ describe('GraphEditorInfoPanel', () => {
         });
         expect(onUpdateDefaultEdgeType).toHaveBeenCalledWith('step');
     });
+    it('retains the chosen tab when collapsing and reopening the content', async () => {
+        await act(async () => {
+            renderer = TestRenderer.create(React.createElement(GraphEditorInfoPanel, {
+                scenarioId: 'sc-1', versionId: 'v-1', name: 'Example',
+                createdAt: null, updatedAt: null, isPublished: false,
+                autosaveStatus: AUTOSAVE_STATUS.IDLE, lastValidatedAt: null,
+                onUpdateDefaultEdgeType: vi.fn(),
+            }));
+        });
+        const global = () => renderer!.root.findAllByProps({ role: 'tab' })[1];
+        await act(async () => global().props.onClick());
+        expect(global().props['aria-selected']).toBe(true);
+        const toggle = () => renderer!.root.findAll((node) => node.type === 'button' && node.props['aria-expanded'] !== undefined)[0];
+        await act(async () => toggle().props.onClick());
+        expect(toggle().props['aria-expanded']).toBe(false);
+        expect(global().props['aria-selected']).toBe(true);
+        await act(async () => toggle().props.onClick());
+        expect(toggle().props['aria-expanded']).toBe(true);
+        expect(global().props['aria-selected']).toBe(true);
+    });
+
 });

@@ -33,7 +33,7 @@ import {
 import ChoiceEdgeAppearanceFields from './ChoiceEdgeAppearanceFields.js';
 import type { InspectorNodeRenderContext } from './InspectorPanel.js';
 
-export interface AppearancePanelProps {
+export interface EdgesPanelProps {
     tree: EditorTree;
     selectedNode: EditorNode | null;
     selectedEdge?: EditorTransition | null;
@@ -117,7 +117,7 @@ function appearancePanelBodyClassName(hasSelection: boolean, expanded: boolean):
     return joinClasses(EDITOR_CARD_BODY, hasSelection && !expanded && EDITOR_HIDDEN);
 }
 
-interface AppearancePanelViewState {
+interface EdgesPanelViewState {
     contextNode: EditorNode | null;
     activeChoiceId: string | null;
     activeChoice: EditorChoice | null;
@@ -128,7 +128,7 @@ interface AppearancePanelViewState {
     edgeToNodeId: string | null;
 }
 
-function deriveAppearancePanelViewState({
+function deriveEdgesPanelViewState({
     tree,
     selectedNode,
     selectedEdge,
@@ -139,8 +139,8 @@ function deriveAppearancePanelViewState({
     selectedNode: EditorNode | null;
     selectedEdge: EditorTransition | null;
     focusChoiceId: string | null;
-    onUpdateChoiceEdgeHints: AppearancePanelProps['onUpdateChoiceEdgeHints'];
-}>): AppearancePanelViewState {
+    onUpdateChoiceEdgeHints: EdgesPanelProps['onUpdateChoiceEdgeHints'];
+}>): EdgesPanelViewState {
     const edgeFocused = Boolean(selectedEdge);
     const contextNode =
         selectedNode ??
@@ -181,7 +181,7 @@ function deriveAppearancePanelViewState({
     };
 }
 
-export default function AppearancePanel({
+export default function EdgesPanel({
     tree,
     selectedNode,
     selectedEdge = null,
@@ -191,10 +191,10 @@ export default function AppearancePanel({
     renderAppearanceFields,
     onUpdateChoiceEdgeHints,
     onNodeSelect,
-    title = 'Appearance',
+    title = 'Edges',
     emptyStateText = 'Select a node or edge to edit appearance.',
     helperText = 'Canvas node only (not shown in preview or training)',
-}: Readonly<AppearancePanelProps>) {
+}: Readonly<EdgesPanelProps>) {
     const [expanded, setExpanded] = useState(true);
     const {
         contextNode,
@@ -205,7 +205,7 @@ export default function AppearancePanel({
         hasSelection,
         edgeFromNodeId,
         edgeToNodeId,
-    } = deriveAppearancePanelViewState({
+    } = deriveEdgesPanelViewState({
         tree,
         selectedNode,
         selectedEdge,

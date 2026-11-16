@@ -1,11 +1,7 @@
-# Current release: @signalsafe/tree-spec-editor 0.4.1
+# Release candidate: @signalsafe/tree-spec-editor 0.5.0
 
-Status: coordinated release approved on 2026-10-21; registry availability is established by release verification receipts. Existing canonical source and host installations remain unchanged. The candidate combines the installed Step 5 capabilities with the verified package audit fixes; earlier dated state summaries and verification records remain historical evidence.
+The published baseline is 0.4.1. This deliberate pre-1.0 minor release removes the public `AppearancePanel` / `AppearancePanelProps` names and exports `EdgesPanel` / `EdgesPanelProps`. Update direct imports and JSX in DeliveryPlus and AdventureStories before adopting; no compatibility aliases are provided. The existing appearance slot, selected-choice edge controls, published inspection protections and React 18 / React Flow 11 compatibility remain.
 
-The package README describes supported entry points and behavior; `../RELEASING.md` describes the publication gate and order. Use the committed declaration in `../package.json` as the dependency authority. Candidate source, built files, packed archive, and isolated installed consumer must agree. Check actual gate receipts rather than inferring completion from this document.
+The candidate reconciles preserved uncommitted editor work with current remote refactors and reviewed dependency PRs. The UI package remains domain-neutral; hosts retain persistence, permissions, simulator state, application properties and injected field controls. This release adds no general property-editor feature family.
 
-TreeSpec `0.4.4` precedes editor-core `0.2.3`, editor-react `0.3.3`, editor `0.4.1` and theme `0.3.7`. Before publication, local archive proof verifies this chain without pretending unpublished versions can pass a frozen registry install. Registry lock refresh and published-dependency smoke verification remain staged until the upstream versions exist. React 18 / React Flow 11 support is retained.
-
-## Review record
-
-The canonical repository is preserved. Candidate changes are reviewed as a source delta over the verified remote baseline; frozen registry lock regeneration and final hosted checks remain separately recorded gates. Local passing tests do not establish production cutover or provider readiness.
+Strict types, package tests and packed consumer checks must validate the actual new export. The coordinated registry dependency order is TreeSpec 0.4.5, editor-core 0.2.4, editor-react 0.3.4, then editor 0.5.0; compatible theme 0.3.8 remains CSS-only. Versions and lockfiles are finalized against real published upstream archives before downstream publication. Existing CI, Sonar and immutable tag checks remain enforced; see [release gates](../RELEASING.md).

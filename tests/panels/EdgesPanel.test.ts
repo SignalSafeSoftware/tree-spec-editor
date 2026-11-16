@@ -1,6 +1,6 @@
 import React from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import AppearancePanel from '../../src/panels/AppearancePanel';
+import EdgesPanel from '../../src/panels/EdgesPanel';
 import { END_NODE_ID, type EditorNode, type EditorTree } from '@signalsafe/tree-spec-editor-core';
 
 import { TestRenderer, act } from '../reactTestRenderer';
@@ -44,11 +44,11 @@ function makeNode(): EditorNode {
     return makeTree().nodes.start!;
 }
 
-describe('AppearancePanel', () => {
+describe('EdgesPanel', () => {
     it('shows empty state when no node is selected', async () => {
         await act(async () => {
             renderer = TestRenderer.create(
-                React.createElement(AppearancePanel, {
+                React.createElement(EdgesPanel, {
                     tree: makeTree(),
                     selectedNode: null,
                     onUpdateSelectedNode: vi.fn(),
@@ -74,7 +74,7 @@ describe('AppearancePanel', () => {
 
         await act(async () => {
             renderer = TestRenderer.create(
-                React.createElement(AppearancePanel, {
+                React.createElement(EdgesPanel, {
                     tree: makeTree(),
                     selectedNode: makeNode(),
                     onUpdateSelectedNode: vi.fn(),
@@ -96,7 +96,7 @@ describe('AppearancePanel', () => {
 
         await act(async () => {
             renderer = TestRenderer.create(
-                React.createElement(AppearancePanel, {
+                React.createElement(EdgesPanel, {
                     tree,
                     selectedNode: tree.nodes.start!,
                     focusChoiceId: 'verify',
@@ -129,7 +129,7 @@ describe('AppearancePanel', () => {
 
         await act(async () => {
             renderer = TestRenderer.create(
-                React.createElement(AppearancePanel, {
+                React.createElement(EdgesPanel, {
                     tree,
                     selectedNode: tree.nodes.start!,
                     focusChoiceId: 'verify',
@@ -152,7 +152,7 @@ describe('AppearancePanel', () => {
 
         await act(async () => {
             renderer = TestRenderer.create(
-                React.createElement(AppearancePanel, {
+                React.createElement(EdgesPanel, {
                     tree,
                     selectedNode: tree.nodes.start!,
                     focusChoiceId: 'verify',
@@ -188,7 +188,7 @@ describe('AppearancePanel', () => {
 
         await act(async () => {
             renderer = TestRenderer.create(
-                React.createElement(AppearancePanel, {
+                React.createElement(EdgesPanel, {
                     tree,
                     selectedNode: null,
                     selectedEdge: tree.transitions[0]!,

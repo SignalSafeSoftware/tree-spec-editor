@@ -19,7 +19,8 @@ describe('package barrel', () => {
         expect(packageExports.NodesPanel).toBeTypeOf('function');
         expect(packageExports.AdvancedJsonPanel).toBeTypeOf('function');
         expect(packageExports.InspectorPanel).toBeTypeOf('function');
-        expect(packageExports.AppearancePanel).toBeTypeOf('function');
+        expect(packageExports.EdgesPanel).toBeTypeOf('function');
+        expect(packageExports).not.toHaveProperty('AppearancePanel');
         expect(packageExports.SelectedEdgePanel).toBeTypeOf('function');
         expect(packageExports.PublishReviewModal).toBeTypeOf('function');
         expect(packageExports.DraftHistoryModal).toBeTypeOf('function');

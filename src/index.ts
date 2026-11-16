@@ -37,8 +37,8 @@ export type {
     InspectorNodeRenderContext,
     InspectorChoiceRenderContext,
 } from './panels/InspectorPanel.js';
-export { default as AppearancePanel } from './panels/AppearancePanel.js';
-export type { AppearancePanelProps } from './panels/AppearancePanel.js';
+export { default as EdgesPanel } from './panels/EdgesPanel.js';
+export type { EdgesPanelProps } from './panels/EdgesPanel.js';
 export { default as SelectedEdgePanel } from './panels/SelectedEdgePanel.js';
 export type { SelectedEdgePanelProps } from './panels/SelectedEdgePanel.js';
 export { default as ChoiceTemplatesPanel } from './panels/ChoiceTemplatesPanel.js';
