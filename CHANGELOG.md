@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.5.0] - 2026-11-15
+## [0.5.1] - 2026-11-15
+
+### Tests
+
+- Cover information-panel arrow-key wraparound, Home/End selection and focus, ignored keys, capability removal and independent tab/panel identities. The immutable, unpublished `v0.5.0` candidate failed the existing 80% new-code coverage gate; this replacement keeps that gate and the original tag intact.
 
 ### Breaking
 

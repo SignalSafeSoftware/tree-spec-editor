@@ -1260,4 +1260,4 @@ Choice inspector Label and Next controls honor the existing read-only state, inc
 
 ## Release and compatibility
 
-Release `0.5.0` replaces the public `AppearancePanel` / `AppearancePanelProps` exports with `EdgesPanel` / `EdgesPanelProps`. Migrate imports and JSX directly; no compatibility alias is shipped. The panel retains the existing host-rendered node controls and per-choice canvas styling contract. React 18 / React Flow 11 support is retained. See [current release preparation](docs/current-release-candidate.md) and [release gates](RELEASING.md).
+Release `0.5.1` replaces the public `AppearancePanel` / `AppearancePanelProps` exports with `EdgesPanel` / `EdgesPanelProps`. Migrate imports and JSX directly; no compatibility alias is shipped. The panel retains the existing host-rendered node controls and per-choice canvas styling contract. React 18 / React Flow 11 support is retained. See [current release preparation](docs/current-release-candidate.md) and [release gates](RELEASING.md).
