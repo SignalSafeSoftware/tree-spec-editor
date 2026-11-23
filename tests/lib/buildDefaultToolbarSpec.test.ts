@@ -328,3 +328,48 @@ describe('buildDefaultToolbarSpec', () => {
         expect(previewItem.disabled).toBe(true);
     });
 });
+
+it('forwards every enabled toolbar capability exactly once and can omit history entirely', () => {
+    const actions = baseActions();
+    const template = { focusSlot: '', nodes: {}, transitions: [] };
+    const items = buildDefaultToolbarSpec({
+        state: baseState(),
+        actions,
+        showUndoRedo: false,
+        templates: [{ id: 'template', label: 'Template', spec: template }],
+        capabilities: {
+            canValidate: true,
+            canListSnapshots: true,
+            canListAudit: true,
+            canCreateSnapshot: true,
+            canCloneToDraft: true,
+            canPublish: true,
+        },
+    });
+    expect(items.some((item) => item.id === 'undo')).toBe(false);
+    for (const item of items) {
+        if (item.kind === TOOLBAR_ITEM_KIND.BUTTON) item.onClick();
+        if (item.kind === TOOLBAR_ITEM_KIND.DROPDOWN) item.entries[0]!.onClick?.();
+    }
+    expect(actions.triggerResetView).toHaveBeenCalledOnce();
+    expect(actions.autoLayout).toHaveBeenCalledOnce();
+    expect(actions.insertTemplate).toHaveBeenCalledExactlyOnceWith(template);
+    expect(actions.validate).toHaveBeenCalledOnce();
+    expect(actions.setShowDraftHistory).toHaveBeenCalledExactlyOnceWith(true);
+    expect(actions.setShowAudit).toHaveBeenCalledExactlyOnceWith(true);
+    expect(actions.createSnapshot).toHaveBeenCalledOnce();
+    expect(actions.cloneToDraft).toHaveBeenCalledOnce();
+    expect(actions.saveDraft).toHaveBeenCalledOnce();
+    expect(actions.setShowPublishModal).toHaveBeenCalledExactlyOnceWith(true);
+    const history = buildDefaultToolbarSpec({
+        state: baseState({ canUndo: true, canRedo: true }),
+        actions,
+    });
+    history
+        .filter((item) => item.id === 'undo' || item.id === 'redo')
+        .forEach((item) => {
+            if (item.kind === TOOLBAR_ITEM_KIND.BUTTON) item.onClick();
+        });
+    expect(actions.undo).toHaveBeenCalledOnce();
+    expect(actions.redo).toHaveBeenCalledOnce();
+});

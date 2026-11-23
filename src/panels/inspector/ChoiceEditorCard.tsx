@@ -4,6 +4,7 @@ import {
     END_NODE_ID,
     getTransition,
     type EditorChoice,
+    type EditorNode,
 } from '@signalsafe/tree-spec-editor-core';
 
 import { LIST_SELECTION_CLASS, LIST_SELECTION_TEXT_CLASS } from '../../lib/selectionStyles.js';
@@ -43,6 +44,12 @@ function choiceTypeSelection(
     const knownTypeIds = new Set((choiceTypes ?? []).map((type) => type.id));
     const showTypeSelect = Boolean(choiceTypes?.length && hasTypeSetter);
     return { showTypeSelect, isCustomType: showTypeSelect && !knownTypeIds.has(choice.id) };
+}
+
+function choicesWithUpdatedLabel(node: EditorNode, choiceId: string, label: string): EditorChoice[] {
+    return (node.choices ?? []).map((choice) =>
+        choice.id === choiceId ? { ...choice, label } : choice,
+    );
 }
 
 export default function ChoiceEditorCard({
@@ -203,10 +210,8 @@ export default function ChoiceEditorCard({
                 disabled={isPublished}
                 value={choice.label}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                    const updatedChoices = (selectedNode.choices ?? []).map((existingChoice) =>
-                        existingChoice.id === choice.id
-                            ? { ...existingChoice, label: event.target.value }
-                            : existingChoice,
+                    const updatedChoices = choicesWithUpdatedLabel(
+                        selectedNode, choice.id, event.target.value,
                     );
                     onUpdateSelectedNode({ choices: updatedChoices });
                 }}

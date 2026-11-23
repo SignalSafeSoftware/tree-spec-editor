@@ -56,12 +56,12 @@ export interface EdgesPanelProps {
 }
 
 function resolveActiveChoiceId(
-    choices: EditorNode['choices'],
+    choices: readonly EditorChoice[],
     selectedEdge: EditorTransition | null | undefined,
     focusChoiceId: string | null | undefined,
 ): string | null {
     if (selectedEdge) return selectedEdge.fromChoiceId;
-    const ids = (choices ?? []).map((choice) => choice.id);
+    const ids = choices.map((choice) => choice.id);
     if (focusChoiceId && ids.includes(focusChoiceId)) return focusChoiceId;
     return null;
 }
@@ -162,7 +162,7 @@ function deriveEdgesPanelViewState({
     );
     const showNodeAppearance = Boolean(contextNode && !edgeAppearanceMode);
     const hasSelection = Boolean(selectedNode || selectedEdge);
-    const edgeFromNodeId = selectedEdge?.fromNodeId ?? (choiceFocused ? selectedNode?.id ?? null : null);
+    const edgeFromNodeId = selectedEdge?.fromNodeId ?? (selectedNode && choiceFocused ? selectedNode.id : null);
     const edgeToNodeId =
         selectedEdge?.toNodeId ??
         (edgeFromNodeId && activeChoiceId

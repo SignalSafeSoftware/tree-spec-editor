@@ -87,7 +87,7 @@ export default function ChoiceEdgeAppearanceFields({
                     }
                 >
                     {EDITOR_EDGE_TYPE_OPTIONS.map((option) => (
-                        <option key={option.value ?? 'default'} value={option.value ?? 'default'}>
+                        <option key={option.value} value={option.value}>
                             {option.label}
                         </option>
                     ))}
