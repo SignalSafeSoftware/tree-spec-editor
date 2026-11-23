@@ -5,10 +5,7 @@ import { defineConfig } from "vitest/config";
 const packageRoot = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-    esbuild: {
-        jsx: "automatic",
-        jsxDev: false,
-    },
+    oxc: { jsx: { runtime: "automatic", development: false } },
     resolve: {
         dedupe: ["react", "react-dom", "react-test-renderer"],
         alias: [
@@ -35,6 +32,13 @@ export default defineConfig({
             exclude: ["src/**/*.d.ts"],
             reporter: ["text", "lcov"],
             reportsDirectory: "coverage",
+            thresholds: {
+                statements: 100,
+                branches: 100,
+                functions: 100,
+                lines: 100,
+                perFile: true,
+            },
         },
         server: {
             deps: {

@@ -53,6 +53,12 @@ export interface GraphEditorInfoPanelProps {
     onUpdateDefaultEdgeType?: (edgeType: GraphEditorEdgeType) => void;
 }
 
+function tabForKey(key: string, current: 'details' | 'global'): 'details' | 'global' {
+    if (key === 'Home') return 'details';
+    if (key === 'End') return 'global';
+    return current === 'details' ? 'global' : 'details';
+}
+
 function defaultFormatTimestamp(iso: string): string {
     return new Date(iso).toLocaleString();
 }
@@ -116,7 +122,7 @@ export default function GraphEditorInfoPanel({
                             onKeyDown={(event) => {
                                 if (!onUpdateDefaultEdgeType || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
                                 event.preventDefault();
-                                const next = event.key === 'Home' ? 'details' : event.key === 'End' ? 'global' : activeTab === 'details' ? 'global' : 'details';
+                                const next = tabForKey(event.key, activeTab);
                                 setTab(next);
                                 event.currentTarget.parentElement?.querySelector<HTMLButtonElement>(`[id="${id}-${next}-tab"]`)?.focus();
                             }}
