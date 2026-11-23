@@ -231,16 +231,14 @@ export default function ChoiceEditorCard({
                 <option value={END_NODE_ID}>END</option>
             </EditorSelect>
 
-            {renderExtraChoiceFields
-                ? renderExtraChoiceFields({
+            {renderExtraChoiceFields?.({
                       tree,
                       node: selectedNode,
                       choice,
                       transition,
                       isPublished,
                       onUpdateNode: onUpdateSelectedNode,
-                  })
-                : null}
+                  })}
         </>
     );
 
