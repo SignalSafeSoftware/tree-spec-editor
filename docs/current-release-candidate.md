@@ -1,4 +1,20 @@
-# Release candidate: @signalsafe/tree-spec-editor 0.5.1
+# Current npm release: @signalsafe/tree-spec-editor 0.5.2
+
+The trusted-publishing migration prepares patch `0.5.2` under immutable
+GitHub tag `v0.5.2`. Current release and authentication instructions are in
+[RELEASING.md](../RELEASING.md); the migration uses GitHub Actions OIDC rather than
+a permanent npm publishing token. Runtime exports and dependency ranges are
+unchanged by this patch. Host adoption and Python releases remain independent.
+
+The release workflow is the source of publication evidence. This documentation
+follow-up does not reseal or republish an immutable package archive or move a tag.
+
+## Historical release and state record
+
+The previous snapshot below is retained for context; its version and publication
+status statements apply to that earlier snapshot.
+
+### Release candidate: @signalsafe/tree-spec-editor 0.5.1
 
 The published baseline is 0.4.1. This deliberate pre-1.0 minor release removes the public `AppearancePanel` / `AppearancePanelProps` names and exports `EdgesPanel` / `EdgesPanelProps`. Update direct imports and JSX in DeliveryPlus and AdventureStories before adopting; no compatibility aliases are provided. The existing appearance slot, selected-choice edge controls, published inspection protections and React 18 / React Flow 11 compatibility remain.
 
