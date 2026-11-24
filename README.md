@@ -1,5 +1,10 @@
 # `@signalsafe/tree-spec-editor`
 
+[![Build](https://github.com/SignalSafeSoftware/tree-spec-editor/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/SignalSafeSoftware/tree-spec-editor/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/@signalsafe/tree-spec-editor?logo=npm)](https://www.npmjs.com/package/@signalsafe/tree-spec-editor)
+[![npm downloads per month](https://img.shields.io/npm/dm/@signalsafe/tree-spec-editor?label=downloads%2Fmonth)](https://www.npmjs.com/package/@signalsafe/tree-spec-editor)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](https://github.com/SignalSafeSoftware/tree-spec-editor/blob/main/LICENSE)
+
 Current source and planned customer-subdomain impact: [current-state summary](docs/current-release-candidate.md).
 
 React **UI-kit agnostic shell** for authoring TreeSpec graphs: canvas (from `@signalsafe/tree-spec-editor-react`), sidebar panels, modals, and toolbar helpers. Hosts style panels with Bootstrap, Material UI, or custom CSS via `graph-editor-*` class hooks.
